@@ -1,0 +1,16 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using Blink.Shared.Domain.DataModels;
+
+namespace Blink.Shared.Domain.DataLayer
+{
+    internal interface IAccess
+    {
+        Task<List<Note>> GetNotes();
+        Task UpdateNote(Note note);
+        Task<bool> DeleteNote(Note note);
+
+        Task<Note> GetNote(Guid noteId);
+    }
+}
