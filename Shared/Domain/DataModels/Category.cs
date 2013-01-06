@@ -1,6 +1,6 @@
 ﻿namespace Blink.Shared.Domain.DataModels
 {
-    internal class Category
+    internal sealed class Category
     {
     }
 }
