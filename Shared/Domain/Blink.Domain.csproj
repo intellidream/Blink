@@ -38,7 +38,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataLayer\Current.cs" />
-    <Compile Include="DataLayer\IAccess.cs" />
+    <Compile Include="DataLayer\IDataAccess.cs" />
     <Compile Include="DataModels\Category.cs" />
     <Compile Include="DataModels\Content.cs" />
     <Compile Include="DataModels\Note.cs" />

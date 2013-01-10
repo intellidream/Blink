@@ -2,6 +2,6 @@
 {
     internal static class Current
     {
-        internal static IAccess Access;
+        internal static IDataAccess DataAccess;
     }
 }

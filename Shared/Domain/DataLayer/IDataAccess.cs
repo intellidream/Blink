@@ -5,7 +5,7 @@ using Blink.Shared.Domain.DataModels;
 
 namespace Blink.Shared.Domain.DataLayer
 {
-    internal interface IAccess
+    internal interface IDataAccess
     {
         Task<List<Note>> GetNotes();
         Task UpdateNote(Note note);
