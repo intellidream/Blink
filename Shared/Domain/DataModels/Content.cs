@@ -2,6 +2,6 @@
 {
     internal sealed class Content
     {
-        internal string Text { get; set; };
+        internal string Text { get; set; }
     }
 }
