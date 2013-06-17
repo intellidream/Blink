@@ -47,6 +47,12 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="Wintellect.Sterling.Core">
+      <HintPath>..\..\..\SterlingDB\Wintellect.Sterling.Server\bin\Debug\Wintellect.Sterling.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Wintellect.Sterling.Server">
+      <HintPath>..\..\..\SterlingDB\Wintellect.Sterling.Server\bin\Debug\Wintellect.Sterling.Server.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">

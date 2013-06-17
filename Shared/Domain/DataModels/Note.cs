@@ -2,7 +2,7 @@
 
 namespace Blink.Shared.Domain.DataModels
 {
-    internal sealed class Note
+    internal abstract class NoteBase
     {
         internal Guid Identity { get; set; }
         internal DateTime Timestamp { get; set; }
