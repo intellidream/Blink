@@ -41,7 +41,16 @@
     <Compile Include="DataLayer\IDataAccess.cs" />
     <Compile Include="DataModels\Category.cs" />
     <Compile Include="DataModels\Content.cs" />
+    <Compile Include="DataModels\Helpers.cs" />
+    <Compile Include="DataModels\Keywords.cs" />
     <Compile Include="DataModels\Note.cs" />
+    <Compile Include="DataModels\NoteBase.cs" />
+    <Compile Include="DataModels\Priority.cs" />
+    <Compile Include="DataModels\Progress.cs" />
+    <Compile Include="DataModels\Relations.cs" />
+    <Compile Include="DataModels\Schedules.cs" />
+    <Compile Include="DataModels\Sharing.cs" />
+    <Compile Include="DataModels\Sources.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />

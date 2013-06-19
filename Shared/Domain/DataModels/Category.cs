@@ -2,5 +2,8 @@
 {
     internal sealed class Category
     {
+        public static Category Empty {
+            get { return null; }
+        }
     }
 }
