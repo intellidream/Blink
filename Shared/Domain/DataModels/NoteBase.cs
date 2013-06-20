@@ -23,5 +23,5 @@ namespace Blink.Shared.Domain.DataModels
         internal virtual Sharing Sharing { get; set; }
     }
 
-    
+    // rhino_mocks, pex-functional_tests
 }
