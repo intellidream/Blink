@@ -77,6 +77,7 @@ namespace Blink.Shared.Domain.DataModels
             {
                 base.Priority = value;
             }
-        }
+        }
+
     }
 }
