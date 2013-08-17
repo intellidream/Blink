@@ -1,4 +1,4 @@
-﻿namespace Blink.Shared.Domain.DataModels
+﻿namespace Blink.Shared.Domain.DataModel.Notes
 {
     internal sealed class Content
     {

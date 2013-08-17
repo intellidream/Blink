@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
-namespace Blink.Shared.Domain.DataModels
+namespace Blink.Shared.Domain.DataModel.Notes
 {
     internal struct Timestamp
     {
