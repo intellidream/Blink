@@ -6,12 +6,14 @@ namespace Blink.Shared.Domain.DataModel.Notes
     /// <summary>
     /// A default Blink note
     /// </summary>
-    internal sealed class BlinkNote : NoteBase, IAggregateRoot
+    internal sealed class BlinkNote : NoteBase
     {
         #region Base Fields
 
         private Guid _id;
         private string _title;
+        private Timestamp _time;
+        private Content _content;
 
         #endregion
 
@@ -43,14 +45,8 @@ namespace Blink.Shared.Domain.DataModel.Notes
 
         public override Timestamp Time
         {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
+            get { return _time; }
+            set { _time = (value.Equals(Timestamp.Empty) || value.Equals(Timestamp.Default)) ? Timestamp.Now : value; }
         }
 
         public override Content Content
@@ -67,18 +63,9 @@ namespace Blink.Shared.Domain.DataModel.Notes
 
         #endregion
 
-        #region Aggregate Interface
-
-        bool IAggregateRoot.CanBeSaved
+        private BlinkNote()
         {
-            get { return true; }
+            //DateTime Default???
         }
-
-        bool IAggregateRoot.CanBeDeleted
-        {
-            get { return true; }
-        }
-
-        #endregion
     }
 }
