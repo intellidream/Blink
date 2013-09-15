@@ -2,30 +2,17 @@
 
 namespace Blink.Shared.Domain.DataModel.Notes
 {
-    internal struct Timestamp : IEquatable<Timestamp>
+    public struct TimeStamp : IEquatable<TimeStamp>
     {
-        internal DateTime? Created { get; set; }
-        internal DateTime? Modified { get; set; }
-        internal DateTime? Accessed { get; set; }
+        internal DateTime Created { get; set; }
+        internal DateTime Modified { get; set; }
+        internal DateTime Accessed { get; set; }
 
-        internal static Timestamp Empty
+        internal static TimeStamp Default
         {
             get
             {
-                return new Timestamp
-                    {
-                        Created = null,
-                        Modified = null,
-                        Accessed = null
-                    };
-            }
-        }
-
-        internal static Timestamp Default
-        {
-            get
-            {
-                return new Timestamp
+                return new TimeStamp
                     {
                         Created = DateTime.MinValue,
                         Modified = DateTime.MinValue,
@@ -34,11 +21,11 @@ namespace Blink.Shared.Domain.DataModel.Notes
             }
         }
 
-        internal static Timestamp Now
+        internal static TimeStamp Now
         {
             get
             {
-                return new Timestamp
+                return new TimeStamp
                     {
                         Created = DateTime.Now,
                         Modified = DateTime.Now,
@@ -47,7 +34,14 @@ namespace Blink.Shared.Domain.DataModel.Notes
             }
         }
 
-        bool IEquatable<Timestamp>.Equals(Timestamp other)
+        internal TimeStamp(DateTime created, DateTime modified, DateTime accessed) : this()
+        {
+            Created = created;
+            Modified = modified;
+            Accessed = accessed;
+        }
+
+        bool IEquatable<TimeStamp>.Equals(TimeStamp other)
         {
             return (Created.Equals(other.Created) && (Modified.Equals(other.Modified)) &&
                     (Accessed.Equals(other.Accessed)));

@@ -44,6 +44,7 @@
     <Compile Include="DataModel\Notes\Category.cs" />
     <Compile Include="DataModel\Notes\Content.cs" />
     <Compile Include="DataModel\Notes\Helpers.cs" />
+    <Compile Include="DataModel\Notes\INoteBase.cs" />
     <Compile Include="DataModel\Notes\Keywords.cs" />
     <Compile Include="DataModel\Notes\NoteBase.cs" />
     <Compile Include="DataModel\Notes\Priority.cs" />

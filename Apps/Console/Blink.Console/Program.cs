@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Blink.Shared.Domain.DataModel.Notes;
 
 namespace Blink.Console
 {
-    class Program
+    static class Program
     {
         static void Main(string[] args)
         {
-            
+            var note = new BlinkNote();
         }
     }
 }
