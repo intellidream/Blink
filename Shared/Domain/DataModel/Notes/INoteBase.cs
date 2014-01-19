@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Threading.Tasks;
 
 namespace Blink.Shared.Domain.DataModel.Notes
 {
@@ -11,9 +10,7 @@ namespace Blink.Shared.Domain.DataModel.Notes
         Guid Id { get; set; }
         String Title { get; set; }
         TimeStamp Time { get; set; }
-        Guid ContentId { get; }
-
-        bool HasContent { get; }
-        Content LoadContent();
+        Content Content { get; set; }
+        Category Category { get; set; }
     }
 }

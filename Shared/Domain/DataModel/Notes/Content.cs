@@ -4,28 +4,10 @@ namespace Blink.Shared.Domain.DataModel.Notes
 {
     public sealed class Content : IEquatable<Content>
     {
-        private string _text;
+        public Guid Id { get; set; }
+        public Guid NoteId { get; set; }
 
-        public string Text
-        {
-            get { return String.IsNullOrWhiteSpace(_text) ? String.Empty : _text; }
-            set { _text = String.IsNullOrWhiteSpace(value) ? String.Empty : value; }
-        }
-
-        public static Content Empty
-        {
-            get { return new Content(); }
-        }
-
-        private Content()
-        {
-            _text = String.Empty;
-        }
-
-        public Content(string text)
-        {
-            _text = text;
-        }
+        public string Text { get; set; }
 
         bool IEquatable<Content>.Equals(Content other)
         {

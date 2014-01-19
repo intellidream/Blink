@@ -53,6 +53,7 @@
     <Compile Include="DataModel\Notes\Schedules.cs" />
     <Compile Include="DataModel\Notes\Sharing.cs" />
     <Compile Include="DataModel\Notes\Sources.cs" />
+    <Compile Include="DataModel\Notes\TimeStamp.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
