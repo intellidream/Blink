@@ -38,7 +38,7 @@
     <Folder Include="ViewModel\" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataLayer\Current.cs" />
+    <Compile Include="DataLayer\Platform.cs" />
     <Compile Include="DataLayer\IDataAccess.cs" />
     <Compile Include="DataModel\Notes\BlinkNote.cs" />
     <Compile Include="DataModel\Notes\Category.cs" />

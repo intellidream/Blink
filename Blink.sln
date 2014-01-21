@@ -1,6 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 2013
+VisualStudioVersion = 12.0.21005.1
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blink.Domain", "Shared\Domain\Blink.Domain.csproj", "{515F724D-3C95-453F-93B9-6B1CF64FE9C2}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{723D4AC7-52CF-4A83-B29C-F72768422EE3}"
@@ -14,6 +16,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blink.Store", "Apps\Store\Blink.Store.csproj", "{072C4CA3-988B-4487-9080-E3187745ED50}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blink.Console", "Apps\Console\Blink.Console\Blink.Console.csproj", "{EC3B9C30-0158-4A60-9E18-B6BDC09FD79A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blink.Classic", "Apps\Classic\Blink.Classic\Blink.Classic.csproj", "{15EEBD38-CB59-43E7-ABE6-2BA85520055C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -101,6 +105,16 @@ Global
 		{EC3B9C30-0158-4A60-9E18-B6BDC09FD79A}.Release|ARM.ActiveCfg = Release|Any CPU
 		{EC3B9C30-0158-4A60-9E18-B6BDC09FD79A}.Release|x64.ActiveCfg = Release|Any CPU
 		{EC3B9C30-0158-4A60-9E18-B6BDC09FD79A}.Release|x86.ActiveCfg = Release|Any CPU
+		{15EEBD38-CB59-43E7-ABE6-2BA85520055C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{15EEBD38-CB59-43E7-ABE6-2BA85520055C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{15EEBD38-CB59-43E7-ABE6-2BA85520055C}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{15EEBD38-CB59-43E7-ABE6-2BA85520055C}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{15EEBD38-CB59-43E7-ABE6-2BA85520055C}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{15EEBD38-CB59-43E7-ABE6-2BA85520055C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{15EEBD38-CB59-43E7-ABE6-2BA85520055C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{15EEBD38-CB59-43E7-ABE6-2BA85520055C}.Release|ARM.ActiveCfg = Release|Any CPU
+		{15EEBD38-CB59-43E7-ABE6-2BA85520055C}.Release|x64.ActiveCfg = Release|Any CPU
+		{15EEBD38-CB59-43E7-ABE6-2BA85520055C}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -111,5 +125,6 @@ Global
 		{DEC67BE7-EC74-48E9-AE5E-A30B09C89021} = {4605E6AC-7D5D-41E9-BE16-7DFCA4F37BD5}
 		{072C4CA3-988B-4487-9080-E3187745ED50} = {4605E6AC-7D5D-41E9-BE16-7DFCA4F37BD5}
 		{EC3B9C30-0158-4A60-9E18-B6BDC09FD79A} = {4605E6AC-7D5D-41E9-BE16-7DFCA4F37BD5}
+		{15EEBD38-CB59-43E7-ABE6-2BA85520055C} = {4605E6AC-7D5D-41E9-BE16-7DFCA4F37BD5}
 	EndGlobalSection
 EndGlobal
