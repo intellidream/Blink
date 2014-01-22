@@ -13,4 +13,13 @@ namespace Blink.Shared.Domain.DataLayer
 
         //Task<Note> GetNote(Guid noteId);
     }
+
+    internal interface IDataAccess<T> where T : class, new()
+    {
+        Task<T> GetById(Guid id);
+        Task<List<T>> GetAll();
+        Task Create(T item);
+        Task Update(T item);
+        Task<bool> Delete(T item);
+    }
 }
