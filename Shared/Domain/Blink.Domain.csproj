@@ -38,8 +38,8 @@
     <Folder Include="ViewModel\" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataLayer\Platform.cs" />
-    <Compile Include="DataLayer\IDataAccess.cs" />
+    <Compile Include="DataLayer\DataAccess.cs" />
+    <Compile Include="DataLayer\IRepository.cs" />
     <Compile Include="DataModel\Notes\BlinkNote.cs" />
     <Compile Include="DataModel\Notes\Category.cs" />
     <Compile Include="DataModel\Notes\Content.cs" />
