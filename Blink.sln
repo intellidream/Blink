@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.21005.1
+VisualStudioVersion = 12.0.30110.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blink.Domain", "Shared\Domain\Blink.Domain.csproj", "{515F724D-3C95-453F-93B9-6B1CF64FE9C2}"
 EndProject
@@ -18,6 +18,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blink.Console", "Apps\Console\Blink.Console\Blink.Console.csproj", "{EC3B9C30-0158-4A60-9E18-B6BDC09FD79A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blink.Classic", "Apps\Classic\Blink.Classic\Blink.Classic.csproj", "{15EEBD38-CB59-43E7-ABE6-2BA85520055C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blink.Engine", "Shared\Engine\Blink.Engine\Blink.Engine.csproj", "{7DC66C70-E402-483D-A3E4-84AE54B3EA40}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -115,12 +117,23 @@ Global
 		{15EEBD38-CB59-43E7-ABE6-2BA85520055C}.Release|ARM.ActiveCfg = Release|Any CPU
 		{15EEBD38-CB59-43E7-ABE6-2BA85520055C}.Release|x64.ActiveCfg = Release|Any CPU
 		{15EEBD38-CB59-43E7-ABE6-2BA85520055C}.Release|x86.ActiveCfg = Release|Any CPU
+		{7DC66C70-E402-483D-A3E4-84AE54B3EA40}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7DC66C70-E402-483D-A3E4-84AE54B3EA40}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7DC66C70-E402-483D-A3E4-84AE54B3EA40}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{7DC66C70-E402-483D-A3E4-84AE54B3EA40}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{7DC66C70-E402-483D-A3E4-84AE54B3EA40}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{7DC66C70-E402-483D-A3E4-84AE54B3EA40}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7DC66C70-E402-483D-A3E4-84AE54B3EA40}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7DC66C70-E402-483D-A3E4-84AE54B3EA40}.Release|ARM.ActiveCfg = Release|Any CPU
+		{7DC66C70-E402-483D-A3E4-84AE54B3EA40}.Release|x64.ActiveCfg = Release|Any CPU
+		{7DC66C70-E402-483D-A3E4-84AE54B3EA40}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{515F724D-3C95-453F-93B9-6B1CF64FE9C2} = {723D4AC7-52CF-4A83-B29C-F72768422EE3}
+		{7DC66C70-E402-483D-A3E4-84AE54B3EA40} = {723D4AC7-52CF-4A83-B29C-F72768422EE3}
 		{7E82A7A2-C040-4453-B5BD-CC1861470227} = {4605E6AC-7D5D-41E9-BE16-7DFCA4F37BD5}
 		{DEC67BE7-EC74-48E9-AE5E-A30B09C89021} = {4605E6AC-7D5D-41E9-BE16-7DFCA4F37BD5}
 		{072C4CA3-988B-4487-9080-E3187745ED50} = {4605E6AC-7D5D-41E9-BE16-7DFCA4F37BD5}
