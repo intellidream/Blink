@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace Blink.Classic
 {
-    public partial class Form1 : Form
+    public partial class BlinkForm : Form
     {
-        public Form1()
+        public BlinkForm()
         {
             InitializeComponent();
         }

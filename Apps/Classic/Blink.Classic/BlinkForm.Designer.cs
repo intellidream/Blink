@@ -1,6 +1,6 @@
 ﻿namespace Blink.Classic
 {
-    partial class Form1
+    partial class BlinkForm
     {
         /// <summary>
         /// Required designer variable.

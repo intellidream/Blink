@@ -42,16 +42,22 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="Wintellect.Sterling.Core">
+      <HintPath>..\..\..\..\SterlingDB\Wintellect.Sterling.Core\bin\Debug\Wintellect.Sterling.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Wintellect.Sterling.Server">
+      <HintPath>..\..\..\..\SterlingDB\Wintellect.Sterling.Server\bin\Debug\Wintellect.Sterling.Server.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\..\Console\Blink.Console\Shared\Domain\DataLayer\DataAccess.cs">
       <Link>Shared\Domain\DataLayer\DataAccess.cs</Link>
     </Compile>
-    <Compile Include="Form1.cs">
+    <Compile Include="BlinkForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="BlinkForm.Designer.cs">
+      <DependentUpon>BlinkForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -81,6 +87,10 @@
     <ProjectReference Include="..\..\..\Shared\Domain\Blink.Domain.csproj">
       <Project>{515f724d-3c95-453f-93b9-6b1cf64fe9c2}</Project>
       <Name>Blink.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Shared\Engine\Blink.Engine\Blink.Engine.csproj">
+      <Project>{7dc66c70-e402-483d-a3e4-84ae54b3ea40}</Project>
+      <Name>Blink.Engine</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
