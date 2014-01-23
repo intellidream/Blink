@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{EC3B9C30-0158-4A60-9E18-B6BDC09FD79A}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Blink.Console</RootNamespace>
     <AssemblyName>Blink.Console</AssemblyName>
@@ -32,7 +32,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject />
+    <StartupObject>Blink.Console.Program</StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -42,6 +42,13 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="Wintellect.Sterling.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b18e15f7365ddb8a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\SterlingDB\Wintellect.Sterling.Core\bin\Debug\Wintellect.Sterling.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Wintellect.Sterling.Server">
+      <HintPath>..\..\..\..\SterlingDB\Wintellect.Sterling.Server\bin\Debug\Wintellect.Sterling.Server.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Program.cs" />
@@ -55,6 +62,10 @@
     <ProjectReference Include="..\..\..\Shared\Domain\Blink.Domain.csproj">
       <Project>{515f724d-3c95-453f-93b9-6b1cf64fe9c2}</Project>
       <Name>Blink.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Shared\Engine\Blink.Engine\Blink.Engine.csproj">
+      <Project>{7dc66c70-e402-483d-a3e4-84ae54b3ea40}</Project>
+      <Name>Blink.Engine</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

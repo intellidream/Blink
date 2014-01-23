@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Wintellect.Sterling.Core;
+using Wintellect.Sterling.Core.Database;
+using Blink.Shared.Domain;
 
-namespace Blink.Engine
+namespace Blink.Shared.Engine
 {
     public static class Sterling
     {
@@ -19,14 +21,41 @@ namespace Blink.Engine
             Engine = null;
         }
 
-        public static void ActivateEngine(Func<ISterlingDatabaseInstance> registerDatabases)
+        public static void Activate(Func<ISterlingPlatformAdapter> provideAdapter, Func<ISterlingDriver> provideDriver)
         {
-            Engine = new SterlingEngine(Engine.PlatformAdapter);
+            var platformAdapter = provideAdapter();
+            if (platformAdapter == null) throw new ArgumentNullException("provideAdapter");
+
+            var sterlingDriver = provideDriver();
+            if (sterlingDriver == null) throw new ArgumentNullException("provideDriver");
+
+            Engine = new SterlingEngine(platformAdapter);
             Logger = new SterlingDefaultLogger(Engine.SterlingDatabase, SterlingLogLevel.Information);
-            Database = registerDatabases();//?!?-listof?!?
+            
             Engine.Activate();
+
+            Database = Engine.SterlingDatabase.RegisterDatabase<BlinkDatabase>("BlinkDatabase", sterlingDriver);
         }
 
+        public static void Deactivate()
+        {
+            Logger.Detach();
+            Engine.Dispose();
+            Database = null;
+            Engine = null;
+        }
+    }
 
+    public class BlinkDatabase : BaseDatabaseInstance
+    {
+        protected override List<ITableDefinition> RegisterTables()
+        {
+            return new List<ITableDefinition>
+            {
+                CreateTableDefinition<Domain.DataModel.Notes.BlinkNote, Guid>(i => i.Id),
+                CreateTableDefinition<Domain.DataModel.Notes.Content, Guid>(i => i.Id),
+                CreateTableDefinition<Domain.DataModel.Notes.Category, Guid>(i => i.Id)
+            };
+        }
     }
 }
