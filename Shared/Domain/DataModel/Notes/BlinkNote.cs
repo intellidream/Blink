@@ -10,8 +10,8 @@ namespace Blink.Shared.Domain.DataModel.Notes
         public override Guid Id { get; set; }
         public override String Title { get; set; }
         public override TimeStamp Time { get; set; }
-        public override Content Content { get; set; }
-        public override Category Category { get; set; }
+        public override Guid ContentId { get; set; }
+        public override Guid CategoryId { get; set; }
 
         bool IEquatable<BlinkNote>.Equals(BlinkNote other)
         {
@@ -19,13 +19,13 @@ namespace Blink.Shared.Domain.DataModel.Notes
                 ((Id.Equals(other.Id)) &&
                 (Title.Equals(other.Title)) &&
                 (Time.Equals(other.Time)) &&
-                (Content.Equals(other.Content)) &&
-                (Category.Equals(other.Category)));
+                (ContentId.Equals(other.ContentId)) &&
+                (CategoryId.Equals(other.CategoryId)));
         }
 
         new string ToString()
         {
-            return Content.ToString();
+            return Title.ToString();
         }
     }
 }

@@ -7,11 +7,11 @@ namespace Blink.Shared.Domain.DataModel.Notes
 {
     public struct TimeStamp : IEquatable<TimeStamp>
     {
-        private DateTime Created { get; set; }
-        private DateTime Modified { get; set; }
-        private DateTime Accessed { get; set; }
+        public DateTime Created { get; set; }
+        public DateTime Modified { get; set; }
+        public DateTime Accessed { get; set; }
 
-        internal static TimeStamp Default
+        public static TimeStamp Default
         {
             get
             {
@@ -24,7 +24,7 @@ namespace Blink.Shared.Domain.DataModel.Notes
             }
         }
 
-        internal static TimeStamp Now
+        public static TimeStamp Now
         {
             get
             {
@@ -37,12 +37,27 @@ namespace Blink.Shared.Domain.DataModel.Notes
             }
         }
 
-        internal TimeStamp(DateTime created, DateTime modified, DateTime accessed)
-            : this()
+        public static TimeStamp UtcNow
         {
-            Created = created;
-            Modified = modified;
-            Accessed = accessed;
+            get
+            {
+                return new TimeStamp
+                {
+                    Created = DateTime.UtcNow,
+                    Modified = DateTime.UtcNow,
+                    Accessed = DateTime.UtcNow
+                };
+            }
+        }
+
+        public TimeStamp ToLocalTime()
+        {
+            return new TimeStamp
+            {
+                Created = Created.ToLocalTime(),
+                Accessed = Accessed.ToLocalTime(),
+                Modified = Modified.ToLocalTime()
+            };
         }
 
         bool IEquatable<TimeStamp>.Equals(TimeStamp other)
@@ -53,9 +68,14 @@ namespace Blink.Shared.Domain.DataModel.Notes
                 (Accessed.Equals(other.Accessed)));
         }
 
-        new string ToString()
+        public override string ToString()
         {
             return String.Format("Created: {0} | Modified: {1} | Accessed: {2}", Created, Modified, Accessed);
         }
+
+        //new string ToString()
+        //{
+        //    return String.Format("Created: {0} | Modified: {1} | Accessed: {2}", Created, Modified, Accessed);
+        //}
     }
 }

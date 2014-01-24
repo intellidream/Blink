@@ -10,7 +10,7 @@ namespace Blink.Shared.Domain.DataModel.Notes
         Guid Id { get; set; }
         String Title { get; set; }
         TimeStamp Time { get; set; }
-        Content Content { get; set; }
-        Category Category { get; set; }
+        Guid ContentId { get; set; }
+        Guid CategoryId { get; set; }
     }
 }
