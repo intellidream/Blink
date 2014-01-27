@@ -110,7 +110,7 @@ namespace Blink.Shared.Engine.SkyDrive
 
                 foreach (var segment in segments)
                 {
-                    var contents = _client.GetContents(result);
+                    var contents = _client.GetContents(result == Folder.Root ? String.Empty : result);
 
                     var actual = contents.SingleOrDefault(f => f.Name.Equals(segment));
 

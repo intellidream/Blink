@@ -73,20 +73,22 @@ namespace Blink.Classic
         public const string ApiKey = "0000000048111E64";
         public const string ApiSecret = "er-ARwUcGUjG4kPbiUVktzAclNoOhZQz";
         public const string CallbackUrl = "https://login.live.com/oauth20_desktop.srf";
-        public const string AccessToken = "EwA4Aq1DBAAUGCCXc8wU%2fzFu9QnLdZXy%2bYnElFkAAd9bNgjwKxTYTzxFgY3hVzTOFtCvkolM%2feO5jxVNuBRZ1GTjgryq59OsUhKzQFTSjNvrMA4h5LPZCyryzPxYbglCuaMC2uKFNs733eRDbnAh%2fRiGviQboYJ1w1jXud8SPU1tZU58qOuslfARZMzDcyYhlxYCheBNJoj4tLUL3M1c%2bKTkSf7rIGBachmysf5cYEhs%2fvxLH%2f2RNRleOZHBzchDoXfaomcBDWgl3luL8VKmcpQ3XOXrOrUZ0IRAm%2bdI5y9T4AjNo5t%2fjmAOlYIoDc5etG%2fSCWzyKoc5nj9BC%2fQRx83VUMmnoejVZ7AJgJstbBa%2bmxEjEs8HQ8HX93UhbmwDZgAACN%2fgWfUKXOZaCAE%2byKiZzxQYdUq%2fHhjpGXHcHDO%2bohSH9NGCDPp%2bdOsDJR38TYSc9L2f71v36DDc2sFJ9x8lNzCkenISIDJga5%2fPJb63Wa2MtUXw5M6P5e%2fLX7m87SAbGT2npzH69MpYcf3CndxBn8bKMfGbiNPrbZ5D6Vu4YXCv4ooZXe8Ad208vzeTYW6YbDucpCPiHi8v%2bJ669%2bBfa%2fz5mdgxmqWt%2bzKCrwp%2bi1bR2FCygDBAoHbmlWlIrmNCul7%2bZK1Ytji1rAOYW18gTzoas%2fIGfNk0XbwT4Uk1dlFinUNo2EeRzz4ORVIGtHawWZfKWELiavU%2bE%2brorowDg4vWI2zu4Qq09TKyQ6pX77PHc3wAAA%3d%3d";
+        public const string AccessToken = "EwA4Aq1DBAAUGCCXc8wU%2fzFu9QnLdZXy%2bYnElFkAAaW%2fZONOx1lHwSrE1l0Ia4mqA3VLlafvxvz74cgP8E5QLGAVTYFuczmb9MbazHnJtQd1ePpUGVzYaqVrcTzxwpmQ8IbCKxSsFDFyCSbo%2fKs9sFzJ73t10mq6l2QOzRSTMjNA9l43aRSBo8sqoW7PmnkRXMxktn4QJIBisD0p9lHIGc4jv0k1t6x%2bK%2b4oXi4GBC656aRjUiexlN%2fCxgnx4hVPLLDM2OXxEbAWoAXOg6kbRu5uGiXfNRgyQdZD20kuPRak5U0KbdX0SZGMWFCQ2ogKqV8PXRc9f8KhMeWpBbW4EGM87X02zJ52l6Or4fP%2fh8xb6l8qRJZzFi7l6zSRc5oDZgAACJeCVu9HOslWCAGT8BH0I%2f3mC8ge6UoYSJPDSiJ6SiAmh%2fH%2fdMLldbonE5EYEKbG9GvGav3TjddTCu0ONS4bMy6Ie5S0XnZ3qH3MGC%2fkFbis4YPUolG3UXkdAWpVX9pxypWsDfQBikPchqwXNrSe0NHmI5mdt8YDkMekn40NGcxf0sWnXRg2VCIeszLLdfI0KaHQ2czhXiyflaqkYafZegNnJ5l7vfagXY5Z9w33xGoVM0cXULCY6QQBZJrSL1Zu9aOar0zVCyH2nYWK4Ddf5D86sI2FcnE1MBRgawlq2TNK1oKn0AWvHaXJgjV4y8CiI3jt6zbr6i8V5ldcmRGNtbmxrR4%2bGb%2bgTFQCxEFziqRPS0EAAA%3d%3d";
         public const string RefreshToken = "";
 
         private void button3_Click(object sender, EventArgs e)
         {
             var client = new SkyNet.Client.Client(ApiKey, ApiSecret, CallbackUrl, AccessToken, RefreshToken);
 
-            var skyHelper = new SkyDriveHelper(client);
+            var contents = client.GetContents(Folder.Root);
 
-            //var contents = client.GetContents(String.Empty);
+            //var skyHelper = new SkyDriveHelper(client);
 
-            //var actual = contents.SingleOrDefault(f => f.Name.Equals(""));
+            ////var contents = client.GetContents(String.Empty);
 
-            skyHelper.EnsureFolder(Folder.Root + "/test01/test02/test03/test04");
+            ////var actual = contents.SingleOrDefault(f => f.Name.Equals(""));
+
+            //skyHelper.EnsureFolder(Folder.Root + "/test01/test02/test03/test04");
 
 
 
