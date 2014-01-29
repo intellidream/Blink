@@ -43,9 +43,9 @@
     <Reference Include="Microsoft.Threading.Tasks.Extensions">
       <HintPath>..\..\..\packages\Microsoft.Bcl.Async.1.0.165\lib\net45\Microsoft.Threading.Tasks.Extensions.dll</HintPath>
     </Reference>
-    <Reference Include="RestSharp, Version=104.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="RestSharp, Version=104.4.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\SkyNet\SkyNet\bin\Debug\RestSharp.dll</HintPath>
+      <HintPath>..\..\..\..\RestSharp\RestSharp.Net4\bin\Debug\RestSharp.dll</HintPath>
     </Reference>
     <Reference Include="SkyNet, Version=1.3.1.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
