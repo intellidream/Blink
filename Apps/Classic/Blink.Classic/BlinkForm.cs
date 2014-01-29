@@ -88,6 +88,8 @@ namespace Blink.Classic
             {
                 if (!args.Url.Query.Contains("code")) return;
 
+                // REGEX with Format/Guid/Format here!!!
+
                 var codeArray = args.Url.Query.Split(new[] {"=", "&"}, StringSplitOptions.RemoveEmptyEntries);
                 var code = codeArray[1];
 
@@ -106,13 +108,13 @@ namespace Blink.Classic
 
             webBrowser1.Navigate(authRequestUrl);
 
-            
-            
 
 
 
 
+            // 4.0 vs. 4.5
 
+            // Synchronization Strategy & Sharing(viaAzureTables) & Users/Friends
 
 
 

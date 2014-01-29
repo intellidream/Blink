@@ -31,7 +31,7 @@ namespace Blink.Console
 
             var client = new SkyNet.Client.Client(ApiKey, ApiSecret, CallbackUrl, AccessToken, RefreshToken);
 
-            var contents = client.GetContents(Folder.Root).ToList();
+            var contents = client.GetContents("/me/skydrive").ToList();
             if (contents.Any(f => f.Name.Equals("Public")))
             {
                 System.Console.WriteLine("Got {0} values.", contents.Count);
