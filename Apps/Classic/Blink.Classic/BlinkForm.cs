@@ -112,7 +112,7 @@ namespace Blink.Classic
 
 
 
-            // 4.0 vs. 4.5
+            // 4.0 vs. 4.5 - debug SkyNet/RestSharp escaping issues
 
             // Synchronization Strategy & Sharing(viaAzureTables) & Users/Friends
 
