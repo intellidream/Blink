@@ -43,6 +43,17 @@ namespace Blink.Shared.Domain.NewThings
 
     class TableElement : ElementBase 
     {
+        //IElement[][] Data { get; set; }
+
+        //LIST(LIST=1'stIsColumnsList)
+
+        public TableElement() 
+        {
+            Data = new IElement[5][5];
+
+            Data.
+        }
+
         class TableColumn : List<IElement>
         {
 
