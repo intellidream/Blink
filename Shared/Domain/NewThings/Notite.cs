@@ -5,35 +5,15 @@ using System.Text;
 
 namespace Blink.Shared.Domain.NewThings
 {
-    class Test 
-    {
-        GridElement g = new GridElement();
-
-        Test() 
-        {
-            g.Add("", new ListElement());
-
-            var l = g[0].Value;
-
-            l.Add(new TextElement());
-
-            if (l[0].Type == ElementTypes.Concrete) { }
-
-            #region Question
-            //?? maybe lists or dictionaries should only contain Concrete types
-            #endregion
-        }
-    }
-
     #region Elements
 
-    enum ElementTypes 
+    public enum ElementTypes 
     {
         Concrete = 0,
         Container = 1
     }
 
-    interface IElement 
+    public interface IElement 
     {
         Guid Id { get; set; }
         Guid? Parent { get; set; }
@@ -45,18 +25,18 @@ namespace Blink.Shared.Domain.NewThings
 
     #region Concrete
 
-    enum ConcreteTypes 
+    public enum ConcreteTypes 
     {
         Text = 0,
         File = 1
     }
 
-    interface IConcrete : IElement
+    public interface IConcrete : IElement
     {
         new ConcreteTypes Type { get; }
     }
 
-    class TextElement : IConcrete
+    public class TextElement : IConcrete
     {
         public string Text { get; set; }
         //public bool IsLink { get; set; } - not important in backend/ui matter
@@ -80,7 +60,7 @@ namespace Blink.Shared.Domain.NewThings
         #endregion
     }
 
-    class FileElement : IConcrete
+    public class FileElement : IConcrete
     {
         #region Suggestions
         // if Path has value, object is linked externally
@@ -137,18 +117,18 @@ namespace Blink.Shared.Domain.NewThings
 
     #region Containers
 
-    enum ContainerTypes 
+    public enum ContainerTypes 
     {
         List = 0,
         Grid = 1
     }
 
-    interface IContainer : IElement
+    public interface IContainer : IElement
     {
         new ContainerTypes Type { get; }
     }
 
-    class ListElement : List<IElement>, IContainer 
+    public class ListElement : List<IElement>, IContainer 
     {
         #region IContainer Members
 
@@ -169,7 +149,7 @@ namespace Blink.Shared.Domain.NewThings
         #endregion
     }
 
-    class GridElement : Dictionary<string, ListElement>, IContainer 
+    public class GridElement : Dictionary<string, ListElement>, IContainer 
     {
         public KeyValuePair<string, ListElement> this[int index]
         {
@@ -207,13 +187,13 @@ namespace Blink.Shared.Domain.NewThings
 
     #region Grouping
 
-    interface IGroup : IElement
+    public interface IGroup : IElement
     {
         string Name { get; set; }
         IList<Guid> Children { get; set; }
     }
 
-    class Group : IGroup
+    public class Group : IGroup
     {
         #region IGroup Members
 
@@ -240,13 +220,13 @@ namespace Blink.Shared.Domain.NewThings
 
     #region Progressing
 
-    interface IProgress
+    public interface IProgress
     {
         Guid Id { get; set; }
         bool IsCompleted();
     }
 
-    class ProgressCollection : List<IProgress>, IProgress
+    public class ProgressCollection : List<IProgress>, IProgress
     {
         #region IProgress Members
 
@@ -260,7 +240,7 @@ namespace Blink.Shared.Domain.NewThings
         #endregion
     }
 
-    class InternalProgress : IProgress
+    public class InternalProgress : IProgress
     {
         public bool Completed { get; set; }
 
@@ -276,7 +256,7 @@ namespace Blink.Shared.Domain.NewThings
         #endregion
     }
 
-    class DateTimeProgress : IProgress
+    public class DateTimeProgress : IProgress
     {
         public DateTime Completion { get; set; }
         
@@ -291,7 +271,7 @@ namespace Blink.Shared.Domain.NewThings
 
         #endregion
     }
-    class LocationProgress : IProgress
+    public class LocationProgress : IProgress
     {
         //public Location Completion { get; set; }
         
@@ -311,7 +291,7 @@ namespace Blink.Shared.Domain.NewThings
 
     #region Scheduling
 
-    interface ISchedule 
+    public interface ISchedule 
     {
         Guid Id { get; set; }
         DateTime Value { get; set; } 

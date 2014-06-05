@@ -10,6 +10,8 @@ using Microsoft.Live;
 using SkyNet.Client;
 using SkyNet.Model;
 
+using Blink.Shared.Domain.NewThings;
+
 namespace Blink.Classic
 {
     public partial class BlinkForm : Form
@@ -21,6 +23,33 @@ namespace Blink.Classic
         public BlinkForm()
         {
             InitializeComponent();
+
+
+
+
+            GridElement g = new GridElement();
+
+            g.Add("Col1", new ListElement());
+
+            var l = g[0].Value;
+
+            l.Add(new TextElement());
+
+            if (l[0].Type == ElementTypes.Concrete)
+            {
+                if (((IConcrete)l[0]).Type == ConcreteTypes.Text)
+                {
+                    var t = l[0] as TextElement;
+
+                    t.Text = "3";
+                }
+            }
+
+            #region Question
+            //?? maybe lists or dictionaries should only contain Concrete types
+            #endregion
+
+
         }
 
         private async void button1_Click(object sender, EventArgs e)
