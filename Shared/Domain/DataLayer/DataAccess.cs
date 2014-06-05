@@ -4,6 +4,6 @@ namespace Blink.Shared.Domain.DataLayer
 {
     internal static class DataAccess<T>
     {
-        internal static IRepository<T> Repository;
+        //internal static IRepository<T> Repository;
     }
 }
