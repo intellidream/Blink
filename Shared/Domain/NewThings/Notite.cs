@@ -60,6 +60,8 @@ namespace Blink.Shared.Domain.NewThings
         #endregion
     }
 
+    //public class HtmlElement : IConcrete { }
+
     public class FileElement : IConcrete
     {
         #region Suggestions
@@ -130,6 +132,8 @@ namespace Blink.Shared.Domain.NewThings
 
     public class ListElement : List<IElement>, IContainer 
     {
+        public string Name { get; set; }
+
         #region IContainer Members
 
         public ContainerTypes Type { get { return ContainerTypes.List; } }
@@ -149,9 +153,11 @@ namespace Blink.Shared.Domain.NewThings
         #endregion
     }
 
-    public class GridElement : Dictionary<string, ListElement>, IContainer 
+    public class GridElement : Dictionary<string, List<IElement>>, IContainer 
     {
-        public KeyValuePair<string, ListElement> this[int index]
+        public string Name { get; set; }
+
+        public KeyValuePair<string, List<IElement>> this[int index]
         {
             get
             {
@@ -190,7 +196,7 @@ namespace Blink.Shared.Domain.NewThings
     public interface IGroup : IElement
     {
         string Name { get; set; }
-        IList<Guid> Children { get; set; }
+        IList<IElement> Children { get; set; }
     }
 
     public class Group : IGroup
@@ -199,7 +205,7 @@ namespace Blink.Shared.Domain.NewThings
 
         public string Name { get; set; }
 
-        public IList<Guid> Children { get; set; }
+        public IList<IElement> Children { get; set; }
 
         #endregion
 
