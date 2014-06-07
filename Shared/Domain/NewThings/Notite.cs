@@ -126,12 +126,23 @@ namespace Blink.Shared.Domain.NewThings
 
     #endregion
 
+    #region Valuable
+
+    public interface IValuable : IElement
+    {
+        string Name { get; set; }
+        List<IConcrete> Values { get; set; }
+    }
+
+    #endregion
+
     #region Container
 
     public enum ContainerTypes 
     {
         List = 0,
-        Grid = 1
+        Grid = 1,
+        Tree = 2
     }
 
     public interface IContainer : IElement
@@ -139,9 +150,28 @@ namespace Blink.Shared.Domain.NewThings
         new ContainerTypes Type { get; }
     }
 
-    public class ListElement : List<IElement>, IContainer 
+    public class ListElement : List<IConcrete>, IValuable, IContainer
     {
+        #region IValuable Members
+
         public string Name { get; set; }
+
+        public List<IConcrete> Values 
+        { 
+            get 
+            {
+                return this as List<IConcrete>;
+            }
+
+            set 
+            {
+                var list = this as List<IConcrete>;
+
+                list = value;
+            }
+        }
+
+        #endregion
 
         #region IContainer Members
 
@@ -164,10 +194,6 @@ namespace Blink.Shared.Domain.NewThings
 
     public class GridElement : List<ListElement>, IContainer
     {
-        #region Suggestions
-        // can be displayed, in UI, as a Grid or a Tree/FoldedTree
-        #endregion
-
         public string Name { get; set; }
 
         public ListElement this[string name]
@@ -202,9 +228,49 @@ namespace Blink.Shared.Domain.NewThings
         #endregion
     }
 
-    //TreeElement - list of NodeElement - contains a parent and a list of children of type NodeElement - model a tree
+    public class NodeElement : List<NodeElement>, IValuable
+    {
+        #region IValuable Members
 
-    //public class NodeElement :  //: IFolder
+        public string Name { get; set; }
+
+        public List<IConcrete> Values { get; set; }
+
+        #endregion
+
+        #region IElement Members
+
+        public Guid Id { get; set; }
+
+        public Guid? Parent { get; set; }
+
+        ElementTypes IElement.Type { get { return ElementTypes.Container; } }
+
+        public IProgress Progress { get; set; }
+
+        #endregion
+    }
+
+    public class TreeElement : List<NodeElement>, IContainer 
+    {
+        #region IContainer Members
+
+        public ContainerTypes Type { get { return ContainerTypes.Tree; } }
+
+        #endregion
+
+        #region IElement Members
+
+        public Guid Id { get; set; }
+
+        public Guid? Parent { get; set; }
+
+        ElementTypes IElement.Type { get { return ElementTypes.Container; } }
+
+        public IProgress Progress { get; set; }
+
+        #endregion
+    }
 
     #endregion
 

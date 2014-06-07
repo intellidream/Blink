@@ -33,33 +33,33 @@ namespace Blink.Classic
 
             var l = g[0];
 
-            l.Add(new ListElement());
+            //l.Add(new ListElement());
 
-            var l2 = l[0] as ListElement;
+            //var l2 = l[0] as ListElement;
 
-            l2.Add(new TextElement());
-            l2.Add(new FileElement());
+            //l2.Add(new TextElement());
+            //l2.Add(new FileElement());
 
-            if (l2[0].Type == ElementTypes.Concrete)
-            {
-                if (((IConcrete)l2[0]).Type == ConcreteTypes.Text)
-                {
-                    var t = l2[0] as TextElement;
+            //if (l2[0].Type == ElementTypes.Concrete)
+            //{
+            //    if (((IConcrete)l2[0]).Type == ConcreteTypes.Text)
+            //    {
+            //        var t = l2[0] as TextElement;
 
-                    t.Text = "3";
-                }
-            }
+            //        t.Text = "3";
+            //    }
+            //}
 
-            if (l2[1].Type == ElementTypes.Concrete)
-            {
-                if (((IConcrete)l2[0]).Type == ConcreteTypes.File)
-                {
-                    var f = l2[0] as FileElement;
+            //if (l2[1].Type == ElementTypes.Concrete)
+            //{
+            //    if (((IConcrete)l2[0]).Type == ConcreteTypes.File)
+            //    {
+            //        var f = l2[0] as FileElement;
 
-                    f.Type = FileElement.FileTypes.Image;
-                    f.Path = "\\";
-                }
-            }
+            //        f.Type = FileElement.FileTypes.Image;
+            //        f.Path = "\\";
+            //    }
+            //}
 
             #region Question
             //?? maybe lists or dictionaries should only contain Concrete types
