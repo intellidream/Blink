@@ -10,13 +10,14 @@ namespace Blink.Shared.Domain.NewThings
     public enum ElementTypes 
     {
         Concrete = 0,
-        Container = 1
+        Container = 1,
+        Groupable = 2
     }
 
     public interface IElement 
     {
         Guid Id { get; set; }
-        Guid? Parent { get; set; }
+        Guid? ParentId { get; set; }
         ElementTypes Type { get; }
         IProgress Progress { get; set; }
     }
@@ -31,7 +32,7 @@ namespace Blink.Shared.Domain.NewThings
         File = 1
     }
 
-    public interface IConcrete : IElement
+    public interface IConcrete : IElement, IGroupable
     {
         new ConcreteTypes Type { get; }
     }
@@ -58,11 +59,17 @@ namespace Blink.Shared.Domain.NewThings
 
         #endregion
 
+        #region IGroupable Members
+
+        public Guid GroupId { get; set; }
+
+        #endregion
+
         #region IElement Members
 
         public Guid Id { get; set; }
 
-        public Guid? Parent { get; set; }
+        public Guid? ParentId { get; set; }
 
         ElementTypes IElement.Type { get { return ElementTypes.Concrete; } }
 
@@ -111,11 +118,17 @@ namespace Blink.Shared.Domain.NewThings
 
         #endregion
 
+        #region IGroupable Members
+
+        public Guid GroupId { get; set; }
+
+        #endregion
+
         #region IElement Members
 
         public Guid Id { get; set; }
 
-        public Guid? Parent { get; set; }
+        public Guid? ParentId { get; set; }
 
         ElementTypes IElement.Type { get { return ElementTypes.Concrete; } }
 
@@ -145,7 +158,7 @@ namespace Blink.Shared.Domain.NewThings
         Tree = 2
     }
 
-    public interface IContainer : IElement
+    public interface IContainer : IElement, IGroupable
     {
         new ContainerTypes Type { get; }
     }
@@ -166,7 +179,6 @@ namespace Blink.Shared.Domain.NewThings
             set 
             {
                 var list = this as List<IConcrete>;
-
                 list = value;
             }
         }
@@ -179,11 +191,17 @@ namespace Blink.Shared.Domain.NewThings
 
         #endregion
 
+        #region IGroupable Members
+
+        public Guid GroupId { get; set; }
+
+        #endregion
+
         #region IElement Members
 
         public Guid Id { get; set; }
 
-        public Guid? Parent { get; set; }
+        public Guid? ParentId { get; set; }
 
         ElementTypes IElement.Type { get { return ElementTypes.Container; } }
 
@@ -215,11 +233,17 @@ namespace Blink.Shared.Domain.NewThings
 
         #endregion
 
+        #region IGroupable Members
+
+        public Guid GroupId { get; set; }
+
+        #endregion
+
         #region IElement Members
 
         public Guid Id { get; set; }
 
-        public Guid? Parent { get; set; }
+        public Guid? ParentId { get; set; }
 
         ElementTypes IElement.Type { get { return ElementTypes.Container; } }
 
@@ -242,7 +266,7 @@ namespace Blink.Shared.Domain.NewThings
 
         public Guid Id { get; set; }
 
-        public Guid? Parent { get; set; }
+        public Guid? ParentId { get; set; }
 
         ElementTypes IElement.Type { get { return ElementTypes.Container; } }
 
@@ -259,11 +283,17 @@ namespace Blink.Shared.Domain.NewThings
 
         #endregion
 
+        #region IGroupable Members
+
+        public Guid GroupId { get; set; }
+
+        #endregion
+
         #region IElement Members
 
         public Guid Id { get; set; }
 
-        public Guid? Parent { get; set; }
+        public Guid? ParentId { get; set; }
 
         ElementTypes IElement.Type { get { return ElementTypes.Container; } }
 
@@ -274,38 +304,54 @@ namespace Blink.Shared.Domain.NewThings
 
     #endregion
 
-    //#region Grouping
+    #region Grouping
 
-    //public interface IGroup : IElement
-    //{
-    //    string Name { get; set; }
-    //    IList<IElement> Children { get; set; }
-    //}
+    public interface IGroupable : IElement
+    {
+        Guid GroupId { get; set; }
+    }
 
-    //public class Group : IGroup
-    //{
-    //    #region IGroup Members
+    public interface IGroupping : IElement 
+    {
+        string Name { get; set; }
+        List<IGroupable> Children { get; set; }
+    }
 
-    //    public string Name { get; set; }
+    public class Group : List<IGroupable>, IGroupping
+    {
+        #region IGroupping Members
 
-    //    public IList<IElement> Children { get; set; }
+        public string Name { get; set; }
 
-    //    #endregion
+        public List<IGroupable> Children 
+        {
+            get 
+            {
+                return this as List<IGroupable>;
+            }
+            set 
+            {
+                var group = this as List<IGroupable>;
+                group = value;
+            }
+        }
 
-    //    #region IElement Members
+        #endregion
 
-    //    public Guid Id { get; set; }
+        #region IElement Members
 
-    //    public Guid? Parent { get; set; }
+        public Guid Id { get; set; }
 
-    //    public ElementTypes Type { get; set; }
+        public Guid? ParentId { get; set; }
 
-    //    public IProgress Progress { get; set; }
+        ElementTypes IElement.Type { get { return ElementTypes.Groupable; } }
 
-    //    #endregion
-    //}
+        public IProgress Progress { get; set; }
 
-    //#endregion
+        #endregion
+    }
+
+    #endregion
 
     #region Progressing
 
@@ -416,7 +462,7 @@ namespace Blink.Shared.Domain.NewThings
             }
         }
 
-        public Guid? Parent
+        public Guid? ParentId
         {
             get
             {
