@@ -38,8 +38,19 @@ namespace Blink.Shared.Domain.NewThings
 
     public class TextElement : IConcrete
     {
+        #region Suggestions
+        // in UI, allow user to input or pick title of a Note from one of IElement(IConcrete/IContainer) names/titles
+        // in UI, add possibility to open Links internally/externally, and/or mobilize via a library (like Nreadablity) or service (like rdd.me)
+        //
+        // in UI, allow for copying the content of any IElement/INote...
+        // in UI, add printing capability to any IElement/IGroup/INote... for All notes - collect into a document, like PDF/XPS/RTF and allow printing it
+        // 
+        // auto-detect links / auto-detect html - have switch to display a TextElement as html or not
+        //
+        // all UI Elemnts should have persisted properties... to remember user choices like show html/or not, etc - so have something like UITextElement : TextElement
+        #endregion
+
         public string Text { get; set; }
-        //public bool IsLink { get; set; } - not important in backend/ui matter
                 
         #region IConcrete Members
 
@@ -59,8 +70,6 @@ namespace Blink.Shared.Domain.NewThings
 
         #endregion
     }
-
-    //public class HtmlElement : IConcrete { }
 
     public class FileElement : IConcrete
     {
@@ -117,7 +126,7 @@ namespace Blink.Shared.Domain.NewThings
 
     #endregion
 
-    #region Containers
+    #region Container
 
     public enum ContainerTypes 
     {
@@ -153,19 +162,23 @@ namespace Blink.Shared.Domain.NewThings
         #endregion
     }
 
-    public class GridElement : Dictionary<string, List<IElement>>, IContainer 
+    public class GridElement : List<ListElement>, IContainer
     {
+        #region Suggestions
+        // can be displayed, in UI, as a Grid or a Tree/FoldedTree
+        #endregion
+
         public string Name { get; set; }
 
-        public KeyValuePair<string, List<IElement>> this[int index]
+        public ListElement this[string name]
         {
             get
             {
-                return this.ElementAt(index);
+                return this.First(l => l.Name == name);
             }
             set
             {
-                var element = this.ElementAt(index);
+                var element = this.First(l => l.Name == name);
                 element = value;
             }
         }
@@ -189,40 +202,44 @@ namespace Blink.Shared.Domain.NewThings
         #endregion
     }
 
-    #endregion
+    //TreeElement - list of NodeElement - contains a parent and a list of children of type NodeElement - model a tree
 
-    #region Grouping
-
-    public interface IGroup : IElement
-    {
-        string Name { get; set; }
-        IList<IElement> Children { get; set; }
-    }
-
-    public class Group : IGroup
-    {
-        #region IGroup Members
-
-        public string Name { get; set; }
-
-        public IList<IElement> Children { get; set; }
-
-        #endregion
-
-        #region IElement Members
-
-        public Guid Id { get; set; }
-
-        public Guid? Parent { get; set; }
-
-        public ElementTypes Type { get; set; }
-
-        public IProgress Progress { get; set; }
-
-        #endregion
-    }
+    //public class NodeElement :  //: IFolder
 
     #endregion
+
+    //#region Grouping
+
+    //public interface IGroup : IElement
+    //{
+    //    string Name { get; set; }
+    //    IList<IElement> Children { get; set; }
+    //}
+
+    //public class Group : IGroup
+    //{
+    //    #region IGroup Members
+
+    //    public string Name { get; set; }
+
+    //    public IList<IElement> Children { get; set; }
+
+    //    #endregion
+
+    //    #region IElement Members
+
+    //    public Guid Id { get; set; }
+
+    //    public Guid? Parent { get; set; }
+
+    //    public ElementTypes Type { get; set; }
+
+    //    public IProgress Progress { get; set; }
+
+    //    #endregion
+    //}
+
+    //#endregion
 
     #region Progressing
 
@@ -301,6 +318,68 @@ namespace Blink.Shared.Domain.NewThings
     {
         Guid Id { get; set; }
         DateTime Value { get; set; } 
+    }
+
+    #endregion
+
+    // ISection - separates IElements into Sections - named or not
+
+    // ICategory - contains a List of Notes
+    // IGroup - groups certain Notes in a Category - progressable/schedulable
+    // IDomain - separates ICategories - named or not
+
+    #region Notes
+
+    //public interface INote : IElement
+    //{ }
+
+    public class Note : Dictionary<Guid, List<IElement>>, IElement
+    {
+
+        #region IElement Members
+
+        public Guid Id
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public Guid? Parent
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public ElementTypes Type
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public IProgress Progress
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        #endregion
     }
 
     #endregion

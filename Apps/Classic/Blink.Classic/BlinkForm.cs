@@ -29,19 +29,35 @@ namespace Blink.Classic
 
             GridElement g = new GridElement();
 
-            g.Add("Col1", new ListElement());
+            g.Add(new ListElement());
 
-            var l = g[0].Value;
+            var l = g[0];
 
-            l.Add(new TextElement());
+            l.Add(new ListElement());
 
-            if (l[0].Type == ElementTypes.Concrete)
+            var l2 = l[0] as ListElement;
+
+            l2.Add(new TextElement());
+            l2.Add(new FileElement());
+
+            if (l2[0].Type == ElementTypes.Concrete)
             {
-                if (((IConcrete)l[0]).Type == ConcreteTypes.Text)
+                if (((IConcrete)l2[0]).Type == ConcreteTypes.Text)
                 {
-                    var t = l[0] as TextElement;
+                    var t = l2[0] as TextElement;
 
                     t.Text = "3";
+                }
+            }
+
+            if (l2[1].Type == ElementTypes.Concrete)
+            {
+                if (((IConcrete)l2[0]).Type == ConcreteTypes.File)
+                {
+                    var f = l2[0] as FileElement;
+
+                    f.Type = FileElement.FileTypes.Image;
+                    f.Path = "\\";
                 }
             }
 
