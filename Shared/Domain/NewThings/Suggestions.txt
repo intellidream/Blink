@@ -1,0 +1,36 @@
+﻿Suggestions
+
+	TextElement
+		// in UI, allow user to input or pick title of a Note from one of IElement(IConcrete/IContainer) names/titles
+		// in UI, add possibility to open Links internally/externally, and/or mobilize via a library (like Nreadablity) or service (like rdd.me)
+		//
+		// in UI, allow for copying the content of any IElement/INote...
+		// in UI, add printing capability to any IElement/IGroup/INote... for All notes - collect into a document, like PDF/XPS/RTF and allow printing it
+		// 
+		// auto-detect links / auto-detect html - have switch to display a TextElement as html or not
+		//
+		// all UI Elemnts should have persisted properties... to remember user choices like show html/or not, etc - so have something like UITextElement : TextElement
+
+	FileElement
+        // if Path has value, object is linked externally
+        // if Data has value, object is stored internally
+
+        // if the user chooses to show a stored or non-stored object as an image, audio or video, 
+        // just try to load from Data or Path in the appropriate Type-determined internal viewer
+        //
+        // if internal loading fails, just display an "Error" loading the object and a "Refresh" link
+        //
+        // if external loading fails (maybe object is not there temporarily), just display an error in viewer and offer the possibility
+        // to display the object as link (see below), and the possibility to refresh the viewer later and display correctly then
+        //
+        // if actual viewer loading fails, just display an "Error" loading the object and a "Refresh" link
+
+        // if the user chooses to show a stored object as link, just show "Name" underlined - non-clickable to see in external viewer - and the possibility to still show the internal viewer (a "Show" link)
+        // if the user chooses to show a non-stored object as link, just show "Path" underlined - clickable to see in external viewer - and the possibility to still show the internal viewer (a "Show" link)
+
+	OtherThings
+		// ISection - separates IElements into Sections - named or not
+		//
+		// ICategory - contains a List of Notes
+		// IGroup - groups certain Notes in a Category - progressable/schedulable
+	    // IDomain - separates ICategories - named or not
