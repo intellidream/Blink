@@ -278,6 +278,26 @@ namespace Blink.Shared.Domain.NewThings
 
     #endregion
 
+    #region Locating
+
+    public interface ILocation
+    {
+        double Latitude { get; set; }
+        double Longitude { get; set; }
+    }
+
+    public class Location : ILocation
+    {
+        #region ILocation Members
+
+        public double Latitude { get; set; }
+        public double Longitude { get; set; }
+
+        #endregion
+    }
+
+    #endregion
+
     #region Progressing
 
     public interface IProgress
@@ -333,7 +353,8 @@ namespace Blink.Shared.Domain.NewThings
     }
     public class LocationProgress : IProgress
     {
-        //public Location Completion { get; set; }
+        public Location Current { get; set; }
+        public Location Destination { get; set; }
         
         #region IProgress Members
 
@@ -341,7 +362,7 @@ namespace Blink.Shared.Domain.NewThings
 
         public bool IsCompleted()
         {
-            throw new NotImplementedException();
+            return Current.Equals(Destination);
         }
 
         #endregion
