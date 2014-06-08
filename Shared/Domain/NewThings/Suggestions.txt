@@ -34,3 +34,5 @@
 		// ICategory - contains a List of Notes
 		// IGroup - groups certain Notes in a Category - progressable/schedulable
 	    // IDomain - separates ICategories - named or not
+		//
+		// Implement Category and Note Repositories

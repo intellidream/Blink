@@ -263,7 +263,61 @@ namespace Blink.Shared.Domain.NewThings
         Guid NoteId { get; set; }
     }
 
-    public class NoteElement : List<INotable>, IElement
+    public class NoteElement : List<INotable>, IFoldable
+    {
+        public string Name { get; set; }
+
+        #region IElement Members
+
+        public Guid Id { get; set; }
+
+        public IProgress Progress { get; set; }
+
+        #endregion
+
+        #region IFoldable Members
+
+        public Guid FolderId { get; set; }
+
+        #endregion
+    }
+
+    #endregion
+
+    #region Pageables
+
+    public class PageElement : List<NoteElement>, IFoldable 
+    {
+        #region IElement Members
+
+        public Guid Id { get; set; }
+
+        public IProgress Progress { get; set; }
+
+        #endregion
+
+        #region IFoldable Members
+
+        public Guid FolderId { get; set; }
+
+        #endregion
+    }
+
+    #endregion
+
+    #region Foldables
+
+    public interface IFoldable : IElement
+    {
+        Guid FolderId { get; set; }
+    }
+
+    public interface IFolder //?? IFoldable??
+    {
+
+    }
+
+    public class FolderElement : List<FolderElement> //List<IFolder>
     {
         public string Name { get; set; }
 
