@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="Blink.Shared.Domain.NewThings.TextElement" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="11.5" Y="2.5" Width="1.5" />
+    <Position X="13.25" Y="2.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAACAAAEAAAAAAAAAAAAAAAAACAAAAAAAQAACACAAAA=</HashCode>
       <FileName>NewThings\Notite.cs</FileName>
@@ -9,7 +9,7 @@
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="Blink.Shared.Domain.NewThings.FileElement" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="11.5" Y="0.5" Width="1.5" />
+    <Position X="13.25" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAACAAAEAAAAAAIAAAAAAAQAACAAABAAAQAAAICAAAA=</HashCode>
       <FileName>NewThings\Notite.cs</FileName>
@@ -17,7 +17,7 @@
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="Blink.Shared.Domain.NewThings.ListElement" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="11.5" Y="1.5" Width="1.5" />
+    <Position X="13.25" Y="1.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAACAAAEAAAAAAAAAAAAAAQAACAAAAAAAQAAAACAAAA=</HashCode>
       <FileName>NewThings\Notite.cs</FileName>
@@ -25,7 +25,7 @@
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="Blink.Shared.Domain.NewThings.GridElement" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="13.25" Y="0.5" Width="1.5" />
+    <Position X="15" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAACAAAEAAAAAAAACAAAAAQAACAAAAAAAQAAAACAAAA=</HashCode>
       <FileName>NewThings\Notite.cs</FileName>
@@ -33,15 +33,15 @@
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="Blink.Shared.Domain.NewThings.TreeElement" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="13.25" Y="2.5" Width="1.5" />
+    <Position X="9.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAACAAAEAAAAAAAAAAAAAAQAACAAAAAAAQAgAACAAAA=</HashCode>
+      <HashCode>AAAAAAAEAAAAAAAAAAAAAAAAACAAAAAAAQAAAAAAAAA=</HashCode>
       <FileName>NewThings\Notite.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="Blink.Shared.Domain.NewThings.GroupElement" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="15" Y="0.5" Width="1.5" />
+    <Position X="16.75" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAACAAAAAAAAAAAAAAAAAAQAACAAAAAAAAAAAACAAAA=</HashCode>
       <FileName>NewThings\Notite.cs</FileName>
@@ -49,7 +49,7 @@
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="Blink.Shared.Domain.NewThings.NoteElement" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="15" Y="1.5" Width="1.5" />
+    <Position X="16.75" Y="1.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAACAAAAAAAAAAAAAAAAAAQAAAAAAAAIAAAAAACAAAA=</HashCode>
       <FileName>NewThings\Notite.cs</FileName>
@@ -57,7 +57,7 @@
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="Blink.Shared.Domain.NewThings.ProgressCollection" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="9.75" Y="2.5" Width="1.5" />
+    <Position X="11.5" Y="2.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAACAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAA=</HashCode>
       <FileName>NewThings\Notite.cs</FileName>
@@ -65,7 +65,7 @@
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="Blink.Shared.Domain.NewThings.InternalProgress" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="9.75" Y="1.5" Width="1.5" />
+    <Position X="11.5" Y="1.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAACAAAAAAAAAAIAAAAAAAAAAAAAABAAAAAAAAAAAAA=</HashCode>
       <FileName>NewThings\Notite.cs</FileName>
@@ -73,7 +73,7 @@
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="Blink.Shared.Domain.NewThings.DateTimeProgress" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="9.75" Y="0.5" Width="1.5" />
+    <Position X="11.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAACAAAAAAAAAAAAAAAAAAACAAAAABAAAAAAAAAAAAA=</HashCode>
       <FileName>NewThings\Notite.cs</FileName>
@@ -81,7 +81,7 @@
     <Lollipop Position="0.195" Collapsed="true" />
   </Class>
   <Class Name="Blink.Shared.Domain.NewThings.LocationProgress" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="13.25" Y="1.5" Width="1.5" />
+    <Position X="15" Y="1.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAACAAAAAAAAAAAAAACAAAAAAAAAABAEAAAAAAAAAAA=</HashCode>
       <FileName>NewThings\Notite.cs</FileName>
@@ -96,13 +96,6 @@
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="Blink.Shared.Domain.NewThings.FolderElement" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="4.75" Y="0.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAACAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAACAAAA=</HashCode>
-      <FileName>NewThings\Notite.cs</FileName>
-    </TypeIdentifier>
-  </Class>
   <Class Name="Blink.Shared.Domain.NewThings.Location" Collapsed="true" BaseTypeListCollapsed="true">
     <Position X="3" Y="1.5" Width="1.5" />
     <TypeIdentifier>
@@ -110,6 +103,30 @@
       <FileName>NewThings\Notite.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Blink.Shared.Domain.NewThings.FolderElement" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="5.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>NewThings\Notite.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Blink.Shared.Domain.NewThings.TweetElement" Collapsed="true">
+    <Position X="1.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAEAgAAAAAAAAACAAAAACAAAAAAAQAAAACAAAA=</HashCode>
+      <FileName>NewThings\Notite.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Blink.Shared.Domain.NewThings.Valuable&lt;T, U&gt;" Collapsed="true">
+    <Position X="7.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAgAACAAAA=</HashCode>
+      <FileName>NewThings\Notite.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
   </Class>
   <Interface Name="Blink.Shared.Domain.NewThings.IElement" Collapsed="true">
     <Position X="4" Y="5.25" Width="1.5" />
@@ -147,42 +164,56 @@
     </TypeIdentifier>
   </Interface>
   <Interface Name="Blink.Shared.Domain.NewThings.IProgress" Collapsed="true">
-    <Position X="9.75" Y="3.75" Width="1.5" />
+    <Position X="11.5" Y="3.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAACAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAA=</HashCode>
       <FileName>NewThings\Notite.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="Blink.Shared.Domain.NewThings.ISchedule" Collapsed="true">
-    <Position X="11.5" Y="3.75" Width="1.5" />
+    <Position X="13.25" Y="3.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
       <FileName>NewThings\Notite.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="Blink.Shared.Domain.NewThings.ILocation" Collapsed="true">
-    <Position X="13.25" Y="3.75" Width="1.5" />
+    <Position X="15" Y="3.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAEAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>NewThings\Notite.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="Blink.Shared.Domain.NewThings.IFoldable" Collapsed="true">
-    <Position X="0.5" Y="0.5" Width="1.5" />
+    <Position X="4" Y="6.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAA=</HashCode>
       <FileName>NewThings\Notite.cs</FileName>
     </TypeIdentifier>
   </Interface>
-  <Enum Name="Blink.Shared.Domain.NewThings.ConcreteTypes" Collapsed="true">
-    <Position X="9.75" Y="4.75" Width="1.5" />
+  <Interface Name="Blink.Shared.Domain.NewThings.IPageable" Collapsed="true">
+    <Position X="4" Y="7.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAACAAAAAA=</HashCode>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>NewThings\Notite.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Blink.Shared.Domain.NewThings.IValuable&lt;U&gt;" Collapsed="true">
+    <Position X="1.75" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>NewThings\Notite.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Enum Name="Blink.Shared.Domain.NewThings.ConcreteTypes" Collapsed="true">
+    <Position X="11.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAEAAQAAAAACAAAAAA=</HashCode>
       <FileName>NewThings\Notite.cs</FileName>
     </TypeIdentifier>
   </Enum>
   <Enum Name="Blink.Shared.Domain.NewThings.ContainerTypes" Collapsed="true">
-    <Position X="11.5" Y="4.75" Width="1.5" />
+    <Position X="13.25" Y="4.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAgAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAI=</HashCode>
       <FileName>NewThings\Notite.cs</FileName>

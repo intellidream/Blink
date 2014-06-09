@@ -24,6 +24,18 @@ namespace Blink.Classic
         {
             InitializeComponent();
 
+
+            var f = new FolderElement();
+
+
+            f.Add(new FolderElement());
+
+            f.Values.Add(new NoteElement());
+            f[0].Values.Add(new PageElement());
+            var p = f[0].Values[0] as PageElement;
+            p.Add(new NoteElement());
+
+
             var n = new NoteElement();
 
             GroupElement g = new GroupElement();

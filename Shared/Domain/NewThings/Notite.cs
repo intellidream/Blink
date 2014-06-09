@@ -232,12 +232,8 @@ namespace Blink.Shared.Domain.NewThings
         #endregion
     }
 
-    public class TreeElement : List<TreeElement>, IContainer 
+    public class TreeElement : Valuable<TreeElement, IConcrete>, IContainer 
     {
-        public string Name { get; set; }
-
-        public List<IConcrete> Values { get; set; }
-
         #region IContainer Members
 
         public ContainerTypes Type { get { return ContainerTypes.Tree; } }
@@ -250,17 +246,44 @@ namespace Blink.Shared.Domain.NewThings
 
         #endregion
 
-        #region IElement Members
-
-        public Guid Id { get; set; }
-
-        public IProgress Progress { get; set; }
-
-        #endregion
-
         #region INotable Members
 
         public Guid NoteId { get; set; }
+
+        #endregion
+    }
+
+    #endregion
+
+    #region Valuables
+
+    public interface IValuable<U> : IElement where U : IElement
+    {
+        string Name { get; set; }
+        IList<U> Values { get; set; }
+    }
+
+    public class Valuable<T, U> : List<T>, IValuable<U> 
+                            where T : IElement where U : IElement
+    {
+        public Valuable() 
+        {
+            Values = new List<U>();
+        }
+
+        #region IElement Members
+
+        public virtual Guid Id { get; set; }
+
+        public virtual IProgress Progress { get; set; }
+
+        #endregion
+
+        #region IValuable Members
+
+        public virtual string Name { get; set; }
+
+        public virtual IList<U> Values { get; set; }
 
         #endregion
     }
@@ -362,20 +385,11 @@ namespace Blink.Shared.Domain.NewThings
         Guid FolderId { get; set; }
     }
 
-    public interface IFolder //?? IFoldable??
+    public class FolderElement : Valuable<FolderElement, IFoldable>, IFoldable
     {
+        #region IFoldable Members
 
-    }
-
-    public class FolderElement : List<FolderElement> //List<IFolder>
-    {
-        public string Name { get; set; }
-
-        #region IElement Members
-
-        public Guid Id { get; set; }
-
-        public IProgress Progress { get; set; }
+        public Guid FolderId { get; set; }
 
         #endregion
     }
