@@ -20,7 +20,8 @@ namespace Blink.Shared.Domain.NewThings
     public enum ConcreteTypes 
     {
         Text = 0,
-        File = 1
+        Tweet = 1,
+        File = 2
     }
 
     public interface IConcrete : IGroupable
@@ -48,7 +49,45 @@ namespace Blink.Shared.Domain.NewThings
 
         #region IGroupable Members
 
-        public Guid GroupId { get; set; }
+        public Guid? GroupId { get; set; }
+
+        #endregion
+
+        #region INotable Members
+
+        public Guid NoteId { get; set; }
+
+        #endregion
+    }
+
+    public class TweetElement : IConcrete 
+    {
+        public string Source { get; set; } //name, twitterid and icon
+        //public TweetContent Content { get; set; } //text and image
+        public DateTime Timestamp { get; set; }
+
+        //public class TweetContent : List<IConcrete>
+        //{
+
+        //}
+
+        #region IElement Members
+
+        public Guid Id { get; set; }
+
+        public IProgress Progress { get; set; }
+
+        #endregion
+
+        #region IConcrete Members
+
+        public ConcreteTypes Type { get { return ConcreteTypes.Tweet; } }
+
+        #endregion
+
+        #region IGroupable Members
+
+        public Guid? GroupId { get; set; }
 
         #endregion
 
@@ -91,7 +130,7 @@ namespace Blink.Shared.Domain.NewThings
 
         #region IGroupable Members
 
-        public Guid GroupId { get; set; }
+        public Guid? GroupId { get; set; }
 
         #endregion
 
@@ -130,7 +169,7 @@ namespace Blink.Shared.Domain.NewThings
 
         #region IGroupable Members
 
-        public Guid GroupId { get; set; }
+        public Guid? GroupId { get; set; }
 
         #endregion
 
@@ -174,7 +213,7 @@ namespace Blink.Shared.Domain.NewThings
 
         #region IGroupable Members
 
-        public Guid GroupId { get; set; }
+        public Guid? GroupId { get; set; }
 
         #endregion
 
@@ -207,7 +246,7 @@ namespace Blink.Shared.Domain.NewThings
 
         #region IGroupable Members
 
-        public Guid GroupId { get; set; }
+        public Guid? GroupId { get; set; }
 
         #endregion
 
@@ -232,7 +271,7 @@ namespace Blink.Shared.Domain.NewThings
 
     public interface IGroupable : INotable
     {
-        Guid GroupId { get; set; }
+        Guid? GroupId { get; set; }
     }
 
     public class GroupElement : List<IGroupable>, IElement, INotable
@@ -263,7 +302,7 @@ namespace Blink.Shared.Domain.NewThings
         Guid NoteId { get; set; }
     }
 
-    public class NoteElement : List<INotable>, IFoldable
+    public class NoteElement : List<INotable>, IPageable
     {
         public string Name { get; set; }
 
@@ -272,6 +311,12 @@ namespace Blink.Shared.Domain.NewThings
         public Guid Id { get; set; }
 
         public IProgress Progress { get; set; }
+
+        #endregion
+
+        #region IPageable Members
+
+        public Guid? PageId { get; set; }
 
         #endregion
 
@@ -286,7 +331,12 @@ namespace Blink.Shared.Domain.NewThings
 
     #region Pageables
 
-    public class PageElement : List<NoteElement>, IFoldable 
+    public interface IPageable : IFoldable
+    {
+        Guid? PageId { get; set; }
+    }
+
+    public class PageElement : List<IPageable>, IFoldable 
     {
         #region IElement Members
 
