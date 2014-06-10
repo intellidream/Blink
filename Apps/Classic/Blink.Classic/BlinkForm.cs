@@ -25,39 +25,110 @@ namespace Blink.Classic
             InitializeComponent();
 
 
-            var f = new FolderElement();
+
+            var folderElement = new FolderElement(Guid.NewGuid());
+            folderElement.Name = "My New Category";
+            folderElement.ParentId = Guid.Empty;
+
+            var subFolderElement = new FolderElement(Guid.NewGuid());
+            subFolderElement.Name = "My New SubCategory";
+            subFolderElement.ParentId = Guid.Empty;
+
+            var pageElement = new PageElement();
+            pageElement.Id = Guid.NewGuid();
+
+            var noteElement = new NoteElement();
+            noteElement.Id = Guid.NewGuid();
+            noteElement.Name = "My New Note";
+
+            var noteElementTwo = new NoteElement();
+            noteElementTwo.Id = Guid.NewGuid();
+            noteElementTwo.Name = "My New Note Two";
+
+            var groupElement = new GroupElement();
+            groupElement.Name = "My New Group";
+            groupElement.Id = Guid.NewGuid();
+
+            var locationProgress = new LocationProgress();
+            locationProgress.Id = Guid.NewGuid();
+            var currentLocation = new Shared.Domain.NewThings.Location();
+            currentLocation.Latitude = 10.00;
+            currentLocation.Longitude = 10.01;
+            var destinationLocation = new Shared.Domain.NewThings.Location();
+            destinationLocation.Latitude = 20.02;
+            destinationLocation.Longitude = 20.03;
+            locationProgress.Current = currentLocation;
+            locationProgress.Destination = destinationLocation;
+            var textElement = new TextElement();
+            textElement.Id = Guid.NewGuid();
+            textElement.Progress = locationProgress;
+
+            var dateTimeProgress = new DateTimeProgress();
+            dateTimeProgress.Id = Guid.NewGuid();
+            dateTimeProgress.Completion = DateTime.UtcNow;
+            var fileElement = new FileElement();
+            fileElement.Id = Guid.NewGuid();
+            fileElement.Data = null;
+            fileElement.Path = "C:\\Text.txt";
+            fileElement.Type = FileElement.FileTypes.Other;
+            fileElement.Progress = dateTimeProgress;
+
+            var dateTimeProgressTwo = new DateTimeProgress();
+            dateTimeProgressTwo.Id = Guid.NewGuid();
+            dateTimeProgressTwo.Completion = DateTime.UtcNow;
+            var textElementTwo = new TextElement();
+            textElementTwo.Id = Guid.NewGuid();
+            textElementTwo.Progress = dateTimeProgressTwo;
+
+            groupElement.Add(fileElement);
+
+            noteElement.Add(textElement);
+            noteElement.Add(groupElement);
+
+            pageElement.Add(noteElement);
+
+            noteElementTwo.Add(textElementTwo);
+            
+            subFolderElement.Values.Add(pageElement);
+            subFolderElement.Values.Add(noteElementTwo);
+            
+            folderElement.Add(subFolderElement);
 
 
-            f.Add(new FolderElement());
-
-            f.Values.Add(new NoteElement());
-            f[0].Values.Add(new PageElement());
-            var p = f[0].Values[0] as PageElement;
-            p.Add(new NoteElement());
+            //var f = new FolderElement();
 
 
-            var n = new NoteElement();
+            //f.Add(new FolderElement());
 
-            GroupElement g = new GroupElement();
+            //f.Values.Add(new NoteElement());
+            //f[0].Values.Add(new PageElement());
+            //var p = f[0].Values[0] as PageElement;
+            //p.Add(new NoteElement());
+
+
+            //var n = new NoteElement();
+
+            //GroupElement g = new GroupElement();
 
             
 
-            var t = new GridElement();
-            var l1 = new ListElement();
-            l1.Add(new FileElement());
-            t.Add(l1);
+            //var t = new GridElement();
+            //var l1 = new ListElement();
+            //l1.Add(new FileElement());
+            //t.Add(l1);
 
-            g.Add(t);
+            //g.Add(t);
 
-            n.Add(g);
-            n.Add(t);
+            //n.Add(g);
+            //n.Add(t);
             
-            n.Add(new TextElement());
+            //n.Add(new TextElement());
 
 
         }
 
-        private async void button1_Click(object sender, EventArgs e)
+        //private async void button1_Click(object sender, EventArgs e)
+        private void button1_Click(object sender, EventArgs e)
         {
             _noteId = Guid.NewGuid();
             _categoryId = Guid.NewGuid();
@@ -95,7 +166,8 @@ namespace Blink.Classic
             //MessageBox.Show(this, @"New Category/Content/Note saved at: " + newNote.Time, @"Saved", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
-        private async void button2_Click(object sender, EventArgs e)
+        //private async void button2_Click(object sender, EventArgs e)
+        private void button2_Click(object sender, EventArgs e)
         {
             //var newNote = await Sterling.Database.LoadAsync<BlinkNote>(_noteId);
             //var newCategory = await Sterling.Database.LoadAsync<Category>(newNote.CategoryId);

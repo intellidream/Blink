@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 
@@ -10,7 +12,84 @@ namespace Blink.Shared.Domain.NewThings
     public interface IElement 
     {
         Guid Id { get; set; }
-        IProgress Progress { get; set; }
+        Guid ParentId { get; set; }
+        IProgress Progress { get; }
+    }
+
+    #endregion
+
+    #region Valuables
+
+    public interface IValuable<T> : IElement where T : IElement
+    {
+        string Name { get; set; }
+        Valuable<T> Values { get; set; }
+    }
+
+    public class Valuable<T> : Collection<T>, IElement where T : IElement
+    {
+        public Valuable()
+        {
+            Progress = new ProgressCollection();
+        }
+
+        #region IElement Members
+
+        public virtual Guid Id { get; set; }
+        public virtual Guid ParentId { get; set; }
+        public virtual IProgress Progress { get; private set; }
+
+        #endregion
+
+        #region Collection Overrides
+
+        protected override void SetItem(int index, T item)
+        {
+            item.ParentId = this.Id;
+            base.SetItem(index, item);
+            ((ProgressCollection)Progress)[index] = item.Progress;
+        }
+
+        protected override void InsertItem(int index, T item)
+        {
+            item.ParentId = this.Id;
+            base.InsertItem(index, item);
+            ((ProgressCollection)Progress).Insert(index, item.Progress);
+        }
+
+        protected override void RemoveItem(int index)
+        {
+            base.RemoveItem(index);
+            ((ProgressCollection)Progress).RemoveAt(index);
+        }
+
+        protected override void ClearItems()
+        {
+            base.ClearItems();
+            ((ProgressCollection)Progress).Clear();
+        }
+
+        #endregion
+    }
+
+    public class Selfable<T> : Valuable<Selfable<T>>, IValuable<T> where T : IElement
+    {
+        public Selfable(Guid id)
+            : base()
+        {
+            this.Id = id;
+
+            Values = new Valuable<T>();
+            Values.Id = this.Id;
+        }
+
+        #region IValuable Members
+
+        public virtual string Name { get; set; }
+
+        public virtual Valuable<T> Values { get; set; }
+
+        #endregion
     }
 
     #endregion
@@ -27,6 +106,8 @@ namespace Blink.Shared.Domain.NewThings
     public interface IConcrete : IGroupable
     {
         ConcreteTypes Type { get; }
+
+        new Guid ParentId { get; set; } 
     }
 
     public class TextElement : IConcrete
@@ -36,7 +117,7 @@ namespace Blink.Shared.Domain.NewThings
         #region IElement Members
 
         public Guid Id { get; set; }
-
+        public Guid ParentId { get; set; }
         public IProgress Progress { get; set; }
 
         #endregion
@@ -44,18 +125,6 @@ namespace Blink.Shared.Domain.NewThings
         #region IConcrete Members
 
         public ConcreteTypes Type { get { return ConcreteTypes.Text; } }
-
-        #endregion
-
-        #region IGroupable Members
-
-        public Guid? GroupId { get; set; }
-
-        #endregion
-
-        #region INotable Members
-
-        public Guid NoteId { get; set; }
 
         #endregion
     }
@@ -74,7 +143,7 @@ namespace Blink.Shared.Domain.NewThings
         #region IElement Members
 
         public Guid Id { get; set; }
-
+        public Guid ParentId { get; set; }
         public IProgress Progress { get; set; }
 
         #endregion
@@ -82,18 +151,6 @@ namespace Blink.Shared.Domain.NewThings
         #region IConcrete Members
 
         public ConcreteTypes Type { get { return ConcreteTypes.Tweet; } }
-
-        #endregion
-
-        #region IGroupable Members
-
-        public Guid? GroupId { get; set; }
-
-        #endregion
-
-        #region INotable Members
-
-        public Guid NoteId { get; set; }
 
         #endregion
     }
@@ -117,7 +174,7 @@ namespace Blink.Shared.Domain.NewThings
         #region IElement Members
 
         public Guid Id { get; set; }
-
+        public Guid ParentId { get; set; }
         public IProgress Progress { get; set; }
 
         #endregion
@@ -125,18 +182,6 @@ namespace Blink.Shared.Domain.NewThings
         #region IConcrete Members
 
         ConcreteTypes IConcrete.Type { get { return ConcreteTypes.File; } }
-
-        #endregion
-
-        #region IGroupable Members
-
-        public Guid? GroupId { get; set; }
-
-        #endregion
-
-        #region INotable Members
-
-        public Guid NoteId { get; set; }
 
         #endregion
     }
@@ -155,9 +200,17 @@ namespace Blink.Shared.Domain.NewThings
     public interface IContainer : IGroupable
     {
         ContainerTypes Type { get; }
+
+        new Guid ParentId { get; set; } 
     }
 
-    public class ListElement : List<IConcrete>, IContainer
+    public interface IListable : IList, IContainer 
+    {
+        string Name { get; set; }
+        new Guid ParentId { get; set; } 
+    }
+
+    public class ListElement : Valuable<IConcrete>, IListable
     {
         public string Name { get; set; }
 
@@ -166,33 +219,13 @@ namespace Blink.Shared.Domain.NewThings
         public ContainerTypes Type { get { return ContainerTypes.List; } }
 
         #endregion
-
-        #region IGroupable Members
-
-        public Guid? GroupId { get; set; }
-
-        #endregion
-
-        #region IElement Members
-
-        public Guid Id { get; set; }
-
-        public IProgress Progress { get; set; }
-
-        #endregion
-
-        #region INotable Members
-
-        public Guid NoteId { get; set; }
-
-        #endregion
     }
 
-    public class GridElement : List<ListElement>, IContainer
+    public class GridElement : Valuable<IListable>, IContainer
     {
         public string Name { get; set; }
 
-        public ListElement this[string name]
+        public IListable this[string name]
         {
             get
             {
@@ -210,80 +243,15 @@ namespace Blink.Shared.Domain.NewThings
         public ContainerTypes Type { get { return ContainerTypes.Grid; } }
 
         #endregion
-
-        #region IGroupable Members
-
-        public Guid? GroupId { get; set; }
-
-        #endregion
-
-        #region IElement Members
-
-        public Guid Id { get; set; }
-
-        public IProgress Progress { get; set; }
-
-        #endregion
-
-        #region INotable Members
-
-        public Guid NoteId { get; set; }
-
-        #endregion
     }
 
-    public class TreeElement : Valuable<TreeElement, IConcrete>, IContainer 
+    public class TreeElement : Selfable<IConcrete>, IContainer 
     {
+        public TreeElement(Guid id) : base(id) { }
+
         #region IContainer Members
 
         public ContainerTypes Type { get { return ContainerTypes.Tree; } }
-
-        #endregion
-
-        #region IGroupable Members
-
-        public Guid? GroupId { get; set; }
-
-        #endregion
-
-        #region INotable Members
-
-        public Guid NoteId { get; set; }
-
-        #endregion
-    }
-
-    #endregion
-
-    #region Valuables
-
-    public interface IValuable<U> : IElement where U : IElement
-    {
-        string Name { get; set; }
-        IList<U> Values { get; set; }
-    }
-
-    public class Valuable<T, U> : List<T>, IValuable<U> 
-                            where T : IElement where U : IElement
-    {
-        public Valuable() 
-        {
-            Values = new List<U>();
-        }
-
-        #region IElement Members
-
-        public virtual Guid Id { get; set; }
-
-        public virtual IProgress Progress { get; set; }
-
-        #endregion
-
-        #region IValuable Members
-
-        public virtual string Name { get; set; }
-
-        public virtual IList<U> Values { get; set; }
 
         #endregion
     }
@@ -294,26 +262,12 @@ namespace Blink.Shared.Domain.NewThings
 
     public interface IGroupable : INotable
     {
-        Guid? GroupId { get; set; }
+        new Guid ParentId { get; set; }
     }
 
-    public class GroupElement : List<IGroupable>, IElement, INotable
+    public class GroupElement : Valuable<IGroupable>, INotable
     {
         public string Name { get; set; }
-
-        #region IElement Members
-
-        public Guid Id { get; set; }
-
-        public IProgress Progress { get; set; }
-
-        #endregion
-
-        #region INotable Members
-
-        public Guid NoteId { get; set; }
-
-        #endregion
     }
 
     #endregion
@@ -322,32 +276,12 @@ namespace Blink.Shared.Domain.NewThings
 
     public interface INotable : IElement
     {
-        Guid NoteId { get; set; }
+        new Guid ParentId { get; set; }
     }
 
-    public class NoteElement : List<INotable>, IPageable
+    public class NoteElement : Valuable<INotable>, IPageable
     {
         public string Name { get; set; }
-
-        #region IElement Members
-
-        public Guid Id { get; set; }
-
-        public IProgress Progress { get; set; }
-
-        #endregion
-
-        #region IPageable Members
-
-        public Guid? PageId { get; set; }
-
-        #endregion
-
-        #region IFoldable Members
-
-        public Guid FolderId { get; set; }
-
-        #endregion
     }
 
     #endregion
@@ -356,25 +290,10 @@ namespace Blink.Shared.Domain.NewThings
 
     public interface IPageable : IFoldable
     {
-        Guid? PageId { get; set; }
+        new Guid ParentId { get; set; }
     }
 
-    public class PageElement : List<IPageable>, IFoldable 
-    {
-        #region IElement Members
-
-        public Guid Id { get; set; }
-
-        public IProgress Progress { get; set; }
-
-        #endregion
-
-        #region IFoldable Members
-
-        public Guid FolderId { get; set; }
-
-        #endregion
-    }
+    public class PageElement : Valuable<IPageable>, IFoldable { }
 
     #endregion
 
@@ -382,16 +301,12 @@ namespace Blink.Shared.Domain.NewThings
 
     public interface IFoldable : IElement
     {
-        Guid FolderId { get; set; }
+        new Guid ParentId { get; set; }
     }
 
-    public class FolderElement : Valuable<FolderElement, IFoldable>, IFoldable
+    public class FolderElement : Selfable<IFoldable>, IFoldable 
     {
-        #region IFoldable Members
-
-        public Guid FolderId { get; set; }
-
-        #endregion
+        public FolderElement(Guid id) : base(id) { }
     }
 
     #endregion
@@ -424,7 +339,7 @@ namespace Blink.Shared.Domain.NewThings
         bool IsCompleted();
     }
 
-    public class ProgressCollection : List<IProgress>, IProgress
+    public class ProgressCollection : Collection<IProgress>, IProgress
     {
         #region IProgress Members
 
