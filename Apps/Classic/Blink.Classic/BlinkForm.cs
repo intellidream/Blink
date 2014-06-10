@@ -26,12 +26,14 @@ namespace Blink.Classic
 
 
 
-            var folderElement = new FolderElement(Guid.NewGuid());
+            var folderElement = new FolderElement();
             folderElement.Name = "My New Category";
+            folderElement.Id = Guid.NewGuid();
             folderElement.ParentId = Guid.Empty;
 
-            var subFolderElement = new FolderElement(Guid.NewGuid());
+            var subFolderElement = new FolderElement();
             subFolderElement.Name = "My New SubCategory";
+            subFolderElement.Id = Guid.NewGuid();
             subFolderElement.ParentId = Guid.Empty;
 
             var pageElement = new PageElement();
@@ -94,6 +96,9 @@ namespace Blink.Classic
             
             folderElement.Add(subFolderElement);
 
+            var p = folderElement.Progress.IsCompleted();
+
+            // DOES NOT travel through all children, see why?!
 
             //var f = new FolderElement();
 

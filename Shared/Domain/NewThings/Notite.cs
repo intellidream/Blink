@@ -9,7 +9,7 @@ namespace Blink.Shared.Domain.NewThings
 {
     #region Elements
 
-    public interface IElement 
+    public interface IElement
     {
         Guid Id { get; set; }
         Guid ParentId { get; set; }
@@ -77,14 +77,31 @@ namespace Blink.Shared.Domain.NewThings
 
     public class Selfable<T> : Valuable<Selfable<T>>, IValuable<T> where T : IElement
     {
-        public Selfable(Guid id)
+        public Selfable()
             : base()
         {
-            this.Id = id;
-
             Values = new Valuable<T>();
-            Values.Id = this.Id;
         }
+
+        #region IElement Members
+
+        private Guid id;
+
+        public override Guid Id 
+        {
+            get
+            { 
+                return id; 
+            }
+            
+            set
+            { 
+                id = value; 
+                Values.Id = id; 
+            }
+        }
+
+        #endregion
 
         #region IValuable Members
 
@@ -250,8 +267,6 @@ namespace Blink.Shared.Domain.NewThings
 
     public class TreeElement : Selfable<IConcrete>, IContainer 
     {
-        public TreeElement(Guid id) : base(id) { }
-
         #region IContainer Members
 
         public ContainerTypes Type { get { return ContainerTypes.Tree; } }
@@ -307,10 +322,7 @@ namespace Blink.Shared.Domain.NewThings
         new Guid ParentId { get; set; }
     }
 
-    public class FolderElement : Selfable<IFoldable>, IFoldable 
-    {
-        public FolderElement(Guid id) : base(id) { }
-    }
+    public class FolderElement : Selfable<IFoldable>, IFoldable { }
 
     #endregion
 
