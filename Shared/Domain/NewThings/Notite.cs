@@ -18,7 +18,9 @@ namespace Blink.Shared.Domain.NewThings
 
     public interface IElementCollection : IElement
     {
-        IProgressCollection ProgressCollection { get; } //a element collection should have a progress collection that yields a result as a progress!!???
+        IProgressCollection ProgressCollection { get; } 
+        //an element collection should have a progress collection that yields a result as a progress!!???
+        // all elementcollections (derived from Valuable<T> should implement IElementCollection, not IElement, just their content CAN be IElement)
     }
 
     #endregion
