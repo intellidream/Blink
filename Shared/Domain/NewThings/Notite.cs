@@ -16,6 +16,11 @@ namespace Blink.Shared.Domain.NewThings
         IProgress Progress { get; }
     }
 
+    public interface IElementCollection : IElement
+    {
+        IProgressCollection ProgressCollection { get; } //a element collection should have a progress collection that yields a result as a progress!!???
+    }
+
     #endregion
 
     #region Valuables
@@ -26,7 +31,7 @@ namespace Blink.Shared.Domain.NewThings
         Valuable<T> Values { get; set; }
     }
 
-    public class Valuable<T> : Collection<T>, IElement where T : IElement
+    public class Valuable<T> : Collection<T>, IElementCollection where T : IElement
     {
         public Valuable()
         {
@@ -72,8 +77,8 @@ namespace Blink.Shared.Domain.NewThings
         #endregion
     }
 
-    // !!Progress of a Folder/TreeNode shoulod be the sum of it's Values + it's subFolders/TreeNodes!!!
-    // so I must treat progress correctly on a collection analisys...
+    // Progress of a Folder/TreeNode shoulod be the sum of it's Values + it's subFolders/TreeNodes...!!!
+    // So I must treat progress correctly on a collection analisys... see Notes...!!
 
     public class Selfable<T> : Valuable<Selfable<T>>, IValuable<T> where T : IElement
     {
@@ -388,7 +393,7 @@ namespace Blink.Shared.Domain.NewThings
     public interface IProgressCollection : ICollection<IProgress>, IProgress
     {
         int Total { get; }
-        int Completed { get ; }
+        int Completed { get; }
         int Percentage { get; }
     }
 
