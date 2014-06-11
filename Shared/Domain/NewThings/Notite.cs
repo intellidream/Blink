@@ -101,6 +101,14 @@ namespace Blink.Shared.Domain.NewThings
             }
         }
 
+        public override IProgress Progress
+        {
+            get
+            {
+                return base.Progress;
+            }
+        }
+
         #endregion
 
         #region IValuable Members

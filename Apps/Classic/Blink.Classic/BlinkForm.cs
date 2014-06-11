@@ -84,15 +84,15 @@ namespace Blink.Classic
 
             groupElement.Add(fileElement);
 
-            noteElement.Add(textElement);
+            //noteElement.Add(textElement);
             noteElement.Add(groupElement);
 
             pageElement.Add(noteElement);
 
-            noteElementTwo.Add(textElementTwo);
+            //noteElementTwo.Add(textElementTwo);
             
             subFolderElement.Values.Add(pageElement);
-            subFolderElement.Values.Add(noteElementTwo);
+            //subFolderElement.Values.Add(noteElementTwo);
             
             folderElement.Add(subFolderElement);
 
