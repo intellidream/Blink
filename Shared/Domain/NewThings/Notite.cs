@@ -105,7 +105,7 @@ namespace Blink.Shared.Domain.NewThings
         {
             get
             {
-                return base.Progress;
+                return Values.Progress;
             }
         }
 
@@ -118,6 +118,29 @@ namespace Blink.Shared.Domain.NewThings
         public virtual Valuable<T> Values { get; set; }
 
         #endregion
+    }
+
+    public static class SelfableExtensions 
+    {
+        // http://stackoverflow.com/questions/11830174/how-to-flatten-tree-via-linq/20335369?stw=2#20335369
+        public static IEnumerable<Selfable<T>> Flatten<T>(this Selfable<T> root) where T : IElement
+        {
+            var stack = new Stack<Selfable<T>>();
+            
+            stack.Push(root);
+
+            while (stack.Count > 0)
+            {
+                var current = stack.Pop();
+                
+                yield return current;
+                
+                foreach (var child in current)
+                {
+                    stack.Push(child); 
+                }
+            }
+        }
     }
 
     #endregion
@@ -362,7 +385,14 @@ namespace Blink.Shared.Domain.NewThings
         bool IsCompleted();
     }
 
-    public class ProgressCollection : Collection<IProgress>, IProgress
+    public interface IProgressCollection : ICollection<IProgress>, IProgress
+    {
+        int Total { get; }
+        int Completed { get ; }
+        int Percentage { get; }
+    }
+
+    public class ProgressCollection : Collection<IProgress>, IProgressCollection
     {
         #region IProgress Members
 
@@ -370,7 +400,34 @@ namespace Blink.Shared.Domain.NewThings
 
         public bool IsCompleted()
         {
-            return this.All(p => p.IsCompleted());
+            return (this.Total > 0)
+                        ? this.All(p => p.IsCompleted())
+                        : false;
+        }
+
+        #endregion
+
+        #region IProgressCollection Members
+
+        public int Total { get { return this.Count; } }
+        public int Completed
+        {
+            get
+            {
+                return (this.Total > 0)
+                        ? this.Count(p => p.IsCompleted())
+                        : 0;
+            }
+        }
+
+        public int Percentage 
+        {
+            get 
+            {
+                return (this.Total > 0)
+                        ? (int)Math.Round((double)(100 * Completed) / Total)
+                        : 0;
+            }
         }
 
         #endregion

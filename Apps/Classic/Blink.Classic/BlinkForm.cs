@@ -67,7 +67,7 @@ namespace Blink.Classic
 
             var dateTimeProgress = new DateTimeProgress();
             dateTimeProgress.Id = Guid.NewGuid();
-            dateTimeProgress.Completion = DateTime.UtcNow;
+            dateTimeProgress.Completion = DateTime.UtcNow.Subtract(new TimeSpan(100000));
             var fileElement = new FileElement();
             fileElement.Id = Guid.NewGuid();
             fileElement.Data = null;
@@ -77,7 +77,7 @@ namespace Blink.Classic
 
             var dateTimeProgressTwo = new DateTimeProgress();
             dateTimeProgressTwo.Id = Guid.NewGuid();
-            dateTimeProgressTwo.Completion = DateTime.UtcNow;
+            dateTimeProgressTwo.Completion = DateTime.UtcNow.Subtract(new TimeSpan(100000));
             var textElementTwo = new TextElement();
             textElementTwo.Id = Guid.NewGuid();
             textElementTwo.Progress = dateTimeProgressTwo;
@@ -96,7 +96,26 @@ namespace Blink.Classic
             
             folderElement.Add(subFolderElement);
 
+
+
+            folderElement.Add(new FolderElement());
+            folderElement[0].Add(new FolderElement());
+            folderElement[0][0].Add(new FolderElement());
+            folderElement[0][0][0].Add(new FolderElement());
+            folderElement[0][0][0][0].Add(new FolderElement());
+            folderElement[0][0][0][0][0].Add(new FolderElement());
+
+            var t = folderElement.Flatten().ToList().Count;
+
             var p = folderElement.Progress.IsCompleted();
+
+            var c = ((IProgressCollection)folderElement.Progress).Percentage;
+
+
+
+
+            var d = new FolderElement();
+            var e = ((IProgressCollection)d.Progress).Percentage;
 
             // DOES NOT travel through all children, see why?!
 
