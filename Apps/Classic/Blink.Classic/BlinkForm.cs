@@ -109,46 +109,13 @@ namespace Blink.Classic
 
             var p = folderElement.Progress.IsCompleted();
 
-            var c = ((IProgressCollection)folderElement.Progress).Percentage;
+            var c = folderElement.CollectionProgress.Percentage;
 
 
 
 
             var d = new FolderElement();
-            var e = ((IProgressCollection)d.Progress).Percentage;
-
-            // DOES NOT travel through all children, see why?!
-
-            //var f = new FolderElement();
-
-
-            //f.Add(new FolderElement());
-
-            //f.Values.Add(new NoteElement());
-            //f[0].Values.Add(new PageElement());
-            //var p = f[0].Values[0] as PageElement;
-            //p.Add(new NoteElement());
-
-
-            //var n = new NoteElement();
-
-            //GroupElement g = new GroupElement();
-
-            
-
-            //var t = new GridElement();
-            //var l1 = new ListElement();
-            //l1.Add(new FileElement());
-            //t.Add(l1);
-
-            //g.Add(t);
-
-            //n.Add(g);
-            //n.Add(t);
-            
-            //n.Add(new TextElement());
-
-
+            var e = d.CollectionProgress.Percentage;
         }
 
         //private async void button1_Click(object sender, EventArgs e)

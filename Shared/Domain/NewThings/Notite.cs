@@ -18,16 +18,14 @@ namespace Blink.Shared.Domain.NewThings
 
     public interface IElementCollection : IElement
     {
-        IProgressCollection ProgressCollection { get; } 
-        //an element collection should have a progress collection that yields a result as a progress!!???
-        // all elementcollections (derived from Valuable<T> should implement IElementCollection, not IElement, just their content CAN be IElement)
+        ProgressCollection CollectionProgress { get; } 
     }
 
     #endregion
 
     #region Valuables
 
-    public interface IValuable<T> : IElement where T : IElement
+    public interface IValuable<T> : IElementCollection where T : IElement
     {
         string Name { get; set; }
         Valuable<T> Values { get; set; }
@@ -37,14 +35,26 @@ namespace Blink.Shared.Domain.NewThings
     {
         public Valuable()
         {
-            Progress = new ProgressCollection();
+            CollectionProgress = new ProgressCollection();
         }
 
         #region IElement Members
 
         public virtual Guid Id { get; set; }
         public virtual Guid ParentId { get; set; }
-        public virtual IProgress Progress { get; private set; }
+
+        private IProgress progress;
+        public virtual IProgress Progress 
+        {
+            get { return progress ?? CollectionProgress; }
+            protected set { progress = value; } 
+        }
+
+        #endregion
+
+        #region IElementCollection Members
+
+        public virtual ProgressCollection CollectionProgress { get; protected set; }
 
         #endregion
 
@@ -53,26 +63,26 @@ namespace Blink.Shared.Domain.NewThings
         protected override void SetItem(int index, T item)
         {
             item.ParentId = this.Id;
-            ((ProgressCollection)Progress)[index] = item.Progress;
+            CollectionProgress[index] = item.Progress;
             base.SetItem(index, item);
         }
 
         protected override void InsertItem(int index, T item)
         {
             item.ParentId = this.Id;
-            ((ProgressCollection)Progress).Insert(index, item.Progress);
+            CollectionProgress.Insert(index, item.Progress);
             base.InsertItem(index, item);
         }
 
         protected override void RemoveItem(int index)
         {
-            ((ProgressCollection)Progress).RemoveAt(index);
+            CollectionProgress.RemoveAt(index);
             base.RemoveItem(index);
         }
 
         protected override void ClearItems()
         {
-            ((ProgressCollection)Progress).Clear();
+            CollectionProgress.Clear();
             base.ClearItems();
         }
 
@@ -84,8 +94,7 @@ namespace Blink.Shared.Domain.NewThings
 
     public class Selfable<T> : Valuable<Selfable<T>>, IValuable<T> where T : IElement
     {
-        public Selfable()
-            : base()
+        public Selfable() : base()
         {
             Values = new Valuable<T>();
         }
@@ -95,25 +104,27 @@ namespace Blink.Shared.Domain.NewThings
         private Guid id;
 
         public override Guid Id 
-        {
-            get
-            { 
-                return id; 
-            }
-            
-            set
-            { 
-                id = value; 
-                Values.Id = id; 
-            }
+        { 
+            get { return id; }
+            set { id = value; Values.Id = id; }
         }
 
+        private ProgressBase progress;
         public override IProgress Progress
         {
-            get
-            {
-                return Values.Progress;
-            }
+            get { return progress ?? Values.Progress; }
+            protected set { progress = (ProgressBase)value; } 
+        }
+
+        #endregion
+
+        #region IElement Members
+
+        private ProgressCollection collectionProgress;
+        public override ProgressCollection CollectionProgress
+        {
+            get { return collectionProgress ?? Values.CollectionProgress; }
+            protected set { collectionProgress = value; }
         }
 
         #endregion
@@ -392,14 +403,13 @@ namespace Blink.Shared.Domain.NewThings
         bool IsCompleted();
     }
 
-    public interface IProgressCollection : ICollection<IProgress>, IProgress
+    public abstract class ProgressBase : IProgress
     {
-        int Total { get; }
-        int Completed { get; }
-        int Percentage { get; }
+        public virtual Guid Id { get; set; }
+        public abstract bool IsCompleted();
     }
 
-    public class ProgressCollection : Collection<IProgress>, IProgressCollection
+    public class ProgressCollection : Collection<IProgress>, IProgress
     {
         #region IProgress Members
 
@@ -413,8 +423,6 @@ namespace Blink.Shared.Domain.NewThings
         }
 
         #endregion
-
-        #region IProgressCollection Members
 
         public int Total { get { return this.Count; } }
         public int Completed
@@ -436,19 +444,15 @@ namespace Blink.Shared.Domain.NewThings
                         : 0;
             }
         }
-
-        #endregion
     }
 
-    public class InternalProgress : IProgress
+    public class InternalProgress : ProgressBase
     {
         public bool Completed { get; set; }
 
         #region IProgress Members
 
-        public Guid Id { get; set; }
-
-        public bool IsCompleted()
+        public override bool IsCompleted()
         {
             return Completed;
         }
@@ -456,31 +460,27 @@ namespace Blink.Shared.Domain.NewThings
         #endregion
     }
 
-    public class DateTimeProgress : IProgress
+    public class DateTimeProgress : ProgressBase
     {
         public DateTime Completion { get; set; }
         
         #region IProgress Members
 
-        public Guid Id { get; set; }
-
-        public bool IsCompleted()
+        public override bool IsCompleted()
         {
             return Completion.ToUniversalTime().Equals(DateTime.UtcNow);
         }
 
         #endregion
     }
-    public class LocationProgress : IProgress
+    public class LocationProgress : ProgressBase
     {
         public Location Current { get; set; }
         public Location Destination { get; set; }
         
         #region IProgress Members
 
-        public Guid Id { get; set; }
-
-        public bool IsCompleted()
+        public override bool IsCompleted()
         {
             return Current.Equals(Destination);
         }
