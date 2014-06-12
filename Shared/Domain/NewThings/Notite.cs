@@ -92,6 +92,8 @@ namespace Blink.Shared.Domain.NewThings
     // Progress of a Folder/TreeNode shoulod be the sum of it's Values + it's subFolders/TreeNodes...!!!
     // So I must treat progress correctly on a collection analisys... see Notes...!!
 
+    // Implement CombinedProgress (with/Completed(IsCompleted()) property in IProgress?!)
+
     public class Selfable<T> : Valuable<Selfable<T>>, IValuable<T> where T : IElement
     {
         public Selfable() : base()
