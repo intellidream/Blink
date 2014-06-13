@@ -52,9 +52,11 @@ namespace Blink.Shared.Engine
         {
             return new List<ITableDefinition>
             {
-                CreateTableDefinition<Domain.DataModel.Notes.BlinkNote, Guid>(i => i.Id),
-                CreateTableDefinition<Domain.DataModel.Notes.Content, Guid>(i => i.Id),
-                CreateTableDefinition<Domain.DataModel.Notes.Category, Guid>(i => i.Id)
+                //CreateTableDefinition<Domain.DataModel.Notes.BlinkNote, Guid>(i => i.Id),
+                //CreateTableDefinition<Domain.DataModel.Notes.Content, Guid>(i => i.Id),
+                //CreateTableDefinition<Domain.DataModel.Notes.Category, Guid>(i => i.Id)
+
+                CreateTableDefinition<Domain.NewThings.FolderElement, Guid>(f => f.Id),
             };
         }
     }

@@ -13,6 +13,7 @@ namespace Blink.Shared.Domain.NewThings
     {
         Guid Id { get; set; }
         Guid ParentId { get; set; }
+        //DateTime Timestamp - created/modified/accessed
         IProgress Progress { get; }
     }
 
@@ -142,7 +143,9 @@ namespace Blink.Shared.Domain.NewThings
 
     public static class SelfableExtensions 
     {
-        // http://stackoverflow.com/questions/11830174/how-to-flatten-tree-via-linq/20335369?stw=2#20335369
+        /// <summary>
+        /// http://stackoverflow.com/questions/11830174/how-to-flatten-tree-via-linq/20335369?stw=2#20335369
+        /// </summary>
         public static IEnumerable<Selfable<T>> Flatten<T>(this Selfable<T> root) where T : IElement
         {
             var stack = new Stack<Selfable<T>>();

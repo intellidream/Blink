@@ -55,6 +55,7 @@
     <Compile Include="DataModel\Notes\Sources.cs" />
     <Compile Include="DataModel\Notes\TimeStamp.cs" />
     <Compile Include="NewThings\Notite.cs" />
+    <Compile Include="NewThings\Repos.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
