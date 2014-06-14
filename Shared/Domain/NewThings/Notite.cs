@@ -7,13 +7,38 @@ using System.Text;
 
 namespace Blink.Shared.Domain.NewThings
 {
+    public class Timestamp 
+    {
+        public DateTime Created { get; set; }
+        public DateTime Modified { get; set; }
+        public DateTime Accessed { get; set; }
+    }
+
+    enum ElementTypes : int
+    {
+        Text,
+        Tweet,
+        File,
+        List,
+        Grid,
+        Tree,
+        Group,
+        Note,
+        Page,
+        Folder
+    }
+
     #region Elements
 
     public interface IElement
     {
         Guid Id { get; set; }
         Guid ParentId { get; set; }
-        //DateTime Timestamp - created/modified/accessed
+        Timestamp Timestamp { get; set; }
+        int Index { get; set; }
+
+        //Type
+        //Index
         IProgress Progress { get; }
     }
 

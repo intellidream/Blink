@@ -36,3 +36,5 @@
 	    // IDomain - separates ICategories - named or not
 		//
 		// Implement Category and Note Repositories
+		//
+		// For UI types display - there could be a property saying display list or display inline?!
