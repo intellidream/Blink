@@ -157,7 +157,7 @@
   <Interface Name="Blink.Shared.Domain.NewThings.IElement" Collapsed="true">
     <Position X="2.75" Y="3" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAACAAAA=</HashCode>
+      <HashCode>AAACAAAAAAAAAAAAAAACAAAAAAAAAAAAAgEAAACAAAA=</HashCode>
       <FileName>NewThings\Notite.cs</FileName>
     </TypeIdentifier>
   </Interface>
@@ -168,10 +168,10 @@
       <FileName>NewThings\Notite.cs</FileName>
     </TypeIdentifier>
   </Interface>
-  <Interface Name="Blink.Shared.Domain.NewThings.IValuable&lt;T&gt;" Collapsed="true">
+  <Interface Name="Blink.Shared.Domain.NewThings.IValuable" Collapsed="true">
     <Position X="5" Y="1.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAgAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>NewThings\Notite.cs</FileName>
     </TypeIdentifier>
   </Interface>

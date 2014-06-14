@@ -9,6 +9,7 @@ namespace Blink.Shared.Domain.NewThings
 {
     public class Timestamp 
     {
+        public Guid Id { get; set; }
         public DateTime Created { get; set; }
         public DateTime Modified { get; set; }
         public DateTime Accessed { get; set; }
@@ -27,6 +28,9 @@ namespace Blink.Shared.Domain.NewThings
         Page,
         Folder
     }
+
+    enum ValuableTypes { }
+    enum SelfableTypes { }
 
     #region Elements
 
@@ -51,13 +55,17 @@ namespace Blink.Shared.Domain.NewThings
 
     #region Valuables
 
-    public interface IValuable<T> : IElementCollection where T : IElement
+    public interface IValuable : IElementCollection
     {
         string Name { get; set; }
+    }
+
+    public interface ISelfable<T> : IValuable where T : IElement
+    {
         Valuable<T> Values { get; set; }
     }
 
-    public class Valuable<T> : Collection<T>, IElementCollection where T : IElement
+    public class Valuable<T> : Collection<T>, IValuable where T : IElement
     {
         public Valuable()
         {
@@ -120,7 +128,7 @@ namespace Blink.Shared.Domain.NewThings
 
     // Implement CombinedProgress (with/Completed(IsCompleted()) property in IProgress?!)
 
-    public class Selfable<T> : Valuable<Selfable<T>>, IValuable<T> where T : IElement
+    public class Selfable<T> : Valuable<Selfable<T>>, ISelfable<T> where T : IElement
     {
         public Selfable() : base()
         {
