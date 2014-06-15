@@ -7,19 +7,31 @@ using System.Text;
 
 namespace Blink.Shared.Domain.NewThings
 {
-    public class Timestamp 
+    #region Elements
+
+    public enum ElementTypes : int
     {
-        public Guid Id { get; set; }
-        public DateTime Created { get; set; }
-        public DateTime Modified { get; set; }
-        public DateTime Accessed { get; set; }
+        Concrete,
+        Valuable,
+        Rootable
     }
 
-    enum ElementTypes : int
+    public interface IElement
     {
-        Text,
-        Tweet,
-        File,
+        Guid Id { get; set; }
+        Guid ParentId { get; set; }
+        int Position { get; set; }
+        Timestamp Timestamp { get; set; }
+        ElementTypes Type { get; }
+        IProgress Progress { get; }
+    }
+
+    #endregion
+
+    #region Valuables
+
+    public enum ValuableTypes : int
+    {
         List,
         Grid,
         Tree,
@@ -29,66 +41,23 @@ namespace Blink.Shared.Domain.NewThings
         Folder
     }
 
-    enum ValuableTypes { }
-    enum SelfableTypes { }
-
-    #region Elements
-
-    public interface IElement
+    public class Keepable<T> : Collection<T>, IElement where T : IElement
     {
-        Guid Id { get; set; }
-        Guid ParentId { get; set; }
-        Timestamp Timestamp { get; set; }
-        int Index { get; set; }
-
-        //Type
-        //Index
-        IProgress Progress { get; }
-    }
-
-    public interface IElementCollection : IElement
-    {
-        ProgressCollection CollectionProgress { get; } 
-    }
-
-    #endregion
-
-    #region Valuables
-
-    public interface IValuable : IElementCollection
-    {
-        string Name { get; set; }
-    }
-
-    public interface ISelfable<T> : IValuable where T : IElement
-    {
-        Valuable<T> Values { get; set; }
-    }
-
-    public class Valuable<T> : Collection<T>, IValuable where T : IElement
-    {
-        public Valuable()
-        {
-            CollectionProgress = new ProgressCollection();
-        }
+        public virtual ProgressCollection Progress { get; private set; }
 
         #region IElement Members
 
         public virtual Guid Id { get; set; }
+
         public virtual Guid ParentId { get; set; }
 
-        private IProgress progress;
-        public virtual IProgress Progress 
-        {
-            get { return progress ?? CollectionProgress; }
-            protected set { progress = value; } 
-        }
+        public virtual int Position { get; set; }
 
-        #endregion
+        public virtual Timestamp Timestamp { get; set; }
 
-        #region IElementCollection Members
+        ElementTypes IElement.Type { get { return ElementTypes.Valuable; } }
 
-        public virtual ProgressCollection CollectionProgress { get; protected set; }
+        IProgress IElement.Progress { get { return Progress; } }
 
         #endregion
 
@@ -97,180 +66,165 @@ namespace Blink.Shared.Domain.NewThings
         protected override void SetItem(int index, T item)
         {
             item.ParentId = this.Id;
-            CollectionProgress[index] = item.Progress;
+            Progress[index] = item.Progress;
             base.SetItem(index, item);
         }
 
         protected override void InsertItem(int index, T item)
         {
             item.ParentId = this.Id;
-            CollectionProgress.Insert(index, item.Progress);
+            Progress.Insert(index, item.Progress);
             base.InsertItem(index, item);
         }
 
         protected override void RemoveItem(int index)
         {
-            CollectionProgress.RemoveAt(index);
+            Progress.RemoveAt(index);
             base.RemoveItem(index);
         }
 
         protected override void ClearItems()
         {
-            CollectionProgress.Clear();
+            Progress.Clear();
             base.ClearItems();
         }
 
         #endregion
     }
 
-    // Progress of a Folder/TreeNode shoulod be the sum of it's Values + it's subFolders/TreeNodes...!!!
-    // So I must treat progress correctly on a collection analisys... see Notes...!!
-
-    // Implement CombinedProgress (with/Completed(IsCompleted()) property in IProgress?!)
-
-    public class Selfable<T> : Valuable<Selfable<T>>, ISelfable<T> where T : IElement
+    public class Valuable<T> : Keepable<T> where T : IElement
     {
-        public Selfable() : base()
-        {
-            Values = new Valuable<T>();
-        }
-
-        #region IElement Members
-
-        private Guid id;
-
-        public override Guid Id 
-        { 
-            get { return id; }
-            set { id = value; Values.Id = id; }
-        }
-
-        private ProgressBase progress;
-        public override IProgress Progress
-        {
-            get { return progress ?? Values.Progress; }
-            protected set { progress = (ProgressBase)value; } 
-        }
-
-        #endregion
-
-        #region IElement Members
-
-        private ProgressCollection collectionProgress;
-        public override ProgressCollection CollectionProgress
-        {
-            get { return collectionProgress ?? Values.CollectionProgress; }
-            protected set { collectionProgress = value; }
-        }
-
-        #endregion
-
-        #region IValuable Members
-
         public virtual string Name { get; set; }
 
-        public virtual Valuable<T> Values { get; set; }
-
-        #endregion
+        public virtual ValuableTypes Type { get; private set; }
     }
 
-    public static class SelfableExtensions 
+    public class Selfable<T> : Valuable<Selfable<T>> where T : IElement
     {
+        public Keepable<T> Values { get; set; }
+
+        public Selfable()
+            : base()
+        {
+            Values = new Keepable<T>();
+        }
+
         /// <summary>
         /// http://stackoverflow.com/questions/11830174/how-to-flatten-tree-via-linq/20335369?stw=2#20335369
         /// </summary>
-        public static IEnumerable<Selfable<T>> Flatten<T>(this Selfable<T> root) where T : IElement
+        public IEnumerable<Selfable<T>> Flatten()
         {
             var stack = new Stack<Selfable<T>>();
-            
-            stack.Push(root);
+
+            stack.Push(this);
 
             while (stack.Count > 0)
             {
                 var current = stack.Pop();
-                
+
                 yield return current;
-                
+
                 foreach (var child in current)
                 {
-                    stack.Push(child); 
+                    stack.Push(child);
                 }
             }
         }
+
+        #region Keepable Members
+
+        #region IElement Members
+
+        public override Guid Id
+        {
+            get { return base.Id; }
+            set
+            {
+                Values.Id = value;
+                base.Id = value;
+            }
+        }
+
+        #endregion
+
+        public override ProgressCollection Progress { get { return Values.Progress; } }
+
+        #endregion
     }
 
     #endregion
 
     #region Concretes
 
-    public enum ConcreteTypes 
+    public enum ConcreteTypes : int
     {
-        Text = 0,
-        Tweet = 1,
-        File = 2
+        Text,
+        Tweet,
+        File
     }
 
-    public interface IConcrete : IGroupable
+    public abstract class ConcreteBase : IElement, IGroupable, INotable
     {
-        ConcreteTypes Type { get; }
+        public abstract ConcreteTypes Type { get; }
 
-        new Guid ParentId { get; set; } 
+        public abstract ProgressBase Progress { get; set; }
+
+        #region IElement Members
+
+        public virtual Guid Id { get; set; }
+
+        public virtual Guid ParentId { get; set; }
+
+        public virtual int Position { get; set; }
+
+        public virtual Timestamp Timestamp { get; set; }
+
+        ElementTypes IElement.Type { get { return ElementTypes.Concrete; } }
+
+        IProgress IElement.Progress { get { return Progress; } }
+
+        #endregion
     }
 
-    public class TextElement : IConcrete
+    public class TextElement : ConcreteBase
     {
         public string Text { get; set; }
 
-        #region IElement Members
+        #region ConcreteBase Members
 
-        public Guid Id { get; set; }
-        public Guid ParentId { get; set; }
-        public IProgress Progress { get; set; }
+        public override ConcreteTypes Type { get { return ConcreteTypes.Text; } }
 
-        #endregion
-
-        #region IConcrete Members
-
-        public ConcreteTypes Type { get { return ConcreteTypes.Text; } }
+        public override ProgressBase Progress { get; set; }
 
         #endregion
     }
 
-    public class TweetElement : IConcrete 
+    public class TweetElement : ConcreteBase
     {
-        public string Source { get; set; } //name, twitterid and icon
+        #region Commented Tweet Implementation
+        //public TweetSource Source { get; set; } //name, twitterid and icon
         //public TweetContent Content { get; set; } //text and image
-        public DateTime Timestamp { get; set; }
-
-        //public class TweetContent : List<IConcrete>
-        //{
-
-        //}
-
-        #region IElement Members
-
-        public Guid Id { get; set; }
-        public Guid ParentId { get; set; }
-        public IProgress Progress { get; set; }
-
+        //public DateTime TweetTime { get; set; }
         #endregion
 
-        #region IConcrete Members
+        #region ConcreteBase Members
 
-        public ConcreteTypes Type { get { return ConcreteTypes.Tweet; } }
+        public override ConcreteTypes Type { get { return ConcreteTypes.Text; } }
+
+        public override ProgressBase Progress { get; set; }
 
         #endregion
     }
 
-    public class FileElement : IConcrete
+    public class FileElement : ConcreteBase
     {
-        public string Name { get; set; }
-        public FileTypes Type { get; set; }
+        public string FileName { get; set; }
+        public FileTypes FileType { get; set; }
 
-        public string Path { get; set; }
-        public byte[] Data { get; set; }
+        public string FilePath { get; set; }
+        public byte[] FileData { get; set; }
 
-        public enum FileTypes 
+        public enum FileTypes
         {
             Other = 0,
             Image = 1,
@@ -278,17 +232,11 @@ namespace Blink.Shared.Domain.NewThings
             Video = 3
         }
 
-        #region IElement Members
+        #region ConcreteBase Members
 
-        public Guid Id { get; set; }
-        public Guid ParentId { get; set; }
-        public IProgress Progress { get; set; }
+        public override ConcreteTypes Type { get { return ConcreteTypes.Text; } }
 
-        #endregion
-
-        #region IConcrete Members
-
-        ConcreteTypes IConcrete.Type { get { return ConcreteTypes.File; } }
+        public override ProgressBase Progress { get; set; }
 
         #endregion
     }
@@ -297,42 +245,24 @@ namespace Blink.Shared.Domain.NewThings
 
     #region Containers
 
-    public enum ContainerTypes 
+    public class ListElement : Valuable<ConcreteBase>, IGroupable, INotable
     {
-        List = 0,
-        Grid = 1,
-        Tree = 2
-    }
+        #region Valuable Members
 
-    public interface IContainer : IGroupable
-    {
-        ContainerTypes Type { get; }
-
-        new Guid ParentId { get; set; } 
-    }
-
-    public interface IListable : IList, IContainer 
-    {
-        string Name { get; set; }
-        new Guid ParentId { get; set; } 
-    }
-
-    public class ListElement : Valuable<IConcrete>, IListable
-    {
-        public string Name { get; set; }
-
-        #region IContainer Members
-
-        public ContainerTypes Type { get { return ContainerTypes.List; } }
+        public override ValuableTypes Type
+        {
+            get
+            {
+                return ValuableTypes.List;
+            }
+        }
 
         #endregion
     }
 
-    public class GridElement : Valuable<IListable>, IContainer
+    public class GridElement : Valuable<ListElement>, IGroupable, INotable
     {
-        public string Name { get; set; }
-
-        public IListable this[string name]
+        public ListElement this[string name]
         {
             get
             {
@@ -345,18 +275,30 @@ namespace Blink.Shared.Domain.NewThings
             }
         }
 
-        #region IContainer Members
+        #region Valuable Members
 
-        public ContainerTypes Type { get { return ContainerTypes.Grid; } }
+        public override ValuableTypes Type
+        {
+            get
+            {
+                return ValuableTypes.Grid;
+            }
+        }
 
         #endregion
     }
 
-    public class TreeElement : Selfable<IConcrete>, IContainer 
+    public class TreeElement : Selfable<ConcreteBase>, IGroupable, INotable
     {
-        #region IContainer Members
+        #region Valuable Members
 
-        public ContainerTypes Type { get { return ContainerTypes.Tree; } }
+        public override ValuableTypes Type
+        {
+            get
+            {
+                return ValuableTypes.Tree;
+            }
+        }
 
         #endregion
     }
@@ -365,70 +307,115 @@ namespace Blink.Shared.Domain.NewThings
 
     #region Groupables
 
-    public interface IGroupable : INotable
-    {
-        new Guid ParentId { get; set; }
-    }
+    public interface IGroupable : IElement { }
 
     public class GroupElement : Valuable<IGroupable>, INotable
     {
-        public string Name { get; set; }
+        #region Valuable Members
+
+        public override ValuableTypes Type
+        {
+            get
+            {
+                return ValuableTypes.Group;
+            }
+        }
+
+        #endregion
     }
 
     #endregion
 
     #region Notables
 
-    public interface INotable : IElement
-    {
-        new Guid ParentId { get; set; }
-    }
+    public interface INotable : IElement { }
 
-    public class NoteElement : Valuable<INotable>, IPageable
+    public class NoteElement : Valuable<INotable>, IPageable, IFoldable
     {
-        public string Name { get; set; }
+        #region Valuable Members
+
+        public override ValuableTypes Type
+        {
+            get
+            {
+                return ValuableTypes.Note;
+            }
+        }
+
+        #endregion
     }
 
     #endregion
 
     #region Pageables
 
-    public interface IPageable : IFoldable
-    {
-        new Guid ParentId { get; set; }
-    }
+    public interface IPageable : IElement { }
 
-    public class PageElement : Valuable<IPageable>, IFoldable { }
+    public class PageElement : Valuable<IPageable>, IFoldable
+    {
+        #region Valuable Members
+
+        public override ValuableTypes Type
+        {
+            get
+            {
+                return ValuableTypes.Page;
+            }
+        }
+
+        #endregion
+    }
 
     #endregion
 
     #region Foldables
 
-    public interface IFoldable : IElement
-    {
-        new Guid ParentId { get; set; }
-    }
+    public interface IFoldable : IElement { }
 
-    public class FolderElement : Selfable<IFoldable>, IFoldable { }
+    public class FolderElement : Selfable<IFoldable>, IRootable
+    {
+        #region Valuable Members
+
+        public override ValuableTypes Type
+        {
+            get
+            {
+                return ValuableTypes.Folder;
+            }
+        }
+
+        #endregion
+    }
 
     #endregion
 
-    #region Locating
+    #region Rootables
 
-    public interface ILocation
+    public interface IRootable : IElement { }
+
+    public sealed class RootElement : Valuable<IRootable>
     {
-        double Latitude { get; set; }
-        double Longitude { get; set; }
-    }
+        private static readonly Lazy<RootElement> lazy =
+            new Lazy<RootElement>(() => new RootElement());
 
-    public class Location : ILocation
+        public static RootElement Instance { get { return lazy.Value; } }
+
+        public bool IsReady { get { return lazy.IsValueCreated; } }
+
+        private RootElement() { }
+    } 
+
+    #endregion
+
+    #region Timestamping
+
+    public class Timestamp
     {
-        #region ILocation Members
-
-        public double Latitude { get; set; }
-        public double Longitude { get; set; }
-
-        #endregion
+        public Guid Id { get; set; }
+        public Guid ParentId { get; set; }
+        public DateTime Created { get; set; }
+        public DateTime Modified { get; set; }
+        public DateTime Accessed { get; set; }
     }
 
     #endregion
@@ -437,21 +424,25 @@ namespace Blink.Shared.Domain.NewThings
 
     public interface IProgress
     {
-        Guid Id { get; set; }
         bool IsCompleted();
     }
 
     public abstract class ProgressBase : IProgress
     {
-        public virtual Guid Id { get; set; }
+        #region IProgress Members
+
         public abstract bool IsCompleted();
+
+        #endregion
+
+        public virtual Guid Id { get; set; }
+
+        public virtual Guid ParentId { get; set; }
     }
 
     public class ProgressCollection : Collection<IProgress>, IProgress
     {
         #region IProgress Members
-
-        public Guid Id { get; set; }
 
         public bool IsCompleted()
         {
@@ -513,8 +504,8 @@ namespace Blink.Shared.Domain.NewThings
     }
     public class LocationProgress : ProgressBase
     {
-        public Location Current { get; set; }
-        public Location Destination { get; set; }
+        Tuple<double, double> Current { get; set; }
+        Tuple<double, double> Destination { get; set; }
         
         #region IProgress Members
 
@@ -533,6 +524,7 @@ namespace Blink.Shared.Domain.NewThings
     public interface ISchedule 
     {
         Guid Id { get; set; }
+        Guid ParentId { get; set; }
         DateTime Value { get; set; } 
     }
 
