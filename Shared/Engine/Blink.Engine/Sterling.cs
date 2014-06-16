@@ -57,6 +57,8 @@ namespace Blink.Shared.Engine
                 //CreateTableDefinition<Domain.DataModel.Notes.Category, Guid>(i => i.Id)
 
                 //CreateTableDefinition<Domain.NewThings.FolderElement, Guid>(f => f.Id),
+
+                CreateTableDefinition<Domain.NewThings.ElementEntity, Guid>(e => e.Id)
             };
         }
     }

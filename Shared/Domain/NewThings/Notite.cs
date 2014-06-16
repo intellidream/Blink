@@ -7,6 +7,77 @@ using System.Text;
 
 namespace Blink.Shared.Domain.NewThings
 {
+    #region Entities
+
+    public interface IElementEntity
+    {
+        ElementEntity ToElementEntity();
+    }
+
+    public interface IConcreteEntity<T> : IElementEntity where T : class
+    {
+        ConcreteEntity ToConcreteBaseEntity();
+
+        T ToConcreteTypeEntity();
+    }
+
+    public interface IValuableEntity : IElementEntity
+    {
+        ValuableEntity ToValuableEntity();
+    }
+
+    // pe tot ce este in values trebuie sa se cheme ToElementEntity/respectiv ToConcreteBase&Type sau ToValuableEntity
+    public interface ISelfableEntity : IValuableEntity
+    {
+        object ValuesToEntities();
+    }
+
+    public class ElementEntity
+    {
+        public Guid Id { get; set; }
+
+        public Guid ParentId { get; set; }
+
+        public int Position { get; set; }
+
+        public Guid TimestampId { get; set; }
+
+        public ElementTypes Type { get; set; }
+    }
+
+    public class ConcreteEntity
+    {
+        public Guid Id { get; set; }
+
+        public ConcreteTypes Type { get; set; }
+
+        public Guid ProgressId { get; set; }
+    }
+
+    public class TextEntity
+    {
+        public Guid Id { get; set; }
+
+        public string Text { get; set; }
+    }
+
+    public class ValuableEntity
+    {
+        public Guid Id { get; set; }
+
+        public virtual ConcreteTypes Type { get; set; }
+
+        public Guid ProgressId { get; set; }
+    }
+
+    // implement converters from TextElement to ElementEntity, ConcreteEntity and TextEntity
+
+    // implement object-to-entity converters... one way?! ce facem cu from - reconstructia din persistence?!
+
+    // transactional inserting/saving/removing/refreshing (not in business classes themselves!!!)?!
+
+    #endregion
+
     #region Elements
 
     public enum ElementTypes : int
@@ -66,6 +137,7 @@ namespace Blink.Shared.Domain.NewThings
         protected override void SetItem(int index, T item)
         {
             item.ParentId = this.Id;
+            item.Position = index;
             Progress[index] = item.Progress;
             base.SetItem(index, item);
         }
@@ -73,6 +145,7 @@ namespace Blink.Shared.Domain.NewThings
         protected override void InsertItem(int index, T item)
         {
             item.ParentId = this.Id;
+            item.Position = index;
             Progress.Insert(index, item.Progress);
             base.InsertItem(index, item);
         }
@@ -186,7 +259,7 @@ namespace Blink.Shared.Domain.NewThings
         #endregion
     }
 
-    public class TextElement : ConcreteBase
+    public class TextElement : ConcreteBase, IConcreteEntity<TextEntity>
     {
         public string Text { get; set; }
 
@@ -195,6 +268,45 @@ namespace Blink.Shared.Domain.NewThings
         public override ConcreteTypes Type { get { return ConcreteTypes.Text; } }
 
         public override ProgressBase Progress { get; set; }
+
+        #endregion
+
+        #region IConcreteEntity<TextEntity> Members
+
+        public ConcreteEntity ToConcreteBaseEntity()
+        {
+            return new ConcreteEntity 
+            {
+                Id = this.Id,
+                Type = ConcreteTypes.Text,
+                ProgressId = this.Progress.Id
+            };
+        }
+
+        public TextEntity ToConcreteTypeEntity()
+        {
+            return new TextEntity 
+            {
+                Id = this.Id,
+                Text = this.Text
+            };
+        }
+
+        #endregion
+
+        #region IElementEntity Members
+
+        public ElementEntity ToElementEntity()
+        {
+            return new ElementEntity
+            {
+                Id = this.Id,
+                ParentId = this.ParentId,
+                Position = this.Position,
+                TimestampId = this.Timestamp.Id,
+                Type = ElementTypes.Concrete
+            };
+        }
 
         #endregion
     }
@@ -412,7 +524,6 @@ namespace Blink.Shared.Domain.NewThings
     public class Timestamp
     {
         public Guid Id { get; set; }
-        public Guid ParentId { get; set; }
         public DateTime Created { get; set; }
         public DateTime Modified { get; set; }
         public DateTime Accessed { get; set; }
@@ -436,8 +547,6 @@ namespace Blink.Shared.Domain.NewThings
         #endregion
 
         public virtual Guid Id { get; set; }
-
-        public virtual Guid ParentId { get; set; }
     }
 
     public class ProgressCollection : Collection<IProgress>, IProgress

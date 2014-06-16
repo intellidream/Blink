@@ -3,7 +3,7 @@
   <Class Name="Blink.Shared.Domain.NewThings.ProgressBase" Collapsed="true">
     <Position X="10.5" Y="5.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAACAAAAAAAAAAAAAAAAAAAAAAAAABAAAgAAAAAAAAA=</HashCode>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAA=</HashCode>
       <FileName>NewThings\Notite.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -43,6 +43,7 @@
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAACACAAAA=</HashCode>
       <FileName>NewThings\Notite.cs</FileName>
     </TypeIdentifier>
+    <Lollipop Position="0.2" />
   </Class>
   <Class Name="Blink.Shared.Domain.NewThings.TweetElement" Collapsed="true" BaseTypeListCollapsed="true">
     <Position X="2.75" Y="7.5" Width="1.5" />
@@ -160,7 +161,7 @@
   <Class Name="Blink.Shared.Domain.NewThings.Timestamp" Collapsed="true">
     <Position X="17.25" Y="5.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAACAAAAAAAAAAACABAAAAAAAAAAAAQAAgAAAAAAAAA=</HashCode>
+      <HashCode>AAACAAAAAAAAAAACABAAAAAAAAAAAAQAAAAAAAAAAAA=</HashCode>
       <FileName>NewThings\Notite.cs</FileName>
     </TypeIdentifier>
   </Class>
