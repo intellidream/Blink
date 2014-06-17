@@ -14,22 +14,19 @@ namespace Blink.Shared.Domain.NewThings
         ElementEntity ToElementEntity();
     }
 
-    public interface IConcreteEntity<T> : IElementEntity where T : class
-    {
-        ConcreteEntity ToConcreteBaseEntity();
-
-        T ToConcreteTypeEntity();
-    }
-
     public interface IValuableEntity : IElementEntity
     {
         ValuableEntity ToValuableEntity();
     }
 
-    // pe tot ce este in values trebuie sa se cheme ToElementEntity/respectiv ToConcreteBase&Type sau ToValuableEntity
-    public interface ISelfableEntity : IValuableEntity
+    public interface IConcreteEntity { }
+
+    public interface IConcreteEntity<T> : IElementEntity 
+        where T : IConcreteEntity
     {
-        object ValuesToEntities();
+        ConcreteEntity ToConcreteBaseEntity();
+
+        T ToConcreteTypeEntity();
     }
 
     public class ElementEntity
@@ -45,36 +42,39 @@ namespace Blink.Shared.Domain.NewThings
         public ElementTypes Type { get; set; }
     }
 
+    public class ValuableEntity
+    {
+        public Guid Id { get; set; }
+
+        public string Name { get; set; }
+    }
+
     public class ConcreteEntity
     {
         public Guid Id { get; set; }
 
-        public ConcreteTypes Type { get; set; }
-
         public Guid ProgressId { get; set; }
     }
 
-    public class TextEntity
+    public class TextEntity : IConcreteEntity
     {
         public Guid Id { get; set; }
 
         public string Text { get; set; }
     }
 
-    public class ValuableEntity
+    public class FileEntity : IConcreteEntity
     {
         public Guid Id { get; set; }
 
-        public virtual ConcreteTypes Type { get; set; }
+        public string FileName { get; set; }
 
-        public Guid ProgressId { get; set; }
+        public Blink.Shared.Domain.NewThings.FileElement.FileTypes FileType { get; set; }
+
+        public string FilePath { get; set; }
+        
+        public byte[] FileData { get; set; }
     }
-
-    // implement converters from TextElement to ElementEntity, ConcreteEntity and TextEntity
-
-    // implement object-to-entity converters... one way?! ce facem cu from - reconstructia din persistence?!
-
-    // transactional inserting/saving/removing/refreshing (not in business classes themselves!!!)?!
 
     #endregion
 
@@ -82,9 +82,18 @@ namespace Blink.Shared.Domain.NewThings
 
     public enum ElementTypes : int
     {
-        Concrete,
-        Valuable,
-        Rootable
+        None,
+        Text,
+        Tweet,
+        File,
+        List,
+        Grid,
+        Tree,
+        Group,
+        Note,
+        Page,
+        Folder,
+        Root
     }
 
     public interface IElement
@@ -101,20 +110,14 @@ namespace Blink.Shared.Domain.NewThings
 
     #region Valuables
 
-    public enum ValuableTypes : int
-    {
-        List,
-        Grid,
-        Tree,
-        Group,
-        Note,
-        Page,
-        Folder
-    }
-
     public class Keepable<T> : Collection<T>, IElement where T : IElement
     {
         public virtual ProgressCollection Progress { get; private set; }
+
+        public Keepable() 
+        {
+            Progress = new ProgressCollection();
+        }
 
         #region IElement Members
 
@@ -126,7 +129,7 @@ namespace Blink.Shared.Domain.NewThings
 
         public virtual Timestamp Timestamp { get; set; }
 
-        ElementTypes IElement.Type { get { return ElementTypes.Valuable; } }
+        public virtual ElementTypes Type { get { return ElementTypes.None; } }
 
         IProgress IElement.Progress { get { return Progress; } }
 
@@ -165,11 +168,38 @@ namespace Blink.Shared.Domain.NewThings
         #endregion
     }
 
-    public class Valuable<T> : Keepable<T> where T : IElement
+    public class Valuable<T> : Keepable<T>, IValuableEntity where T : IElement
     {
         public virtual string Name { get; set; }
+        
+        #region IValuableEntity Members
 
-        public virtual ValuableTypes Type { get; private set; }
+        public ValuableEntity ToValuableEntity()
+        {
+            return new ValuableEntity
+            {
+                Id = this.Id,
+                Name = this.Name
+            };
+        }
+
+        #endregion
+
+        #region IElementEntity Members
+
+        public ElementEntity ToElementEntity()
+        {
+            return new ElementEntity 
+            {
+                Id = this.Id,
+                ParentId = this.ParentId,
+                Position = this.Position,
+                TimestampId = this.Timestamp.Id,
+                Type = this.Type
+            };
+        }
+
+        #endregion
     }
 
     public class Selfable<T> : Valuable<Selfable<T>> where T : IElement
@@ -229,17 +259,8 @@ namespace Blink.Shared.Domain.NewThings
 
     #region Concretes
 
-    public enum ConcreteTypes : int
-    {
-        Text,
-        Tweet,
-        File
-    }
-
     public abstract class ConcreteBase : IElement, IGroupable, INotable
     {
-        public abstract ConcreteTypes Type { get; }
-
         public abstract ProgressBase Progress { get; set; }
 
         #region IElement Members
@@ -252,7 +273,7 @@ namespace Blink.Shared.Domain.NewThings
 
         public virtual Timestamp Timestamp { get; set; }
 
-        ElementTypes IElement.Type { get { return ElementTypes.Concrete; } }
+        public abstract ElementTypes Type { get; }
 
         IProgress IElement.Progress { get { return Progress; } }
 
@@ -265,9 +286,13 @@ namespace Blink.Shared.Domain.NewThings
 
         #region ConcreteBase Members
 
-        public override ConcreteTypes Type { get { return ConcreteTypes.Text; } }
-
         public override ProgressBase Progress { get; set; }
+
+        #endregion
+
+        #region IElement Members
+
+        public override ElementTypes Type { get { return ElementTypes.Text; } }
 
         #endregion
 
@@ -278,7 +303,6 @@ namespace Blink.Shared.Domain.NewThings
             return new ConcreteEntity 
             {
                 Id = this.Id,
-                Type = ConcreteTypes.Text,
                 ProgressId = this.Progress.Id
             };
         }
@@ -304,7 +328,7 @@ namespace Blink.Shared.Domain.NewThings
                 ParentId = this.ParentId,
                 Position = this.Position,
                 TimestampId = this.Timestamp.Id,
-                Type = ElementTypes.Concrete
+                Type = ElementTypes.Text
             };
         }
 
@@ -321,9 +345,13 @@ namespace Blink.Shared.Domain.NewThings
 
         #region ConcreteBase Members
 
-        public override ConcreteTypes Type { get { return ConcreteTypes.Text; } }
-
         public override ProgressBase Progress { get; set; }
+
+        #endregion
+
+        #region IElement Members
+
+        public override ElementTypes Type { get { return ElementTypes.Tweet; } }
 
         #endregion
     }
@@ -346,9 +374,13 @@ namespace Blink.Shared.Domain.NewThings
 
         #region ConcreteBase Members
 
-        public override ConcreteTypes Type { get { return ConcreteTypes.Text; } }
-
         public override ProgressBase Progress { get; set; }
+
+        #endregion
+
+        #region IElement Members
+
+        public override ElementTypes Type { get { return ElementTypes.File; } }
 
         #endregion
     }
@@ -359,15 +391,9 @@ namespace Blink.Shared.Domain.NewThings
 
     public class ListElement : Valuable<ConcreteBase>, IGroupable, INotable
     {
-        #region Valuable Members
+        #region IElement Members
 
-        public override ValuableTypes Type
-        {
-            get
-            {
-                return ValuableTypes.List;
-            }
-        }
+        public override ElementTypes Type { get { return ElementTypes.List; } }
 
         #endregion
     }
@@ -387,30 +413,18 @@ namespace Blink.Shared.Domain.NewThings
             }
         }
 
-        #region Valuable Members
+        #region IElement Members
 
-        public override ValuableTypes Type
-        {
-            get
-            {
-                return ValuableTypes.Grid;
-            }
-        }
+        public override ElementTypes Type { get { return ElementTypes.Grid; } }
 
         #endregion
     }
 
     public class TreeElement : Selfable<ConcreteBase>, IGroupable, INotable
     {
-        #region Valuable Members
+        #region IElement Members
 
-        public override ValuableTypes Type
-        {
-            get
-            {
-                return ValuableTypes.Tree;
-            }
-        }
+        public override ElementTypes Type { get { return ElementTypes.Tree; } }
 
         #endregion
     }
@@ -423,15 +437,9 @@ namespace Blink.Shared.Domain.NewThings
 
     public class GroupElement : Valuable<IGroupable>, INotable
     {
-        #region Valuable Members
+        #region IElement Members
 
-        public override ValuableTypes Type
-        {
-            get
-            {
-                return ValuableTypes.Group;
-            }
-        }
+        public override ElementTypes Type { get { return ElementTypes.Group; } }
 
         #endregion
     }
@@ -444,15 +452,9 @@ namespace Blink.Shared.Domain.NewThings
 
     public class NoteElement : Valuable<INotable>, IPageable, IFoldable
     {
-        #region Valuable Members
+        #region IElement Members
 
-        public override ValuableTypes Type
-        {
-            get
-            {
-                return ValuableTypes.Note;
-            }
-        }
+        public override ElementTypes Type { get { return ElementTypes.Note; } }
 
         #endregion
     }
@@ -465,15 +467,9 @@ namespace Blink.Shared.Domain.NewThings
 
     public class PageElement : Valuable<IPageable>, IFoldable
     {
-        #region Valuable Members
+        #region IElement Members
 
-        public override ValuableTypes Type
-        {
-            get
-            {
-                return ValuableTypes.Page;
-            }
-        }
+        public override ElementTypes Type { get { return ElementTypes.Page; } }
 
         #endregion
     }
@@ -486,14 +482,17 @@ namespace Blink.Shared.Domain.NewThings
 
     public class FolderElement : Selfable<IFoldable>, IRootable
     {
-        #region Valuable Members
+        #region IElement Members
 
-        public override ValuableTypes Type
+        private ElementTypes? type;
+        new public ElementTypes Type
         {
             get
             {
-                return ValuableTypes.Folder;
+                return type.HasValue ? type.Value : ElementTypes.Folder;
             }
+
+            set { type = value; }
         }
 
         #endregion
@@ -503,7 +502,10 @@ namespace Blink.Shared.Domain.NewThings
 
     #region Rootables
 
-    public interface IRootable : IElement { }
+    public interface IRootable : IElement 
+    {
+        new ElementTypes Type { get; set; }
+    }
 
     public sealed class RootElement : Valuable<IRootable>
     {
@@ -613,8 +615,8 @@ namespace Blink.Shared.Domain.NewThings
     }
     public class LocationProgress : ProgressBase
     {
-        Tuple<double, double> Current { get; set; }
-        Tuple<double, double> Destination { get; set; }
+        public Tuple<double, double> Current { get; set; }
+        public Tuple<double, double> Destination { get; set; }
         
         #region IProgress Members
 

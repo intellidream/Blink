@@ -114,94 +114,98 @@ namespace Blink.Classic
             #endregion
         }
 
-        //Guid _folderElementId;
+        Guid _folderElementId;
 
-        private void button1_Click(object sender, EventArgs e)
-        //private async void button1_Click(object sender, EventArgs e)
+        //private void button1_Click(object sender, EventArgs e)
+        private async void button1_Click(object sender, EventArgs e)
         {
-            //var folderElement = new FolderElement();
-            //folderElement.Name = "My New Category";
-            //_folderElementId = Guid.NewGuid();
-            //folderElement.Id = _folderElementId;
-            //folderElement.ParentId = Guid.Empty;
+            var folderElement = new FolderElement();
+            folderElement.Name = "My New Folder";
+            _folderElementId = Guid.NewGuid();
+            folderElement.Id = _folderElementId;
+            folderElement.ParentId = Guid.Empty;
 
-            //var subFolderElement = new FolderElement();
-            //subFolderElement.Name = "My New SubCategory";
-            //subFolderElement.Id = Guid.NewGuid();
-            //subFolderElement.ParentId = Guid.Empty;
+            var subFolderElement = new FolderElement();
+            subFolderElement.Name = "My New SubFolder";
+            subFolderElement.Id = Guid.NewGuid();
+            subFolderElement.ParentId = Guid.Empty;
 
-            //var pageElement = new PageElement();
-            //pageElement.Id = Guid.NewGuid();
+            var pageElement = new PageElement();
+            pageElement.Id = Guid.NewGuid();
 
-            //var noteElement = new NoteElement();
-            //noteElement.Id = Guid.NewGuid();
-            //noteElement.Name = "My New Note";
+            var noteElement = new NoteElement();
+            noteElement.Id = Guid.NewGuid();
+            noteElement.Name = "My New Note";
 
-            //var noteElementTwo = new NoteElement();
-            //noteElementTwo.Id = Guid.NewGuid();
-            //noteElementTwo.Name = "My New Note Two";
+            var noteElementTwo = new NoteElement();
+            noteElementTwo.Id = Guid.NewGuid();
+            noteElementTwo.Name = "My New Note Two";
 
-            //var groupElement = new GroupElement();
-            //groupElement.Name = "My New Group";
-            //groupElement.Id = Guid.NewGuid();
+            var groupElement = new GroupElement();
+            groupElement.Name = "My New Group";
+            groupElement.Id = Guid.NewGuid();
 
-            //var locationProgress = new LocationProgress();
-            //locationProgress.Id = Guid.NewGuid();
-            //var currentLocation = new Shared.Domain.NewThings.Location();
-            //currentLocation.Latitude = 10.00;
-            //currentLocation.Longitude = 10.01;
-            //var destinationLocation = new Shared.Domain.NewThings.Location();
-            //destinationLocation.Latitude = 20.02;
-            //destinationLocation.Longitude = 20.03;
-            //locationProgress.Current = currentLocation;
-            //locationProgress.Destination = destinationLocation;
-            //var textElement = new TextElement();
-            //textElement.Id = Guid.NewGuid();
-            //textElement.Progress = locationProgress;
+            var locationProgress = new LocationProgress();
+            locationProgress.Id = Guid.NewGuid();
+            locationProgress.Current = new Tuple<double, double>(10.00, 10.01);
+            locationProgress.Destination = new Tuple<double, double>(20.02, 20.03);
+            var textElement = new TextElement();
+            textElement.Id = Guid.NewGuid();
+            textElement.Progress = locationProgress;
 
-            //var dateTimeProgress = new DateTimeProgress();
-            //dateTimeProgress.Id = Guid.NewGuid();
-            //dateTimeProgress.Completion = DateTime.UtcNow.Subtract(new TimeSpan(100000));
-            //var fileElement = new FileElement();
-            //fileElement.Id = Guid.NewGuid();
-            //fileElement.Data = null;
-            //fileElement.Path = "C:\\Text.txt";
-            //fileElement.Type = FileElement.FileTypes.Other;
-            //fileElement.Progress = dateTimeProgress;
+            var dateTimeProgress = new DateTimeProgress();
+            dateTimeProgress.Id = Guid.NewGuid();
+            dateTimeProgress.Completion = DateTime.UtcNow.Subtract(new TimeSpan(100000));
+            var fileElement = new FileElement();
+            fileElement.Id = Guid.NewGuid();
+            fileElement.FileData = null;
+            fileElement.FilePath = "C:\\Text.txt";
+            fileElement.FileType = FileElement.FileTypes.Other;
+            fileElement.Progress = dateTimeProgress;
 
-            //var dateTimeProgressTwo = new DateTimeProgress();
-            //dateTimeProgressTwo.Id = Guid.NewGuid();
-            //dateTimeProgressTwo.Completion = DateTime.UtcNow.Subtract(new TimeSpan(100000));
-            //var textElementTwo = new TextElement();
-            //textElementTwo.Id = Guid.NewGuid();
-            //textElementTwo.Progress = dateTimeProgressTwo;
+            var dateTimeProgressTwo = new DateTimeProgress();
+            dateTimeProgressTwo.Id = Guid.NewGuid();
+            dateTimeProgressTwo.Completion = DateTime.UtcNow.Subtract(new TimeSpan(100000));
+            var textElementTwo = new TextElement();
+            textElementTwo.Id = Guid.NewGuid();
+            textElementTwo.Progress = dateTimeProgressTwo;
 
-            //groupElement.Add(fileElement);
+            groupElement.Add(fileElement);
 
-            //noteElement.Add(textElement);
-            //noteElement.Add(groupElement);
+            noteElement.Add(textElement);
+            noteElement.Add(groupElement);
 
-            //pageElement.Add(noteElement);
+            pageElement.Add(noteElement);
 
-            //noteElementTwo.Add(textElementTwo);
+            noteElementTwo.Add(textElementTwo);
 
-            //subFolderElement.Values.Add(pageElement);
-            //subFolderElement.Values.Add(noteElementTwo);
+            subFolderElement.Values.Add(pageElement);
+            subFolderElement.Values.Add(noteElementTwo);
 
-            //folderElement.Add(subFolderElement);
+            folderElement.Add(subFolderElement);
 
+            folderElement.Type = ElementTypes.Root;
+            RootElement.Instance.Add(folderElement);
+
+            await Sterling.Database.SaveAsync(folderElement.ToValuableEntity());
             //await Sterling.Database.SaveAsync(folderElement);
-            //await Sterling.Database.FlushAsync();
+            //await Sterling.Database.SaveAsync(folderElement);
+            //await Sterling.Database.SaveAsync(folderElement);
+            //await Sterling.Database.SaveAsync(folderElement);
 
-            //MessageBox.Show(this, @"folderElement saved at: " + DateTime.Now /*newNote.UtcTime.ToLocal()*/, @"Saved", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+
+            await Sterling.Database.FlushAsync();
+
+            MessageBox.Show(this, @"folderElement saved at: " + DateTime.Now /*newNote.UtcTime.ToLocal()*/, @"Saved", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
-        private void button2_Click(object sender, EventArgs e)
-        //private async void button2_Click(object sender, EventArgs e)
+        //private void button2_Click(object sender, EventArgs e)
+        private async void button2_Click(object sender, EventArgs e)
         {
-            //var folderElement = await Sterling.Database.LoadAsync<FolderElement>(_folderElementId);
+            var folderElement = await Sterling.Database.LoadAsync<ValuableEntity>(_folderElementId);
 
-            //MessageBox.Show(this, @"folderElement loaded.", @"Loaded", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show(this, @"folderElement loaded.", @"Loaded", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         public const string ApiKey = "0000000048111E64";

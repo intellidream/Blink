@@ -58,7 +58,11 @@ namespace Blink.Shared.Engine
 
                 //CreateTableDefinition<Domain.NewThings.FolderElement, Guid>(f => f.Id),
 
-                CreateTableDefinition<Domain.NewThings.ElementEntity, Guid>(e => e.Id)
+                CreateTableDefinition<Domain.NewThings.ElementEntity, Guid>(e => e.Id),
+                CreateTableDefinition<Domain.NewThings.ConcreteEntity, Guid>(e => e.Id),
+                CreateTableDefinition<Domain.NewThings.ValuableEntity, Guid>(e => e.Id),
+                CreateTableDefinition<Domain.NewThings.TextEntity, Guid>(e => e.Id),
+                CreateTableDefinition<Domain.NewThings.FileEntity, Guid>(e => e.Id)
             };
         }
     }
