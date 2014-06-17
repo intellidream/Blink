@@ -40,7 +40,7 @@
   <Class Name="Blink.Shared.Domain.NewThings.TextElement" Collapsed="true" BaseTypeListCollapsed="true">
     <Position X="0.5" Y="7.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAACACAAAA=</HashCode>
+      <HashCode>AAAAAAAAEAgAAAAAAAAAAAAAAAAAAAAAAQCACACAAAA=</HashCode>
       <FileName>NewThings\Notite.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
