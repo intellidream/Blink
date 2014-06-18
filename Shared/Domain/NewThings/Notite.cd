@@ -8,20 +8,13 @@
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="Blink.Shared.Domain.NewThings.ProgressCollection" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="8.25" Y="5.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAIAAAAAAAAAAAgAQBAAAAAAAAAAAAA=</HashCode>
-      <FileName>NewThings\Notite.cs</FileName>
-    </TypeIdentifier>
-    <Lollipop Position="0.2" Collapsed="true" />
-  </Class>
   <Class Name="Blink.Shared.Domain.NewThings.InternalProgress" Collapsed="true">
     <Position X="8.25" Y="7.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAIAAAAAAAAAAAAAABAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAABAAAABAAAAAgAAAAAAA=</HashCode>
       <FileName>NewThings\Notite.cs</FileName>
     </TypeIdentifier>
+    <Lollipop Position="0.2" />
   </Class>
   <Class Name="Blink.Shared.Domain.NewThings.DateTimeProgress" Collapsed="true">
     <Position X="10.5" Y="7.5" Width="1.5" />

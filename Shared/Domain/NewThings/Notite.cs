@@ -112,11 +112,11 @@ namespace Blink.Shared.Domain.NewThings
 
     public class Keepable<T> : Collection<T>, IElement where T : IElement
     {
-        public virtual ProgressCollection Progress { get; private set; }
+        //public virtual ProgressCollection Progress { get; private set; }
 
         public Keepable() 
         {
-            Progress = new ProgressCollection();
+            //Progress = new ProgressCollection();
         }
 
         #region IElement Members
@@ -131,7 +131,7 @@ namespace Blink.Shared.Domain.NewThings
 
         public virtual ElementTypes Type { get { return ElementTypes.None; } }
 
-        IProgress IElement.Progress { get { return Progress; } }
+        //IProgress IElement.Progress { get { return Progress; } }
 
         #endregion
 
@@ -250,7 +250,7 @@ namespace Blink.Shared.Domain.NewThings
 
         #endregion
 
-        public override ProgressCollection Progress { get { return Values.Progress; } }
+        //public override ProgressCollection Progress { get { return Values.Progress; } }
 
         #endregion
     }
@@ -535,8 +535,20 @@ namespace Blink.Shared.Domain.NewThings
 
     #region Progressing
 
+    public enum ProgressTypes : int
+    {
+        Manual,
+        DateTime,
+        Location,
+        Internal
+    }
+
     public interface IProgress
     {
+        Guid Id { get; set; }
+
+        ProgressTypes ProgressType { get; }
+
         bool IsCompleted();
     }
 
@@ -544,53 +556,113 @@ namespace Blink.Shared.Domain.NewThings
     {
         #region IProgress Members
 
+        public Guid Id { get; set; }
+
+        public abstract ProgressTypes ProgressType { get; }
+
         public abstract bool IsCompleted();
 
         #endregion
-
-        public virtual Guid Id { get; set; }
     }
 
-    public class ProgressCollection : Collection<IProgress>, IProgress
+    public class InternalProgress : IProgress
     {
-        #region IProgress Members
+        public Keepable<IElement> Parent { get; set; }//???take values yourself from this actually!!
+        public IList<IProgress> Values { get; set; }
 
-        public bool IsCompleted()
+        public bool HasValues 
         {
-            return (this.Total > 0)
-                        ? this.All(p => p.IsCompleted())
-                        : false;
+            get { return ((Values != null) && (Values.Count > 0)); } 
         }
 
-        #endregion
+        public int Total { get { return HasValues ? Values.Count : 0; } }
 
-        public int Total { get { return this.Count; } }
         public int Completed
         {
             get
             {
                 return (this.Total > 0)
-                        ? this.Count(p => p.IsCompleted())
+                        ? Values.Count(p => p.IsCompleted())
                         : 0;
             }
         }
 
-        public int Percentage 
+        public int Percentage
         {
-            get 
+            get
             {
                 return (this.Total > 0)
                         ? (int)Math.Round((double)(100 * Completed) / Total)
                         : 0;
             }
         }
+
+        #region IProgress Members
+
+        public Guid Id { get; set; }
+
+        public ProgressTypes ProgressType 
+        {
+            get { return ProgressTypes.Internal; } 
+        }
+
+        //to allow IsCompleted behavior override, use a Func/Action
+        //treat case where some of sub-progresses are null in the code below!!!
+        public bool IsCompleted()
+        {
+            return (this.Total > 0)
+                        ? Values.All(p => p.IsCompleted())
+                        : false;
+        }
+
+        #endregion
     }
 
-    public class InternalProgress : ProgressBase
+    //public class ProgressCollection : Collection<IProgress>, IProgress
+    //{
+    //    #region IProgress Members
+
+    //    public bool IsCompleted()
+    //    {
+    //        return (this.Total > 0)
+    //                    ? this.All(p => p.IsCompleted())
+    //                    : false;
+    //    }
+
+    //    #endregion
+
+    //    public int Total { get { return this.Count; } }
+    //    public int Completed
+    //    {
+    //        get
+    //        {
+    //            return (this.Total > 0)
+    //                    ? this.Count(p => p.IsCompleted())
+    //                    : 0;
+    //        }
+    //    }
+
+    //    public int Percentage 
+    //    {
+    //        get 
+    //        {
+    //            return (this.Total > 0)
+    //                    ? (int)Math.Round((double)(100 * Completed) / Total)
+    //                    : 0;
+    //        }
+    //    }
+    //}
+
+    public class ManualProgress : ProgressBase
     {
         public bool Completed { get; set; }
 
         #region IProgress Members
+
+        public override ProgressTypes ProgressType
+        {
+            get { return ProgressTypes.Manual; }
+        }
 
         public override bool IsCompleted()
         {
@@ -606,6 +678,11 @@ namespace Blink.Shared.Domain.NewThings
         
         #region IProgress Members
 
+        public override ProgressTypes ProgressType
+        {
+            get { return ProgressTypes.DateTime; }
+        }
+
         public override bool IsCompleted()
         {
             return Completion.ToUniversalTime().Equals(DateTime.UtcNow);
@@ -619,6 +696,11 @@ namespace Blink.Shared.Domain.NewThings
         public Tuple<double, double> Destination { get; set; }
         
         #region IProgress Members
+
+        public override ProgressTypes ProgressType
+        {
+            get { return ProgressTypes.Location; }
+        }
 
         public override bool IsCompleted()
         {
