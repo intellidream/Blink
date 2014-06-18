@@ -568,7 +568,12 @@ namespace Blink.Shared.Domain.NewThings
     public class InternalProgress : IProgress
     {
         public Keepable<IElement> Parent { get; set; }//???take values yourself from this actually!!
-        public IList<IProgress> Values { get; set; }
+        //public IList<IProgress> Values { get; set; }
+
+        public IList<IProgress> Values 
+        {
+            get { return (Parent != null) ? Parent.Select(e => e.Progress).ToList() : null; } 
+        }
 
         public bool HasValues 
         {
