@@ -38,7 +38,7 @@
     </TypeIdentifier>
   </Class>
   <Class Name="Blink.Shared.Domain.NewThings.TextElement" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="0.5" Y="4.5" Width="1.5" />
+    <Position X="0.5" Y="4.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAEAgAAAAAAAAAAAAAAAAAAAAAAQCACACAAAA=</HashCode>
       <FileName>NewThings\Notite.cs</FileName>
@@ -46,14 +46,14 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="Blink.Shared.Domain.NewThings.TweetElement" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="2.75" Y="4.5" Width="1.5" />
+    <Position X="2.75" Y="4.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAACAAAA=</HashCode>
       <FileName>NewThings\Notite.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Blink.Shared.Domain.NewThings.FileElement" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="5" Y="4.5" Width="1.5" />
+    <Position X="5" Y="4.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AgAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAQBAAADAAAA=</HashCode>
       <FileName>NewThings\Notite.cs</FileName>
@@ -92,7 +92,7 @@
       </Path>
     </InheritanceLine>
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAgAAAAAAAAAAAQAAAAAAAAAAgAAAAAAAAA=</HashCode>
       <FileName>NewThings\Notite.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -137,7 +137,7 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="Blink.Shared.Domain.NewThings.ConcreteBase" Collapsed="true">
-    <Position X="2.75" Y="6.5" Width="1.5" />
+    <Position X="2.75" Y="6.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAACAAAAAAAAAAAgAAACAAAIAAAAAAAAAwAAAACAAAA=</HashCode>
       <FileName>NewThings\Notite.cs</FileName>
@@ -167,28 +167,28 @@
     </TypeIdentifier>
   </Class>
   <Class Name="Blink.Shared.Domain.NewThings.ElementEntity" Collapsed="true">
-    <Position X="0.5" Y="8.75" Width="1.5" />
+    <Position X="0.5" Y="8.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAACAAAAAAAAAAAgAAAAAAAAAAAAAAAAAwAAAAAEAAA=</HashCode>
       <FileName>NewThings\Notite.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Blink.Shared.Domain.NewThings.ValuableEntity" Collapsed="true">
-    <Position X="4.5" Y="8.75" Width="1.5" />
+    <Position X="4.5" Y="8.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAACAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>NewThings\Notite.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Blink.Shared.Domain.NewThings.ConcreteEntity" Collapsed="true">
-    <Position X="2.5" Y="8.75" Width="1.5" />
+    <Position X="2.5" Y="8.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAACAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>NewThings\Notite.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Blink.Shared.Domain.NewThings.FileEntity" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="6.5" Y="8.75" Width="1.5" />
+    <Position X="6.5" Y="8.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AgACAgAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAABAAAA=</HashCode>
       <FileName>NewThings\Notite.cs</FileName>
@@ -266,28 +266,28 @@
     </TypeIdentifier>
   </Interface>
   <Interface Name="Blink.Shared.Domain.NewThings.IElementEntity" Collapsed="true">
-    <Position X="2.75" Y="7.5" Width="1.5" />
+    <Position X="2.75" Y="7.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>NewThings\Notite.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="Blink.Shared.Domain.NewThings.IValuableEntity" Collapsed="true">
-    <Position X="5.25" Y="7.5" Width="1.5" />
+    <Position X="5.25" Y="7.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAA=</HashCode>
       <FileName>NewThings\Notite.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="Blink.Shared.Domain.NewThings.IConcreteEntity" Collapsed="true">
-    <Position X="0.5" Y="6.5" Width="1.5" />
+    <Position X="0.5" Y="6.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>NewThings\Notite.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="Blink.Shared.Domain.NewThings.IConcreteEntity&lt;T&gt;" Collapsed="true">
-    <Position X="0.5" Y="7.5" Width="1.5" />
+    <Position X="0.5" Y="7.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAA=</HashCode>
       <FileName>NewThings\Notite.cs</FileName>
