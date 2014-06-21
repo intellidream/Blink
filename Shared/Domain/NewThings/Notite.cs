@@ -112,7 +112,7 @@ namespace Blink.Shared.Domain.NewThings
 
     public class Keepable<T> : Collection<T>, IElement where T : IElement
     {
-        //public virtual ProgressCollection Progress { get; private set; }
+        private InternalProgress _Progress { get; private set; }
 
         public Keepable() 
         {
@@ -131,7 +131,7 @@ namespace Blink.Shared.Domain.NewThings
 
         public virtual ElementTypes Type { get { return ElementTypes.None; } }
 
-        //IProgress IElement.Progress { get { return Progress; } }
+        public IProgress Progress { get; }
 
         #endregion
 
@@ -567,27 +567,24 @@ namespace Blink.Shared.Domain.NewThings
 
     public class InternalProgress : IProgress
     {
-        public Keepable<IElement> Parent { get; set; }//???take values yourself from this actually!!
-        //public IList<IProgress> Values { get; set; }
-
-        public IList<IProgress> Values 
+        private IList<IProgress> _Values 
         {
             get { return (Parent != null) ? Parent.Select(e => e.Progress).ToList() : null; } 
         }
 
-        public bool HasValues 
+        private bool _HasValues 
         {
-            get { return ((Values != null) && (Values.Count > 0)); } 
+            get { return ((_Values != null) && (_Values.Count > 0)); } 
         }
 
-        public int Total { get { return HasValues ? Values.Count : 0; } }
+        private int _Total { get { return _HasValues ? _Values.Count : 0; } }
 
-        public int Completed
+        private int _Completed
         {
             get
             {
-                return (this.Total > 0)
-                        ? Values.Count(p => p.IsCompleted())
+                return (this._Total > 0)
+                        ? _Values.Count(p => p != null && p.IsCompleted())
                         : 0;
             }
         }
@@ -596,11 +593,15 @@ namespace Blink.Shared.Domain.NewThings
         {
             get
             {
-                return (this.Total > 0)
-                        ? (int)Math.Round((double)(100 * Completed) / Total)
+                var completed = this._Completed;
+
+                return (completed > 0)
+                        ? (int)Math.Round((double)(100 * completed) / _Total)
                         : 0;
             }
         }
+
+        public Keepable<IElement> Parent { get; set; }
 
         #region IProgress Members
 
@@ -611,52 +612,13 @@ namespace Blink.Shared.Domain.NewThings
             get { return ProgressTypes.Internal; } 
         }
 
-        //to allow IsCompleted behavior override, use a Func/Action
-        //treat case where some of sub-progresses are null in the code below!!!
         public bool IsCompleted()
         {
-            return (this.Total > 0)
-                        ? Values.All(p => p.IsCompleted())
-                        : false;
+            return _Completed > 0;
         }
 
         #endregion
     }
-
-    //public class ProgressCollection : Collection<IProgress>, IProgress
-    //{
-    //    #region IProgress Members
-
-    //    public bool IsCompleted()
-    //    {
-    //        return (this.Total > 0)
-    //                    ? this.All(p => p.IsCompleted())
-    //                    : false;
-    //    }
-
-    //    #endregion
-
-    //    public int Total { get { return this.Count; } }
-    //    public int Completed
-    //    {
-    //        get
-    //        {
-    //            return (this.Total > 0)
-    //                    ? this.Count(p => p.IsCompleted())
-    //                    : 0;
-    //        }
-    //    }
-
-    //    public int Percentage 
-    //    {
-    //        get 
-    //        {
-    //            return (this.Total > 0)
-    //                    ? (int)Math.Round((double)(100 * Completed) / Total)
-    //                    : 0;
-    //        }
-    //    }
-    //}
 
     public class ManualProgress : ProgressBase
     {
