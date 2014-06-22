@@ -112,7 +112,7 @@ namespace Blink.Shared.Domain.NewThings
 
     public class Keepable<T> : Collection<T>, IElement where T : IElement
     {
-        private InternalProgress _Progress { get; private set; }
+        private InternalProgress _Progress { get; set; }
 
         public Keepable() 
         {
