@@ -112,11 +112,12 @@ namespace Blink.Shared.Domain.NewThings
 
     public class Keepable<T> : Collection<T>, IElement where T : IElement
     {
-        private InternalProgress _Progress { get; set; }
+        private IProgress _Progress { get; set; }
+        private InternalProgress<T> _InternalProgress { get; set; }
 
         public Keepable() 
         {
-            //Progress = new ProgressCollection();
+            _InternalProgress = new InternalProgress<T>(this);
         }
 
         #region IElement Members
@@ -131,7 +132,11 @@ namespace Blink.Shared.Domain.NewThings
 
         public virtual ElementTypes Type { get { return ElementTypes.None; } }
 
-        public IProgress Progress { get; }
+        public virtual IProgress Progress 
+        {
+            get { return _Progress ?? _InternalProgress; } 
+            set { _Progress = value; } 
+        }
 
         #endregion
 
@@ -141,7 +146,6 @@ namespace Blink.Shared.Domain.NewThings
         {
             item.ParentId = this.Id;
             item.Position = index;
-            Progress[index] = item.Progress;
             base.SetItem(index, item);
         }
 
@@ -149,19 +153,16 @@ namespace Blink.Shared.Domain.NewThings
         {
             item.ParentId = this.Id;
             item.Position = index;
-            Progress.Insert(index, item.Progress);
             base.InsertItem(index, item);
         }
 
         protected override void RemoveItem(int index)
         {
-            Progress.RemoveAt(index);
             base.RemoveItem(index);
         }
 
         protected override void ClearItems()
         {
-            Progress.Clear();
             base.ClearItems();
         }
 
@@ -250,7 +251,7 @@ namespace Blink.Shared.Domain.NewThings
 
         #endregion
 
-        //public override ProgressCollection Progress { get { return Values.Progress; } }
+        public override IProgress Progress { get { return Values.Progress; } }
 
         #endregion
     }
@@ -549,6 +550,8 @@ namespace Blink.Shared.Domain.NewThings
 
         ProgressTypes ProgressType { get; }
 
+        int Percentage { get; }
+
         bool IsCompleted();
     }
 
@@ -560,16 +563,24 @@ namespace Blink.Shared.Domain.NewThings
 
         public abstract ProgressTypes ProgressType { get; }
 
+        public virtual int Percentage 
+        {
+            get 
+            {
+                return IsCompleted() ? 100 : 0;
+            } 
+        }
+
         public abstract bool IsCompleted();
 
         #endregion
     }
 
-    public class InternalProgress : IProgress
+    public class InternalProgress<T> : IProgress where T : IElement
     {
         private IList<IProgress> _Values 
         {
-            get { return (Parent != null) ? Parent.Select(e => e.Progress).ToList() : null; } 
+            get { return (_Parent != null) ? _Parent.Select(e => e.Progress).ToList() : null; } 
         }
 
         private bool _HasValues 
@@ -601,8 +612,15 @@ namespace Blink.Shared.Domain.NewThings
             }
         }
 
-        public Keepable<IElement> Parent { get; set; }
+        private Keepable<T> _Parent { get; set; }
 
+        private InternalProgress() { }
+
+        public InternalProgress(Keepable<T> parent)
+        {
+            _Parent = parent;
+        }
+        
         #region IProgress Members
 
         public Guid Id { get; set; }
@@ -614,7 +632,7 @@ namespace Blink.Shared.Domain.NewThings
 
         public bool IsCompleted()
         {
-            return _Completed > 0;
+            return _HasValues && (_Completed == _Total);
         }
 
         #endregion

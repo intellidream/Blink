@@ -163,9 +163,9 @@ namespace Blink.Classic
             fileElement.FileType = FileElement.FileTypes.Other;
             fileElement.Progress = dateTimeProgress;
 
-            var dateTimeProgressTwo = new DateTimeProgress();
+            var dateTimeProgressTwo = new ManualProgress();
             dateTimeProgressTwo.Id = Guid.NewGuid();
-            dateTimeProgressTwo.Completion = DateTime.UtcNow.Subtract(new TimeSpan(100000));
+            dateTimeProgressTwo.Completed = true;
             var textElementTwo = new TextElement();
             textElementTwo.Id = Guid.NewGuid();
             textElementTwo.Progress = dateTimeProgressTwo;
@@ -186,6 +186,8 @@ namespace Blink.Classic
 
             folderElement.Type = ElementTypes.Root;
             RootElement.Instance.Add(folderElement);
+
+            // my entities or sterling's custom serializers - also consider switching to another db (sterling's custom serializers will not be good there...)?!
 
             await Sterling.Database.SaveAsync(folderElement.ToValuableEntity());
             //await Sterling.Database.SaveAsync(folderElement);
