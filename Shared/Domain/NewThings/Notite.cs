@@ -7,77 +7,6 @@ using System.Text;
 
 namespace Blink.Shared.Domain.NewThings
 {
-    #region Entities
-
-    public interface IElementEntity
-    {
-        ElementEntity ToElementEntity();
-    }
-
-    public interface IValuableEntity : IElementEntity
-    {
-        ValuableEntity ToValuableEntity();
-    }
-
-    public interface IConcreteEntity { }
-
-    public interface IConcreteEntity<T> : IElementEntity 
-        where T : IConcreteEntity
-    {
-        ConcreteEntity ToConcreteBaseEntity();
-
-        T ToConcreteTypeEntity();
-    }
-
-    public class ElementEntity
-    {
-        public Guid Id { get; set; }
-
-        public Guid ParentId { get; set; }
-
-        public int Position { get; set; }
-
-        public Guid TimestampId { get; set; }
-
-        public ElementTypes Type { get; set; }
-    }
-
-    public class ValuableEntity
-    {
-        public Guid Id { get; set; }
-
-        public string Name { get; set; }
-    }
-
-    public class ConcreteEntity
-    {
-        public Guid Id { get; set; }
-
-        public Guid ProgressId { get; set; }
-    }
-
-    public class TextEntity : IConcreteEntity
-    {
-        public Guid Id { get; set; }
-
-        public string Text { get; set; }
-    }
-
-    public class FileEntity : IConcreteEntity
-    {
-        public Guid Id { get; set; }
-
-        public string FileName { get; set; }
-
-        public Blink.Shared.Domain.NewThings.FileElement.FileTypes FileType { get; set; }
-
-        public string FilePath { get; set; }
-        
-        public byte[] FileData { get; set; }
-    }
-
-    #endregion
-
     #region Elements
 
     public enum ElementTypes : int
@@ -169,7 +98,7 @@ namespace Blink.Shared.Domain.NewThings
         #endregion
     }
 
-    public class Valuable<T> : Keepable<T>, IValuableEntity where T : IElement
+    public class Valuable<T> : Keepable<T>, IValuableEntity<T> where T : IElement
     {
         public virtual string Name { get; set; }
         

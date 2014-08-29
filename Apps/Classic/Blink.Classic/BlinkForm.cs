@@ -189,6 +189,7 @@ namespace Blink.Classic
 
             // my entities or sterling's custom serializers - also consider switching to another db (sterling's custom serializers will not be good there...)?!
 
+            await Sterling.Database.SaveAsync(folderElement.ToElementEntity());
             await Sterling.Database.SaveAsync(folderElement.ToValuableEntity());
             //await Sterling.Database.SaveAsync(folderElement);
             //await Sterling.Database.SaveAsync(folderElement);
@@ -205,6 +206,10 @@ namespace Blink.Classic
         //private void button2_Click(object sender, EventArgs e)
         private async void button2_Click(object sender, EventArgs e)
         {
+            var elementEntity = await Sterling.Database.LoadAsync<ElementEntity>(_folderElementId);
+            var valuableEntity = await Sterling.Database.LoadAsync<ValuableEntity>(_folderElementId);
+
+
             var folderElement = await Sterling.Database.LoadAsync<ValuableEntity>(_folderElementId);
 
             MessageBox.Show(this, @"folderElement loaded.", @"Loaded", MessageBoxButtons.OK, MessageBoxIcon.Information);
