@@ -2,8 +2,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
+using System.Runtime.CompilerServices;
 
 namespace Blink.Shared.Domain.NewThings
 {
@@ -25,9 +27,10 @@ namespace Blink.Shared.Domain.NewThings
         Root
     }
 
-    public interface IElement
+    public interface IElement : INotifyPropertyChanged
     {
         Guid Id { get; set; }
+        Guid SyncId { get; set; }
         Guid ParentId { get; set; }
         int Position { get; set; }
         Timestamp Timestamp { get; set; }
@@ -41,8 +44,23 @@ namespace Blink.Shared.Domain.NewThings
 
     public class Keepable<T> : Collection<T>, IElement where T : IElement
     {
-        private IProgress _Progress { get; set; }
+        #region Private Members
+
+        private Guid _id;
+        private Guid _parentId;
+        private int _position;
+        private Timestamp _timestamp;
+        private ProgressBase _progress;
+
+        #endregion
+
         private InternalProgress<T> _InternalProgress { get; set; }
+        private IProgress _Progress { get; set; }
+        public virtual IProgress Progress
+        {
+            get { return _Progress ?? _InternalProgress; }
+            set { _Progress = value; }
+        }
 
         public Keepable() 
         {
@@ -51,21 +69,30 @@ namespace Blink.Shared.Domain.NewThings
 
         #region IElement Members
 
-        public virtual Guid Id { get; set; }
+        public virtual Guid Id
+        {
+            get { return _id; }
+            set
+            {
+                if (value != _id)
+                {
+                    _id = value;
+                    NotifyPropertyChanged();
+                }
+            }
+        }
 
-        public virtual Guid ParentId { get; set; }
+        public Guid SyncId { get; set; }
 
-        public virtual int Position { get; set; }
+        public Guid ParentId { get; set; }
 
-        public virtual Timestamp Timestamp { get; set; }
+        public int Position { get; set; }
+
+        public Timestamp Timestamp { get; set; }
 
         public virtual ElementTypes Type { get { return ElementTypes.None; } }
 
-        public virtual IProgress Progress 
-        {
-            get { return _Progress ?? _InternalProgress; } 
-            set { _Progress = value; } 
-        }
+        IProgress IElement.Progress { get { return Progress; } }
 
         #endregion
 
@@ -76,6 +103,7 @@ namespace Blink.Shared.Domain.NewThings
             item.ParentId = this.Id;
             item.Position = index;
             base.SetItem(index, item);
+            NotifyPropertyChanged("Items");
         }
 
         protected override void InsertItem(int index, T item)
@@ -83,16 +111,34 @@ namespace Blink.Shared.Domain.NewThings
             item.ParentId = this.Id;
             item.Position = index;
             base.InsertItem(index, item);
+            NotifyPropertyChanged("Items");
         }
 
         protected override void RemoveItem(int index)
         {
             base.RemoveItem(index);
+            NotifyPropertyChanged("Items");
         }
 
         protected override void ClearItems()
         {
             base.ClearItems();
+            NotifyPropertyChanged("Items");
+        }
+
+        #endregion
+
+        #region INotifyPropertyChanged Members
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
+        {
+            if (PropertyChanged != null)
+            {
+                SyncId = Guid.Empty; //Device SyncId here
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            }
         }
 
         #endregion
@@ -102,7 +148,7 @@ namespace Blink.Shared.Domain.NewThings
     {
         public virtual string Name { get; set; }
         
-        #region IValuableEntity Members
+        #region IValuableEntity<T> Members
 
         public ValuableEntity ToValuableEntity()
         {
@@ -113,13 +159,18 @@ namespace Blink.Shared.Domain.NewThings
             };
         }
 
+        public Valuable<T> FromValuableEntity()
+        {
+            throw new NotImplementedException();
+        }
+
         #endregion
 
         #region IElementEntity Members
 
         public ElementEntity ToElementEntity()
         {
-            return new ElementEntity 
+            return new ElementEntity
             {
                 Id = this.Id,
                 ParentId = this.ParentId,
@@ -127,6 +178,11 @@ namespace Blink.Shared.Domain.NewThings
                 TimestampId = this.Timestamp.Id,
                 Type = this.Type
             };
+        }
+
+        public IElement FromElementEntity()
+        {
+            throw new NotImplementedException();
         }
 
         #endregion
@@ -189,36 +245,85 @@ namespace Blink.Shared.Domain.NewThings
 
     #region Concretes
 
-    public abstract class ConcreteBase : IElement, IGroupable, INotable
+    public abstract class Concrete : IElement, IGroupable, INotable
     {
-        public abstract ProgressBase Progress { get; set; }
+        #region Private Members
+
+        private Guid _id;
+        private Guid _parentId;
+        private int _position;
+        private Timestamp _timestamp;
+        private ProgressBase _progress;
+
+        #endregion
+
+        public ProgressBase Progress { get; set; }
 
         #region IElement Members
 
-        public virtual Guid Id { get; set; }
+        public Guid Id 
+        {
+            get { return _id; }
+            set 
+            {
+                if (value != _id)
+                {
+                    _id = value;
+                    NotifyPropertyChanged();
+                }
+            } 
+        }
 
-        public virtual Guid ParentId { get; set; }
+        public Guid SyncId { get; set; }
 
-        public virtual int Position { get; set; }
+        public Guid ParentId { get; set; }
 
-        public virtual Timestamp Timestamp { get; set; }
+        public int Position { get; set; }
+
+        public Timestamp Timestamp { get; set; }
 
         public abstract ElementTypes Type { get; }
 
         IProgress IElement.Progress { get { return Progress; } }
 
         #endregion
-    }
 
-    public class TextElement : ConcreteBase, IConcreteEntity<TextEntity>
-    {
-        public string Text { get; set; }
+        #region INotifyPropertyChanged Members
 
-        #region ConcreteBase Members
+        public event PropertyChangedEventHandler PropertyChanged;
 
-        public override ProgressBase Progress { get; set; }
+        public void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
+        {
+            if (PropertyChanged != null)
+            {
+                SyncId = Guid.Empty; //Device SyncId here
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
 
         #endregion
+    }
+
+    public class TextElement : Concrete, IConcreteEntity<TextEntity>
+    {
+        #region Private Members
+
+        private string _text;
+
+        #endregion
+
+        public string Text
+        {
+            get { return _text; }
+            set
+            {
+                if (value != _text)
+                {
+                    _text = value;
+                    NotifyPropertyChanged();
+                }
+            }
+        }
 
         #region IElement Members
 
@@ -262,21 +367,20 @@ namespace Blink.Shared.Domain.NewThings
             };
         }
 
+        public IElement FromElementEntity()
+        {
+            throw new NotImplementedException();
+        }
+
         #endregion
     }
 
-    public class TweetElement : ConcreteBase
+    public class TweetElement : Concrete
     {
         #region Commented Tweet Implementation
         //public TweetSource Source { get; set; } //name, twitterid and icon
         //public TweetContent Content { get; set; } //text and image
         //public DateTime TweetTime { get; set; }
-        #endregion
-
-        #region ConcreteBase Members
-
-        public override ProgressBase Progress { get; set; }
-
         #endregion
 
         #region IElement Members
@@ -286,7 +390,7 @@ namespace Blink.Shared.Domain.NewThings
         #endregion
     }
 
-    public class FileElement : ConcreteBase
+    public class FileElement : Concrete
     {
         public string FileName { get; set; }
         public FileTypes FileType { get; set; }
@@ -302,12 +406,6 @@ namespace Blink.Shared.Domain.NewThings
             Video = 3
         }
 
-        #region ConcreteBase Members
-
-        public override ProgressBase Progress { get; set; }
-
-        #endregion
-
         #region IElement Members
 
         public override ElementTypes Type { get { return ElementTypes.File; } }
@@ -319,7 +417,7 @@ namespace Blink.Shared.Domain.NewThings
 
     #region Containers
 
-    public class ListElement : Valuable<ConcreteBase>, IGroupable, INotable
+    public class ListElement : Valuable<Concrete>, IGroupable, INotable
     {
         #region IElement Members
 
@@ -350,7 +448,7 @@ namespace Blink.Shared.Domain.NewThings
         #endregion
     }
 
-    public class TreeElement : Selfable<ConcreteBase>, IGroupable, INotable
+    public class TreeElement : Selfable<Concrete>, IGroupable, INotable
     {
         #region IElement Members
 
@@ -453,7 +551,7 @@ namespace Blink.Shared.Domain.NewThings
 
     #region Timestamping
 
-    public class Timestamp
+    public struct Timestamp
     {
         public Guid Id { get; set; }
         public DateTime Created { get; set; }
