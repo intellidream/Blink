@@ -27,6 +27,11 @@ namespace Blink.Shared.Domain.NewThings
         Root
     }
 
+    public interface IManaged 
+    {
+        bool IsDirty { get; set; }
+    }
+
     public interface IElement : INotifyPropertyChanged
     {
         Guid Id { get; set; }
@@ -46,11 +51,17 @@ namespace Blink.Shared.Domain.NewThings
     {
         #region Private Members
 
+        public bool IsDirty { get; private set; }
+
+        #region IElement Members
+
         private Guid _id;
         private Guid _parentId;
         private int _position;
         private Timestamp _timestamp;
         private ProgressBase _progress;
+
+        #endregion
 
         #endregion
 
@@ -136,6 +147,7 @@ namespace Blink.Shared.Domain.NewThings
         {
             if (PropertyChanged != null)
             {
+                IsDirty = true;
                 SyncId = Guid.Empty; //Device SyncId here
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
