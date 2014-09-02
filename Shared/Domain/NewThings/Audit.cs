@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Blink.Shared.Domain.NewThings
 {
-    public class Audit
+    public class AuditRecord
     {
 
 
