@@ -32,11 +32,13 @@
             this.button2 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.webBrowser1 = new System.Windows.Forms.WebBrowser();
+            this.treeView1 = new System.Windows.Forms.TreeView();
+            this.listView1 = new System.Windows.Forms.ListView();
             this.SuspendLayout();
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(354, 194);
+            this.button1.Location = new System.Drawing.Point(797, 527);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 0;
@@ -46,7 +48,7 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(435, 194);
+            this.button2.Location = new System.Drawing.Point(716, 527);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(75, 23);
             this.button2.TabIndex = 1;
@@ -56,7 +58,7 @@
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(354, 269);
+            this.button3.Location = new System.Drawing.Point(1664, 503);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(75, 23);
             this.button3.TabIndex = 2;
@@ -66,17 +68,34 @@
             // 
             // webBrowser1
             // 
-            this.webBrowser1.Location = new System.Drawing.Point(516, 12);
+            this.webBrowser1.Location = new System.Drawing.Point(1259, 12);
             this.webBrowser1.MinimumSize = new System.Drawing.Size(20, 20);
             this.webBrowser1.Name = "webBrowser1";
-            this.webBrowser1.Size = new System.Drawing.Size(480, 514);
+            this.webBrowser1.Size = new System.Drawing.Size(480, 485);
             this.webBrowser1.TabIndex = 3;
+            // 
+            // treeView1
+            // 
+            this.treeView1.Location = new System.Drawing.Point(12, 12);
+            this.treeView1.Name = "treeView1";
+            this.treeView1.Size = new System.Drawing.Size(279, 509);
+            this.treeView1.TabIndex = 4;
+            // 
+            // listView1
+            // 
+            this.listView1.Location = new System.Drawing.Point(297, 12);
+            this.listView1.Name = "listView1";
+            this.listView1.Size = new System.Drawing.Size(575, 509);
+            this.listView1.TabIndex = 5;
+            this.listView1.UseCompatibleStateImageBehavior = false;
             // 
             // BlinkForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1008, 538);
+            this.ClientSize = new System.Drawing.Size(884, 562);
+            this.Controls.Add(this.listView1);
+            this.Controls.Add(this.treeView1);
             this.Controls.Add(this.webBrowser1);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.button2);
@@ -94,6 +113,8 @@
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.WebBrowser webBrowser1;
+        private System.Windows.Forms.TreeView treeView1;
+        private System.Windows.Forms.ListView listView1;
     }
 }
 

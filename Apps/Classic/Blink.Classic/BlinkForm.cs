@@ -9,8 +9,9 @@ using Blink.Shared.Engine.SkyDrive;
 using Microsoft.Live;
 using SkyNet.Client;
 using SkyNet.Model;
-
 using Blink.Shared.Domain.NewThings;
+using Wintellect.Sterling.Core.Database;
+using Wintellect.Sterling.Core;
 
 namespace Blink.Classic
 {
@@ -187,10 +188,18 @@ namespace Blink.Classic
             folderElement.Type = ElementTypes.Root;
             RootElement.Instance.Add(folderElement);
 
+            // everything saved or deleted as element-entity will be audited for synchronization
+
             // my entities or sterling's custom serializers - also consider switching to another db (sterling's custom serializers will not be good there...)?!
 
             await Sterling.Database.SaveAsync(folderElement.ToElementEntity());
             await Sterling.Database.SaveAsync(folderElement.ToValuableEntity());
+
+
+
+
+
+
             //await Sterling.Database.SaveAsync(folderElement);
             //await Sterling.Database.SaveAsync(folderElement);
             //await Sterling.Database.SaveAsync(folderElement);

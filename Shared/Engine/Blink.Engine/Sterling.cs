@@ -5,6 +5,7 @@ using System.Text;
 using Wintellect.Sterling.Core;
 using Wintellect.Sterling.Core.Database;
 using Blink.Shared.Domain;
+using Blink.Shared.Domain.NewThings;
 
 namespace Blink.Shared.Engine
 {
@@ -64,6 +65,28 @@ namespace Blink.Shared.Engine
                 CreateTableDefinition<Domain.NewThings.TextEntity, Guid>(e => e.Id),
                 CreateTableDefinition<Domain.NewThings.FileEntity, Guid>(e => e.Id)
             };
+        }
+    }
+
+    public class AuditTrigger<T> : BaseSterlingTrigger<T, Guid> where T : ElementEntity, new()
+    {
+        public AuditTrigger(ISterlingDatabaseInstance database)
+        {
+        }
+
+        public override bool BeforeSave(T instance)
+        {
+            return true;
+        }
+
+        public override void AfterSave(T instance)
+        {
+            return;
+        }
+
+        public override bool BeforeDelete(Guid key)
+        {
+            return true;
         }
     }
 }
