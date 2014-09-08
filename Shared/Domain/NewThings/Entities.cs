@@ -7,6 +7,9 @@ namespace Blink.Shared.Domain.NewThings
 {
     #region Contracts
 
+    // Sterling serialization may be enough, no nedd for entities!
+    // Also, see Lazy<T>!
+
     public interface IElementEntity
     {
         ElementEntity ToElementEntity();
