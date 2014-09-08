@@ -5,6 +5,8 @@ using System.Text;
 
 namespace Blink.Shared.Domain.NewThings
 {
+    #region Contracts
+
     public interface IElementEntity
     {
         ElementEntity ToElementEntity();
@@ -14,19 +16,54 @@ namespace Blink.Shared.Domain.NewThings
     public interface IValuableEntity<T> : IElementEntity where T : IElement
     {
         ValuableEntity ToValuableEntity();
-
         Valuable<T> FromValuableEntity();
     }
 
-    public interface IConcreteEntity { }
-
-    public interface IConcreteEntity<T> : IElementEntity
-        where T : IConcreteEntity
+    public interface IConcreteEntity : IElementEntity
     {
-        ConcreteEntity ToConcreteBaseEntity();
-
-        T ToConcreteTypeEntity();
+        ConcreteEntity ToConcreteEntity();
+        Concrete FromConcreteEntity();
     }
+
+    public interface ITextEntity 
+    {
+        TextEntity ToTextEntity();
+        TextElement FromTextEntity();
+    }
+
+    public interface IFileEntity
+    {
+        FileEntity ToFileEntity();
+        FileElement FromFileEntity();
+    }
+
+    public interface IProgressEntity
+    {
+        ProgressEntity ToProgressEntity();
+        IProgress FromProgressEntity();
+    }
+
+    public interface IManualProgressEntity
+    {
+        ManualProgressEntity ToManualProgressEntity();
+        ManualProgress FromManualProgressEntity();
+    }
+
+    public interface IDateTimeProgressEntity
+    {
+        DateTimeProgressEntity ToDateTimeProgressEntity();
+        DateTimeProgress FromDateTimeProgressEntity();
+    }
+
+    public interface ILocationProgressEntity
+    {
+        LocationProgressEntity ToLocationProgressEntity();
+        LocationProgress FromLocationProgressEntity();
+    }
+
+    #endregion
+
+    #region Entities
 
     public class ElementEntity
     {
@@ -55,23 +92,54 @@ namespace Blink.Shared.Domain.NewThings
         public Guid ProgressId { get; set; }
     }
 
-    public class TextEntity : IConcreteEntity
+    public class TextEntity
     {
         public Guid Id { get; set; }
 
         public string Text { get; set; }
     }
 
-    public class FileEntity : IConcreteEntity
+    public class FileEntity
     {
         public Guid Id { get; set; }
 
         public string FileName { get; set; }
 
-        public Blink.Shared.Domain.NewThings.FileElement.FileTypes FileType { get; set; }
+        public FileTypes FileType { get; set; }
 
         public string FilePath { get; set; }
 
         public byte[] FileData { get; set; }
     }
+
+    public class ProgressEntity 
+    {
+        public Guid Id { get; set; }
+
+        public ProgressTypes ProgressType { get; set; }
+    }
+
+    public class ManualProgressEntity 
+    {
+        public Guid Id { get; set; }
+
+        public bool Completed { get; set; }
+    }
+
+    public class DateTimeProgressEntity
+    {
+        public Guid Id { get; set; }
+
+        public DateTime Completion { get; set; }
+    }
+
+    public class LocationProgressEntity
+    {
+        public Guid Id { get; set; }
+
+        public Tuple<double, double> Current { get; set; }
+        public Tuple<double, double> Destination { get; set; }
+    }
+
+    #endregion
 }

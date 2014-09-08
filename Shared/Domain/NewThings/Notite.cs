@@ -27,15 +27,9 @@ namespace Blink.Shared.Domain.NewThings
         Root
     }
 
-    public interface IManaged 
-    {
-        bool IsDirty { get; set; }
-    }
-
     public interface IElement : INotifyPropertyChanged
     {
         Guid Id { get; set; }
-        Guid SyncId { get; set; }
         Guid ParentId { get; set; }
         int Position { get; set; }
         Timestamp Timestamp { get; set; }
@@ -51,27 +45,44 @@ namespace Blink.Shared.Domain.NewThings
     {
         #region Private Members
 
-        public bool IsDirty { get; private set; }
-
         #region IElement Members
 
         private Guid _id;
         private Guid _parentId;
         private int _position;
         private Timestamp _timestamp;
-        private ProgressBase _progress;
+        private IProgress _progress;
 
         #endregion
 
-        #endregion
+        #region Internal Progress
 
         private InternalProgress<T> _InternalProgress { get; set; }
-        private IProgress _Progress { get; set; }
+
+        #endregion
+
+        #endregion
+
+        #region Public Members
+
+        #region Internal Progress
+
         public virtual IProgress Progress
         {
-            get { return _Progress ?? _InternalProgress; }
-            set { _Progress = value; }
+            get { return _progress ?? _InternalProgress; }
+            set 
+            {
+                if (value != _progress)
+                {
+                    _progress = value;
+                    NotifyPropertyChanged();
+                }
+            }
         }
+
+        #endregion
+
+        #endregion
 
         public Keepable() 
         {
@@ -93,13 +104,44 @@ namespace Blink.Shared.Domain.NewThings
             }
         }
 
-        public Guid SyncId { get; set; }
+        public virtual Guid ParentId
+        {
+            get { return _parentId; }
+            set
+            {
+                if (value != _parentId)
+                {
+                    _parentId = value;
+                    NotifyPropertyChanged();
+                }
+            }
+        }
 
-        public Guid ParentId { get; set; }
+        public virtual int Position
+        {
+            get { return _position; }
+            set
+            {
+                if (value != _position)
+                {
+                    _position = value;
+                    NotifyPropertyChanged();
+                }
+            }
+        }
 
-        public int Position { get; set; }
-
-        public Timestamp Timestamp { get; set; }
+        public virtual Timestamp Timestamp
+        {
+            get { return _timestamp; }
+            set
+            {
+                if (!value.Equals(_timestamp))
+                {
+                    _timestamp = value;
+                    NotifyPropertyChanged();
+                }
+            }
+        }
 
         public virtual ElementTypes Type { get { return ElementTypes.None; } }
 
@@ -147,8 +189,6 @@ namespace Blink.Shared.Domain.NewThings
         {
             if (PropertyChanged != null)
             {
-                IsDirty = true;
-                SyncId = Guid.Empty; //Device SyncId here
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
         }
@@ -158,8 +198,12 @@ namespace Blink.Shared.Domain.NewThings
 
     public class Valuable<T> : Keepable<T>, IValuableEntity<T> where T : IElement
     {
+        #region Public Members
+
         public virtual string Name { get; set; }
-        
+
+        #endregion
+
         #region IValuableEntity<T> Members
 
         public ValuableEntity ToValuableEntity()
@@ -210,6 +254,8 @@ namespace Blink.Shared.Domain.NewThings
             Values = new Keepable<T>();
         }
 
+        #region Helper Methods
+
         /// <summary>
         /// http://stackoverflow.com/questions/11830174/how-to-flatten-tree-via-linq/20335369?stw=2#20335369
         /// </summary>
@@ -231,6 +277,8 @@ namespace Blink.Shared.Domain.NewThings
                 }
             }
         }
+
+        #endregion
 
         #region Keepable Members
 
@@ -257,7 +305,7 @@ namespace Blink.Shared.Domain.NewThings
 
     #region Concretes
 
-    public abstract class Concrete : IElement, IGroupable, INotable
+    public abstract class Concrete : IElement, IGroupable, INotable, IConcreteEntity
     {
         #region Private Members
 
@@ -269,7 +317,25 @@ namespace Blink.Shared.Domain.NewThings
 
         #endregion
 
-        public ProgressBase Progress { get; set; }
+        #region Public Members
+
+        public ProgressBase Progress 
+        {
+            get 
+            {
+                return _progress; 
+            }
+            set 
+            {
+                if (value != _progress)
+                {
+                    _progress = value;
+                    NotifyPropertyChanged();
+                }
+            } 
+        }
+
+        #endregion
 
         #region IElement Members
 
@@ -286,13 +352,44 @@ namespace Blink.Shared.Domain.NewThings
             } 
         }
 
-        public Guid SyncId { get; set; }
+        public Guid ParentId
+        {
+            get { return _parentId; }
+            set
+            {
+                if (value != _parentId)
+                {
+                    _parentId = value;
+                    NotifyPropertyChanged();
+                }
+            }
+        }
 
-        public Guid ParentId { get; set; }
+        public int Position
+        {
+            get { return _position; }
+            set
+            {
+                if (value != _position)
+                {
+                    _position = value;
+                    NotifyPropertyChanged();
+                }
+            }
+        }
 
-        public int Position { get; set; }
-
-        public Timestamp Timestamp { get; set; }
+        public Timestamp Timestamp
+        {
+            get { return _timestamp; }
+            set
+            {
+                if (!value.Equals(_timestamp))
+                {
+                    _timestamp = value;
+                    NotifyPropertyChanged();
+                }
+            }
+        }
 
         public abstract ElementTypes Type { get; }
 
@@ -300,67 +397,20 @@ namespace Blink.Shared.Domain.NewThings
 
         #endregion
 
-        #region INotifyPropertyChanged Members
+        #region IConcreteEntity Members
 
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        public void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
+        public ConcreteEntity ToConcreteEntity()
         {
-            if (PropertyChanged != null)
-            {
-                SyncId = Guid.Empty; //Device SyncId here
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
-        }
-
-        #endregion
-    }
-
-    public class TextElement : Concrete, IConcreteEntity<TextEntity>
-    {
-        #region Private Members
-
-        private string _text;
-
-        #endregion
-
-        public string Text
-        {
-            get { return _text; }
-            set
-            {
-                if (value != _text)
-                {
-                    _text = value;
-                    NotifyPropertyChanged();
-                }
-            }
-        }
-
-        #region IElement Members
-
-        public override ElementTypes Type { get { return ElementTypes.Text; } }
-
-        #endregion
-
-        #region IConcreteEntity<TextEntity> Members
-
-        public ConcreteEntity ToConcreteBaseEntity()
-        {
-            return new ConcreteEntity 
+            return new ConcreteEntity
             {
                 Id = this.Id,
                 ProgressId = this.Progress.Id
             };
         }
 
-        public TextEntity ToConcreteTypeEntity()
+        public Concrete FromConcreteEntity()
         {
-            return new TextEntity 
-            {
-                Id = this.Id,
-                Text = this.Text
-            };
+            throw new NotImplementedException();
         }
 
         #endregion
@@ -375,7 +425,7 @@ namespace Blink.Shared.Domain.NewThings
                 ParentId = this.ParentId,
                 Position = this.Position,
                 TimestampId = this.Timestamp.Id,
-                Type = ElementTypes.Text
+                Type = this.Type
             };
         }
 
@@ -385,14 +435,82 @@ namespace Blink.Shared.Domain.NewThings
         }
 
         #endregion
+
+        #region INotifyPropertyChanged Members
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
+
+        #endregion
+    }
+
+    public class TextElement : Concrete, ITextEntity
+    {
+        #region Private Members
+
+        private string _text;
+
+        #endregion
+
+        #region Public Members
+
+        public string Text
+        {
+            get { return _text; }
+            set
+            {
+                if (value != _text)
+                {
+                    _text = value;
+                    NotifyPropertyChanged();
+                }
+            }
+        }
+
+        #endregion
+
+        #region IElement Members
+
+        public override ElementTypes Type { get { return ElementTypes.Text; } }
+
+        #endregion
+
+        #region ITextEntity Members
+
+        public TextEntity ToTextEntity()
+        {
+            return new TextEntity
+            {
+                Id = this.Id,
+                Text = this.Text
+            };
+        }
+
+        public TextElement FromTextEntity()
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
     }
 
     public class TweetElement : Concrete
     {
+        #region Public Members
+
         #region Commented Tweet Implementation
         //public TweetSource Source { get; set; } //name, twitterid and icon
         //public TweetContent Content { get; set; } //text and image
         //public DateTime TweetTime { get; set; }
+        #endregion
+
         #endregion
 
         #region IElement Members
@@ -402,25 +520,48 @@ namespace Blink.Shared.Domain.NewThings
         #endregion
     }
 
-    public class FileElement : Concrete
+    public enum FileTypes
     {
+        Other = 0,
+        Image = 1,
+        Audio = 2,
+        Video = 3
+    }
+
+    public class FileElement : Concrete, IFileEntity
+    {
+        #region Public Members
+
         public string FileName { get; set; }
         public FileTypes FileType { get; set; }
-
         public string FilePath { get; set; }
         public byte[] FileData { get; set; }
 
-        public enum FileTypes
-        {
-            Other = 0,
-            Image = 1,
-            Audio = 2,
-            Video = 3
-        }
+        #endregion
 
         #region IElement Members
 
         public override ElementTypes Type { get { return ElementTypes.File; } }
+
+        #endregion
+
+        #region IFileEntity Members
+
+        public FileEntity ToFileEntity()
+        {
+            return new FileEntity
+            {
+                FileName = this.FileName,
+                FileType = this.FileType,
+                FilePath = this.FilePath,
+                FileData = this.FileData
+            };
+        }
+
+        public FileElement FromFileEntity()
+        {
+            throw new NotImplementedException();
+        }
 
         #endregion
     }
@@ -594,7 +735,7 @@ namespace Blink.Shared.Domain.NewThings
         bool IsCompleted();
     }
 
-    public abstract class ProgressBase : IProgress
+    public abstract class ProgressBase : IProgress, IProgressEntity
     {
         #region IProgress Members
 
@@ -613,10 +754,32 @@ namespace Blink.Shared.Domain.NewThings
         public abstract bool IsCompleted();
 
         #endregion
+
+        #region IProgressEntity Members
+
+        public ProgressEntity ToProgressEntity()
+        {
+            return new ProgressEntity
+            {
+                Id = this.Id,
+                ProgressType = this.ProgressType
+            };
+        }
+
+        public IProgress FromProgressEntity()
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
     }
 
     public class InternalProgress<T> : IProgress where T : IElement
     {
+        #region Private Members
+
+        private Keepable<T> _Parent { get; set; }
+
         private IList<IProgress> _Values 
         {
             get { return (_Parent != null) ? _Parent.Select(e => e.Progress).ToList() : null; } 
@@ -639,19 +802,7 @@ namespace Blink.Shared.Domain.NewThings
             }
         }
 
-        public int Percentage
-        {
-            get
-            {
-                var completed = this._Completed;
-
-                return (completed > 0)
-                        ? (int)Math.Round((double)(100 * completed) / _Total)
-                        : 0;
-            }
-        }
-
-        private Keepable<T> _Parent { get; set; }
+        #endregion
 
         private InternalProgress() { }
 
@@ -669,6 +820,18 @@ namespace Blink.Shared.Domain.NewThings
             get { return ProgressTypes.Internal; } 
         }
 
+        public int Percentage
+        {
+            get
+            {
+                var completed = this._Completed;
+
+                return (completed > 0)
+                        ? (int)Math.Round((double)(100 * completed) / _Total)
+                        : 0;
+            }
+        }
+
         public bool IsCompleted()
         {
             return _HasValues && (_Completed == _Total);
@@ -677,9 +840,13 @@ namespace Blink.Shared.Domain.NewThings
         #endregion
     }
 
-    public class ManualProgress : ProgressBase
+    public class ManualProgress : ProgressBase, IManualProgressEntity
     {
+        #region Public Members
+
         public bool Completed { get; set; }
+
+        #endregion
 
         #region IProgress Members
 
@@ -694,12 +861,34 @@ namespace Blink.Shared.Domain.NewThings
         }
 
         #endregion
+
+        #region IManualProgressEntity Members
+
+        public ManualProgressEntity ToManualProgressEntity()
+        {
+            return new ManualProgressEntity 
+            { 
+                Id = this.Id, 
+                Completed = this.Completed 
+            };
+        }
+
+        public ManualProgress FromManualProgressEntity()
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
     }
 
-    public class DateTimeProgress : ProgressBase
+    public class DateTimeProgress : ProgressBase, IDateTimeProgressEntity
     {
+        #region Public Members
+
         public DateTime Completion { get; set; }
-        
+
+        #endregion
+
         #region IProgress Members
 
         public override ProgressTypes ProgressType
@@ -713,12 +902,34 @@ namespace Blink.Shared.Domain.NewThings
         }
 
         #endregion
+
+        #region IDateTimeProgressEntity Members
+
+        public DateTimeProgressEntity ToDateTimeProgressEntity()
+        {
+            return new DateTimeProgressEntity 
+            {
+                Id = this.Id,
+                Completion = this.Completion
+            };
+        }
+
+        public DateTimeProgress FromDateTimeProgressEntity()
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
     }
-    public class LocationProgress : ProgressBase
+    public class LocationProgress : ProgressBase, ILocationProgressEntity
     {
+        #region Public Members
+
         public Tuple<double, double> Current { get; set; }
         public Tuple<double, double> Destination { get; set; }
-        
+
+        #endregion
+
         #region IProgress Members
 
         public override ProgressTypes ProgressType
@@ -729,6 +940,25 @@ namespace Blink.Shared.Domain.NewThings
         public override bool IsCompleted()
         {
             return Current.Equals(Destination);
+        }
+
+        #endregion
+
+        #region ILocationProgressEntity Members
+
+        public LocationProgressEntity ToLocationProgressEntity()
+        {
+            return new LocationProgressEntity
+            {
+                Id = this.Id,
+                Current = this.Current,
+                Destination = this.Destination
+            };
+        }
+
+        public LocationProgress FromLocationProgressEntity()
+        {
+            throw new NotImplementedException();
         }
 
         #endregion

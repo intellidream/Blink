@@ -161,7 +161,7 @@ namespace Blink.Classic
             fileElement.Id = Guid.NewGuid();
             fileElement.FileData = null;
             fileElement.FilePath = "C:\\Text.txt";
-            fileElement.FileType = FileElement.FileTypes.Other;
+            fileElement.FileType = FileTypes.Other;
             fileElement.Progress = dateTimeProgress;
 
             var dateTimeProgressTwo = new ManualProgress();
