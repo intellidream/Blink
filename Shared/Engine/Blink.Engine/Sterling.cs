@@ -89,4 +89,8 @@ namespace Blink.Shared.Engine
             return true;
         }
     }
+
+
+
+    // use own entities or SerializeAs BaseElement, Concrete/Valuable, actual entity's serialization, etc???
 }

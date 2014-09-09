@@ -37,6 +37,30 @@ namespace Blink.Shared.Domain.NewThings
         IProgress Progress { get; }
     }
 
+    public sealed class BaseElement : IElement 
+    {
+        public Guid Id { get; set; }
+        public Guid ParentId { get; set; }
+        public int Position { get; set; }
+        public Timestamp Timestamp { get; set; }
+        public ElementTypes Type { get; }
+        public IProgress Progress { get; }
+
+        #region INotifyPropertyChanged Members
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
+
+        #endregion
+    }
+
     #endregion
 
     #region Valuables
