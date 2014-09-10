@@ -33,7 +33,7 @@ namespace Blink.Shared.Domain.NewThings
         Guid ParentId { get; set; }
         int Position { get; set; }
         Timestamp Timestamp { get; set; }
-        ElementTypes Type { get; }
+        ElementTypes ElementType { get; }
         IProgress Progress { get; }
     }
 
@@ -167,7 +167,7 @@ namespace Blink.Shared.Domain.NewThings
             }
         }
 
-        public virtual ElementTypes Type { get { return ElementTypes.None; } }
+        public virtual ElementTypes ElementType { get { return ElementTypes.None; } }
 
         IProgress IElement.Progress { get { return Progress; } }
 
@@ -256,7 +256,7 @@ namespace Blink.Shared.Domain.NewThings
                 ParentId = this.ParentId,
                 Position = this.Position,
                 TimestampId = this.Timestamp.Id,
-                Type = this.Type
+                Type = this.ElementType
             };
         }
 
@@ -415,7 +415,7 @@ namespace Blink.Shared.Domain.NewThings
             }
         }
 
-        public abstract ElementTypes Type { get; }
+        public abstract ElementTypes ElementType { get; }
 
         IProgress IElement.Progress { get { return Progress; } }
 
@@ -449,7 +449,7 @@ namespace Blink.Shared.Domain.NewThings
                 ParentId = this.ParentId,
                 Position = this.Position,
                 TimestampId = this.Timestamp.Id,
-                Type = this.Type
+                Type = this.ElementType
             };
         }
 
@@ -502,7 +502,7 @@ namespace Blink.Shared.Domain.NewThings
 
         #region IElement Members
 
-        public override ElementTypes Type { get { return ElementTypes.Text; } }
+        public override ElementTypes ElementType { get { return ElementTypes.Text; } }
 
         #endregion
 
@@ -539,7 +539,7 @@ namespace Blink.Shared.Domain.NewThings
 
         #region IElement Members
 
-        public override ElementTypes Type { get { return ElementTypes.Tweet; } }
+        public override ElementTypes ElementType { get { return ElementTypes.Tweet; } }
 
         #endregion
     }
@@ -565,7 +565,7 @@ namespace Blink.Shared.Domain.NewThings
 
         #region IElement Members
 
-        public override ElementTypes Type { get { return ElementTypes.File; } }
+        public override ElementTypes ElementType { get { return ElementTypes.File; } }
 
         #endregion
 
@@ -598,7 +598,7 @@ namespace Blink.Shared.Domain.NewThings
     {
         #region IElement Members
 
-        public override ElementTypes Type { get { return ElementTypes.List; } }
+        public override ElementTypes ElementType { get { return ElementTypes.List; } }
 
         #endregion
     }
@@ -620,7 +620,7 @@ namespace Blink.Shared.Domain.NewThings
 
         #region IElement Members
 
-        public override ElementTypes Type { get { return ElementTypes.Grid; } }
+        public override ElementTypes ElementType { get { return ElementTypes.Grid; } }
 
         #endregion
     }
@@ -629,7 +629,7 @@ namespace Blink.Shared.Domain.NewThings
     {
         #region IElement Members
 
-        public override ElementTypes Type { get { return ElementTypes.Tree; } }
+        public override ElementTypes ElementType { get { return ElementTypes.Tree; } }
 
         #endregion
     }
@@ -644,7 +644,7 @@ namespace Blink.Shared.Domain.NewThings
     {
         #region IElement Members
 
-        public override ElementTypes Type { get { return ElementTypes.Group; } }
+        public override ElementTypes ElementType { get { return ElementTypes.Group; } }
 
         #endregion
     }
@@ -659,7 +659,7 @@ namespace Blink.Shared.Domain.NewThings
     {
         #region IElement Members
 
-        public override ElementTypes Type { get { return ElementTypes.Note; } }
+        public override ElementTypes ElementType { get { return ElementTypes.Note; } }
 
         #endregion
     }
@@ -674,7 +674,7 @@ namespace Blink.Shared.Domain.NewThings
     {
         #region IElement Members
 
-        public override ElementTypes Type { get { return ElementTypes.Page; } }
+        public override ElementTypes ElementType { get { return ElementTypes.Page; } }
 
         #endregion
     }
@@ -690,7 +690,7 @@ namespace Blink.Shared.Domain.NewThings
         #region IElement Members
 
         private ElementTypes? type;
-        new public ElementTypes Type
+        new public ElementTypes ElementType
         {
             get
             {
@@ -709,7 +709,7 @@ namespace Blink.Shared.Domain.NewThings
 
     public interface IRootable : IElement 
     {
-        new ElementTypes Type { get; set; }
+        new ElementTypes ElementType { get; set; }
     }
 
     public sealed class RootElement : Valuable<IRootable>
