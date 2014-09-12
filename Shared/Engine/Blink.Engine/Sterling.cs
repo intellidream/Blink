@@ -71,7 +71,7 @@ namespace Blink.Shared.Engine
         }
     }
 
-    public class AuditTrigger<T> : BaseSterlingTrigger<T, Guid> where T : ElementEntity, new()
+    public class AuditTrigger<T> : BaseSterlingTrigger<T, Guid> where T : ElementRecord, new()
     {
         public AuditTrigger(ISterlingDatabaseInstance database)
         {

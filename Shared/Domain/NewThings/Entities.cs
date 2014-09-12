@@ -5,62 +5,67 @@ using System.Text;
 
 namespace Blink.Shared.Domain.NewThings
 {
-    #region Contracts
+    // TODO: rename file to Data.cs
 
-    // Sterling serialization may be enough, no nedd for entities!
-    // Also, see Lazy<T>!
+    // TODO: see Lazy<T> on deserializing nested stuff!
+
+    // TODO: see if using AutoMapper to map between entities and data is an option!
+
+    // TODO: collection + properties composing wrappers instead of derived collections and observable collections in PCL!
+
+    #region Contracts
 
     public interface IElementEntity
     {
-        ElementEntity ToElementEntity();
+        ElementRecord ToElementEntity();
         IElement FromElementEntity();
     }
 
     public interface IValuableEntity<T> : IElementEntity where T : IElement
     {
-        ValuableEntity ToValuableEntity();
+        ValuableRecord ToValuableEntity();
         Valuable<T> FromValuableEntity();
     }
 
     public interface IConcreteEntity : IElementEntity
     {
-        ConcreteEntity ToConcreteEntity();
+        ConcreteRecord ToConcreteEntity();
         Concrete FromConcreteEntity();
     }
 
     public interface ITextEntity 
     {
-        TextEntity ToTextEntity();
+        TextRecord ToTextEntity();
         TextElement FromTextEntity();
     }
 
     public interface IFileEntity
     {
-        FileEntity ToFileEntity();
+        FileRecord ToFileEntity();
         FileElement FromFileEntity();
     }
 
     public interface IProgressEntity
     {
-        ProgressEntity ToProgressEntity();
+        ProgressRecord ToProgressEntity();
         IProgress FromProgressEntity();
     }
 
     public interface IManualProgressEntity
     {
-        ManualProgressEntity ToManualProgressEntity();
+        ManualProgressRecord ToManualProgressEntity();
         ManualProgress FromManualProgressEntity();
     }
 
     public interface IDateTimeProgressEntity
     {
-        DateTimeProgressEntity ToDateTimeProgressEntity();
+        DateTimeProgressRecord ToDateTimeProgressEntity();
         DateTimeProgress FromDateTimeProgressEntity();
     }
 
     public interface ILocationProgressEntity
     {
-        LocationProgressEntity ToLocationProgressEntity();
+        LocationProgressRecord ToLocationProgressEntity();
         LocationProgress FromLocationProgressEntity();
     }
 
@@ -68,7 +73,7 @@ namespace Blink.Shared.Domain.NewThings
 
     #region Entities
 
-    public class ElementEntity
+    public class ElementRecord
     {
         public Guid Id { get; set; }
 
@@ -81,28 +86,28 @@ namespace Blink.Shared.Domain.NewThings
         public ElementTypes Type { get; set; }
     }
 
-    public class ValuableEntity
+    public class ValuableRecord
     {
         public Guid Id { get; set; }
 
         public string Name { get; set; }
     }
 
-    public class ConcreteEntity
+    public class ConcreteRecord
     {
         public Guid Id { get; set; }
 
         public Guid ProgressId { get; set; }
     }
 
-    public class TextEntity
+    public class TextRecord
     {
         public Guid Id { get; set; }
 
         public string Text { get; set; }
     }
 
-    public class FileEntity
+    public class FileRecord
     {
         public Guid Id { get; set; }
 
@@ -115,28 +120,28 @@ namespace Blink.Shared.Domain.NewThings
         public byte[] FileData { get; set; }
     }
 
-    public class ProgressEntity 
+    public class ProgressRecord 
     {
         public Guid Id { get; set; }
 
         public ProgressTypes ProgressType { get; set; }
     }
 
-    public class ManualProgressEntity 
+    public class ManualProgressRecord 
     {
         public Guid Id { get; set; }
 
         public bool Completed { get; set; }
     }
 
-    public class DateTimeProgressEntity
+    public class DateTimeProgressRecord
     {
         public Guid Id { get; set; }
 
         public DateTime Completion { get; set; }
     }
 
-    public class LocationProgressEntity
+    public class LocationProgressRecord
     {
         public Guid Id { get; set; }
 

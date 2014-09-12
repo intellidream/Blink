@@ -9,6 +9,8 @@ using System.Runtime.CompilerServices;
 
 namespace Blink.Shared.Domain.NewThings
 {
+    // TODO: rename file to Model.cs
+
     #region Elements
 
     public enum ElementTypes : int
@@ -36,30 +38,6 @@ namespace Blink.Shared.Domain.NewThings
         ElementTypes ElementType { get; }
         IProgress Progress { get; }
     }
-
-    //public sealed class BaseElement : IElement 
-    //{
-    //    public Guid Id { get; set; }
-    //    public Guid ParentId { get; set; }
-    //    public int Position { get; set; }
-    //    public Timestamp Timestamp { get; set; }
-    //    public ElementTypes Type { get; }
-    //    public IProgress Progress { get; }
-
-    //    #region INotifyPropertyChanged Members
-
-    //    public event PropertyChangedEventHandler PropertyChanged;
-
-    //    public void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
-    //    {
-    //        if (PropertyChanged != null)
-    //        {
-    //            PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-    //        }
-    //    }
-
-    //    #endregion
-    //}
 
     #endregion
 
@@ -230,9 +208,9 @@ namespace Blink.Shared.Domain.NewThings
 
         #region IValuableEntity<T> Members
 
-        public ValuableEntity ToValuableEntity()
+        public ValuableRecord ToValuableEntity()
         {
-            return new ValuableEntity
+            return new ValuableRecord
             {
                 Id = this.Id,
                 Name = this.Name
@@ -248,9 +226,9 @@ namespace Blink.Shared.Domain.NewThings
 
         #region IElementEntity Members
 
-        public ElementEntity ToElementEntity()
+        public ElementRecord ToElementEntity()
         {
-            return new ElementEntity
+            return new ElementRecord
             {
                 Id = this.Id,
                 ParentId = this.ParentId,
@@ -329,7 +307,7 @@ namespace Blink.Shared.Domain.NewThings
 
     #region Concretes
 
-    public abstract class Concrete : IElement, IGroupable, INotable, IConcreteEntity
+    public abstract class Concrete : IElement, MGroupable, MNotable, IConcreteEntity
     {
         #region Private Members
 
@@ -423,9 +401,9 @@ namespace Blink.Shared.Domain.NewThings
 
         #region IConcreteEntity Members
 
-        public ConcreteEntity ToConcreteEntity()
+        public ConcreteRecord ToConcreteEntity()
         {
-            return new ConcreteEntity
+            return new ConcreteRecord
             {
                 Id = this.Id,
                 ProgressId = this.Progress.Id
@@ -441,9 +419,9 @@ namespace Blink.Shared.Domain.NewThings
 
         #region IElementEntity Members
 
-        public ElementEntity ToElementEntity()
+        public ElementRecord ToElementEntity()
         {
-            return new ElementEntity
+            return new ElementRecord
             {
                 Id = this.Id,
                 ParentId = this.ParentId,
@@ -508,9 +486,9 @@ namespace Blink.Shared.Domain.NewThings
 
         #region ITextEntity Members
 
-        public TextEntity ToTextEntity()
+        public TextRecord ToTextEntity()
         {
-            return new TextEntity
+            return new TextRecord
             {
                 Id = this.Id,
                 Text = this.Text
@@ -571,9 +549,9 @@ namespace Blink.Shared.Domain.NewThings
 
         #region IFileEntity Members
 
-        public FileEntity ToFileEntity()
+        public FileRecord ToFileEntity()
         {
-            return new FileEntity
+            return new FileRecord
             {
                 FileName = this.FileName,
                 FileType = this.FileType,
@@ -594,7 +572,7 @@ namespace Blink.Shared.Domain.NewThings
 
     #region Containers
 
-    public class ListElement : Valuable<Concrete>, IGroupable, INotable
+    public class ListElement : Valuable<Concrete>, MGroupable, MNotable
     {
         #region IElement Members
 
@@ -603,7 +581,7 @@ namespace Blink.Shared.Domain.NewThings
         #endregion
     }
 
-    public class GridElement : Valuable<ListElement>, IGroupable, INotable
+    public class GridElement : Valuable<ListElement>, MGroupable, MNotable
     {
         public ListElement this[string name]
         {
@@ -625,7 +603,7 @@ namespace Blink.Shared.Domain.NewThings
         #endregion
     }
 
-    public class TreeElement : Selfable<Concrete>, IGroupable, INotable
+    public class TreeElement : Selfable<Concrete>, MGroupable, MNotable
     {
         #region IElement Members
 
@@ -638,9 +616,9 @@ namespace Blink.Shared.Domain.NewThings
 
     #region Groupables
 
-    public interface IGroupable : IElement { }
+    public interface MGroupable : IElement { }
 
-    public class GroupElement : Valuable<IGroupable>, INotable
+    public class GroupElement : Valuable<MGroupable>, MNotable
     {
         #region IElement Members
 
@@ -653,9 +631,9 @@ namespace Blink.Shared.Domain.NewThings
 
     #region Notables
 
-    public interface INotable : IElement { }
+    public interface MNotable : IElement { }
 
-    public class NoteElement : Valuable<INotable>, IPageable, IFoldable
+    public class NoteElement : Valuable<MNotable>, MPageable, MFoldable
     {
         #region IElement Members
 
@@ -668,9 +646,9 @@ namespace Blink.Shared.Domain.NewThings
 
     #region Pageables
 
-    public interface IPageable : IElement { }
+    public interface MPageable : IElement { }
 
-    public class PageElement : Valuable<IPageable>, IFoldable
+    public class PageElement : Valuable<MPageable>, MFoldable
     {
         #region IElement Members
 
@@ -683,9 +661,9 @@ namespace Blink.Shared.Domain.NewThings
 
     #region Foldables
 
-    public interface IFoldable : IElement { }
+    public interface MFoldable : IElement { }
 
-    public class FolderElement : Selfable<IFoldable>, IRootable
+    public class FolderElement : Selfable<MFoldable>, IRootable
     {
         #region IElement Members
 
@@ -781,9 +759,9 @@ namespace Blink.Shared.Domain.NewThings
 
         #region IProgressEntity Members
 
-        public ProgressEntity ToProgressEntity()
+        public ProgressRecord ToProgressEntity()
         {
-            return new ProgressEntity
+            return new ProgressRecord
             {
                 Id = this.Id,
                 ProgressType = this.ProgressType
@@ -888,9 +866,9 @@ namespace Blink.Shared.Domain.NewThings
 
         #region IManualProgressEntity Members
 
-        public ManualProgressEntity ToManualProgressEntity()
+        public ManualProgressRecord ToManualProgressEntity()
         {
-            return new ManualProgressEntity 
+            return new ManualProgressRecord 
             { 
                 Id = this.Id, 
                 Completed = this.Completed 
@@ -929,9 +907,9 @@ namespace Blink.Shared.Domain.NewThings
 
         #region IDateTimeProgressEntity Members
 
-        public DateTimeProgressEntity ToDateTimeProgressEntity()
+        public DateTimeProgressRecord ToDateTimeProgressEntity()
         {
-            return new DateTimeProgressEntity 
+            return new DateTimeProgressRecord 
             {
                 Id = this.Id,
                 Completion = this.Completion
@@ -970,9 +948,9 @@ namespace Blink.Shared.Domain.NewThings
 
         #region ILocationProgressEntity Members
 
-        public LocationProgressEntity ToLocationProgressEntity()
+        public LocationProgressRecord ToLocationProgressEntity()
         {
-            return new LocationProgressEntity
+            return new LocationProgressRecord
             {
                 Id = this.Id,
                 Current = this.Current,

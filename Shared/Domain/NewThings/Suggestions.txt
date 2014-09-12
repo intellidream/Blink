@@ -1,4 +1,4 @@
-﻿Suggestions
+﻿// Suggestions
 
 	TextElement
 		// in UI, allow user to input or pick title of a Note from one of IElement(IConcrete/IContainer) names/titles
