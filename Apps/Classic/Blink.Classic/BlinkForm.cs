@@ -201,6 +201,10 @@ namespace Blink.Classic
 
 
 
+            // implement ICollection<T>?!
+
+
+
             //await Sterling.Database.SaveAsync(noteElement);
 
 
