@@ -43,9 +43,15 @@ namespace Blink.Shared.Domain.NewThings
 
     #region Valuables
 
-    public class Keepable<T> : Collection<T>, IElement where T : IElement
+    public class Keepable<T> : IElement, IEnumerable<T>, IEnumerable where T : IElement
     {
         #region Private Members
+
+        #region Internal Collection
+
+        private Collection<T> _data;
+
+        #endregion
 
         #region IElement Members
 
@@ -72,7 +78,7 @@ namespace Blink.Shared.Domain.NewThings
         public virtual IProgress Progress
         {
             get { return _progress ?? _InternalProgress; }
-            set 
+            set
             {
                 if (value != _progress)
                 {
@@ -86,11 +92,98 @@ namespace Blink.Shared.Domain.NewThings
 
         #endregion
 
-        public Keepable() 
+        public Keepable()
         {
+            _data = new Collection<T>();
             _InternalProgress = new InternalProgress<T>(this);
         }
 
+        #region Collection Indexer
+        
+        public T this[int i]
+        {
+            get
+            {
+                return _data[i];
+            }
+            set
+            {
+                value.ParentId = this.Id;
+                value.Position = i;
+                _data[i] = value;
+                //NotifyPropertyChanged("Data");
+            }
+        }
+
+        #endregion
+
+        #region Collection Methods
+
+        public void Insert(int index, T item)
+        {
+            item.ParentId = this.Id;
+            item.Position = index;
+            _data.Insert(index, item);
+            //NotifyPropertyChanged("Data");
+        }
+
+        public void Add(T item)
+        {
+            _data.Add(item);
+            //NotifyPropertyChanged("Data");
+        }
+
+        public void Remove(int index)
+        {
+            _data.RemoveAt(index);
+            //NotifyPropertyChanged("Data");
+        }
+
+        public void Remove(T item)
+        {
+            _data.Remove(item);
+            //NotifyPropertyChanged("Data");
+        }
+
+        public void Clear()
+        {
+            _data.Clear();
+            //NotifyPropertyChanged("Data");
+        }
+
+        public bool Contains(T item)
+        {
+            return _data.Contains(item);
+        }
+
+        public int IndexOf(T item)
+        {
+            return _data.IndexOf(item);
+        }
+
+        public IEnumerator<T> GetEnumerator()
+        {
+            return _data.GetEnumerator();
+        }
+
+        public void CopyTo(T[] array, int index)
+        {
+            _data.CopyTo(array, index);
+        }
+
+        public int Count { get { return _data.Count; } }
+
+        #endregion
+
+        #region IEnumerable Members
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return _data.GetEnumerator();
+        }
+
+        #endregion
+        
         #region IElement Members
 
         public virtual Guid Id
@@ -101,7 +194,7 @@ namespace Blink.Shared.Domain.NewThings
                 if (value != _id)
                 {
                     _id = value;
-                    NotifyPropertyChanged();
+                    //NotifyPropertyChanged();
                 }
             }
         }
@@ -114,7 +207,7 @@ namespace Blink.Shared.Domain.NewThings
                 if (value != _parentId)
                 {
                     _parentId = value;
-                    NotifyPropertyChanged();
+                    //NotifyPropertyChanged();
                 }
             }
         }
@@ -127,7 +220,7 @@ namespace Blink.Shared.Domain.NewThings
                 if (value != _position)
                 {
                     _position = value;
-                    NotifyPropertyChanged();
+                    //NotifyPropertyChanged();
                 }
             }
         }
@@ -140,7 +233,7 @@ namespace Blink.Shared.Domain.NewThings
                 if (!value.Equals(_timestamp))
                 {
                     _timestamp = value;
-                    NotifyPropertyChanged();
+                    //NotifyPropertyChanged();
                 }
             }
         }
@@ -148,38 +241,6 @@ namespace Blink.Shared.Domain.NewThings
         public virtual ElementTypes ElementType { get { return ElementTypes.None; } }
 
         IProgress IElement.Progress { get { return Progress; } }
-
-        #endregion
-
-        #region Collection Overrides
-
-        protected override void SetItem(int index, T item)
-        {
-            item.ParentId = this.Id;
-            item.Position = index;
-            base.SetItem(index, item);
-            NotifyPropertyChanged("Items");
-        }
-
-        protected override void InsertItem(int index, T item)
-        {
-            item.ParentId = this.Id;
-            item.Position = index;
-            base.InsertItem(index, item);
-            NotifyPropertyChanged("Items");
-        }
-
-        protected override void RemoveItem(int index)
-        {
-            base.RemoveItem(index);
-            NotifyPropertyChanged("Items");
-        }
-
-        protected override void ClearItems()
-        {
-            base.ClearItems();
-            NotifyPropertyChanged("Items");
-        }
 
         #endregion
 
@@ -205,6 +266,8 @@ namespace Blink.Shared.Domain.NewThings
         public virtual string Name { get; set; }
 
         #endregion
+
+        public Valuable() : base() { }
 
         #region IValuableEntity<T> Members
 
@@ -246,7 +309,7 @@ namespace Blink.Shared.Domain.NewThings
         #endregion
     }
 
-    public class Selfable<T> : Valuable<Selfable<T>> where T : IElement
+    public class Selfable<T> : Valuable<T> where T : IElement
     {
         public Keepable<T> Values { get; set; }
 
@@ -261,24 +324,24 @@ namespace Blink.Shared.Domain.NewThings
         /// <summary>
         /// http://stackoverflow.com/questions/11830174/how-to-flatten-tree-via-linq/20335369?stw=2#20335369
         /// </summary>
-        public IEnumerable<Selfable<T>> Flatten()
-        {
-            var stack = new Stack<Selfable<T>>();
+        //public IEnumerable<Selfable<T>> Flatten()
+        //{
+        //    var stack = new Stack<Selfable<T>>();
 
-            stack.Push(this);
+        //    stack.Push(this);
 
-            while (stack.Count > 0)
-            {
-                var current = stack.Pop();
+        //    while (stack.Count > 0)
+        //    {
+        //        var current = stack.Pop();
 
-                yield return current;
+        //        yield return current;
 
-                foreach (var child in current)
-                {
-                    stack.Push(child);
-                }
-            }
-        }
+        //        foreach (var child in current)
+        //        {
+        //            stack.Push(child);
+        //        }
+        //    }
+        //}
 
         #endregion
 
@@ -663,7 +726,7 @@ namespace Blink.Shared.Domain.NewThings
 
     public interface MFoldable : IElement { }
 
-    public class FolderElement : Selfable<MFoldable>, IRootable
+    public class FolderElement : Selfable<MFoldable>, MFoldable, IRootable
     {
         #region IElement Members
 
@@ -780,11 +843,11 @@ namespace Blink.Shared.Domain.NewThings
     {
         #region Private Members
 
-        private Keepable<T> _Parent { get; set; }
+        public Keepable<T> Parent { get; set; }
 
         private IList<IProgress> _Values 
         {
-            get { return (_Parent != null) ? _Parent.Select(e => e.Progress).ToList() : null; } 
+            get { return (Parent != null) ? Parent.Select(e => e.Progress).ToList() : null; } 
         }
 
         private bool _HasValues 
@@ -806,11 +869,11 @@ namespace Blink.Shared.Domain.NewThings
 
         #endregion
 
-        private InternalProgress() { }
+        public InternalProgress() { }
 
         public InternalProgress(Keepable<T> parent)
         {
-            _Parent = parent;
+            Parent = parent;
         }
         
         #region IProgress Members

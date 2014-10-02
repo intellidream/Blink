@@ -11,7 +11,7 @@
   <Class Name="Blink.Shared.Domain.NewThings.InternalProgress&lt;T&gt;" Collapsed="true">
     <Position X="8.25" Y="7.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAACAAAAAAAAAAAACAAAQAAAQBgAABAAAAAAAAEQAAA=</HashCode>
+      <HashCode>AAACAAAAAAAAAAAACAAAQAAAQBgAABAAAAAAAAEAAAA=</HashCode>
       <FileName>NewThings\Notite.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -90,7 +90,7 @@
   <Class Name="Blink.Shared.Domain.NewThings.Selfable&lt;T&gt;" Collapsed="true">
     <Position X="12.75" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAACAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAgAACAAAA=</HashCode>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAACAAAA=</HashCode>
       <FileName>NewThings\Notite.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -121,7 +121,7 @@
   <Class Name="Blink.Shared.Domain.NewThings.Keepable&lt;T&gt;" Collapsed="true">
     <Position X="12.75" Y="5.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>EAACBABAAAAABIAgAABCAAAI4ACAAAAEAggAgACAAAA=</HashCode>
+      <HashCode>EEICBEAABAAAAJAgCABCBAQIoACAAAAEAggAgADQIAA=</HashCode>
       <FileName>NewThings\Notite.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />

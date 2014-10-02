@@ -195,10 +195,13 @@ namespace Blink.Classic
             //await Sterling.Database.SaveAsync(folderElement.ToElementEntity());
             //await Sterling.Database.SaveAsync(folderElement.ToValuableEntity());
 
-            var folderType = typeof(FolderElement);
+            //var folderType = typeof(FolderElement);
 
-            await Sterling.Database.SaveAsync<FolderElement>(folderElement);
+            await Sterling.Database.SaveAsync(folderElement);
 
+
+
+            //await Sterling.Database.SaveAsync(noteElement);
 
 
 

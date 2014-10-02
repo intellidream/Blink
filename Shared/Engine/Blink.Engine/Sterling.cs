@@ -34,7 +34,7 @@ namespace Blink.Shared.Engine
             Engine = new SterlingEngine(platformAdapter);
             Logger = new SterlingDefaultLogger(Engine.SterlingDatabase, SterlingLogLevel.Information);
 
-            Engine.SterlingDatabase.RegisterSerializer<FolderSerializer>();
+            //Engine.SterlingDatabase.RegisterSerializer<FolderSerializer>();
 
             Engine.Activate();
 
@@ -61,6 +61,8 @@ namespace Blink.Shared.Engine
                 //CreateTableDefinition<Domain.DataModel.Notes.Category, Guid>(i => i.Id)
 
                 CreateTableDefinition<Domain.NewThings.FolderElement, Guid>(f => f.Id),
+
+                //CreateTableDefinition<Domain.NewThings.NoteElement, Guid>(n => n.Id),
 
                 //CreateTableDefinition<Domain.NewThings.ElementEntity, Guid>(e => e.Id),
                 //CreateTableDefinition<Domain.NewThings.ConcreteEntity, Guid>(e => e.Id),
@@ -93,29 +95,29 @@ namespace Blink.Shared.Engine
         }
     }
 
-    public class FolderSerializer : BaseSerializer 
-    {
-        public override bool CanSerialize(Type targetType)
-        {
-            return targetType.Equals(typeof(FolderElement));
-        }
+    //public class FolderSerializer : BaseSerializer 
+    //{
+    //    public override bool CanSerialize(Type targetType)
+    //    {
+    //        return targetType.Equals(typeof(FolderElement));
+    //    }
 
-        public override void Serialize(object target, System.IO.BinaryWriter writer)
-        {
-            var data = (FolderElement)target;
-            //writer.Write(data.Id);
-            writer.Write(data.Name);
-        }
+    //    public override void Serialize(object target, System.IO.BinaryWriter writer)
+    //    {
+    //        var data = (FolderElement)target;
+    //        //writer.Write(data.Id);
+    //        writer.Write(data.Name);
+    //    }
 
-        public override object Deserialize(Type type, System.IO.BinaryReader reader)
-        {
-            return new FolderElement
-                                {
-                                    //Id = ,
-                                    Name = reader.ReadString()
-                                };
-        }
-    }
+    //    public override object Deserialize(Type type, System.IO.BinaryReader reader)
+    //    {
+    //        return new FolderElement
+    //                            {
+    //                                //Id = ,
+    //                                Name = reader.ReadString()
+    //                            };
+    //    }
+    //}
 
     // use own entities or SerializeAs BaseElement, Concrete/Valuable, actual entity's serialization, etc???
 }
