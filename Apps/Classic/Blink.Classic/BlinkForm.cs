@@ -184,21 +184,24 @@ namespace Blink.Classic
 
             noteElementTwo.Add(textElementTwo);
 
-            //subFolderElement.Values.Add(pageElement);
-            //subFolderElement.Values.Add(noteElementTwo);
+            subFolderElement.Values.Add(pageElement);
+            subFolderElement.Values.Add(noteElementTwo);
 
-            //folderElement.Childs.Add(subFolderElement);
+            //folderElement.Values.Add(pageElement);
+            //folderElement.Values.Add(noteElementTwo);
+            
+            folderElement.Add(subFolderElement);
 
 
 
             var treeElement = new TreeElement();
             treeElement.Id = Guid.NewGuid();
             _treeElementId = treeElement.Id;
-            //treeElement.Values.Add(fileElement);
+            treeElement.Values.Add(fileElement);
 
             var treeElementTwo = new TreeElement();
             treeElementTwo.Id = Guid.NewGuid();
-            //treeElement.Childs.Add(treeElementTwo);
+            treeElement.Add(treeElementTwo);
 
 
             //folderElement.ElementType = ElementTypes.Root;

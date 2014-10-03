@@ -77,7 +77,7 @@ namespace Blink.Shared.Domain.NewThings
 
         public virtual IProgress Progress
         {
-            get { return _progress ?? _internalProgress; }
+            get { return _progress ?? (_internalProgress = new InternalProgress<T>(this)); }
             set
             {
                 if (value != _progress)
@@ -282,17 +282,17 @@ namespace Blink.Shared.Domain.NewThings
         #endregion
     }
 
-    public class Selfable<T> : Valuable<T> where T : IElement
+    public class Selfable<T> : Valuable<Selfable<T>> where T : IElement
     {
         #region Public Members
 
-        private Keepable<Selfable<T>> Childs { get; set; }
+        public Keepable<T> Values { get; set; }
 
         #endregion
 
         public Selfable()
         {
-            Childs = new Keepable<Selfable<T>>();
+            Values = new Keepable<T>();
         }
 
         #region Helper Methods
@@ -300,107 +300,47 @@ namespace Blink.Shared.Domain.NewThings
         /// <summary>
         /// http://stackoverflow.com/questions/11830174/how-to-flatten-tree-via-linq/20335369?stw=2#20335369
         /// </summary>
-        //public IEnumerable<Selfable<T>> Flatten()
-        //{
-        //    var stack = new Stack<Selfable<T>>();
+        public IEnumerable<Selfable<T>> Flatten()
+        {
+            var stack = new Stack<Selfable<T>>();
 
-        //    stack.Push(this);
+            stack.Push(this);
 
-        //    while (stack.Count > 0)
-        //    {
-        //        var current = stack.Pop();
+            while (stack.Count > 0)
+            {
+                var current = stack.Pop();
 
-        //        yield return current;
+                yield return current;
 
-        //        foreach (var child in current.Childs)
-        //        {
-        //            stack.Push(child);
-        //        }
-        //    }
-        //}
+                foreach (var child in current)
+                {
+                    stack.Push(child);
+                }
+            }
+        }
 
         #endregion
 
         #region Keepable Members
 
-        //#region IElement Members
+        #region IElement Members
 
-        //public override Guid Id
-        //{
-        //    get { return base.Id; }
-        //    set
-        //    {
-        //        Values.Id = value;
-        //        base.Id = value;
-        //    }
-        //}
+        public override Guid Id
+        {
+            get { return base.Id; }
+            set
+            {
+                Values.Id = value;
+                base.Id = value;
+            }
+        }
 
-        //#endregion
+        #endregion
 
-        //public override IProgress Progress { get { return Values.Progress; } }
+        public override IProgress Progress { get { return Values.Progress; } }
 
         #endregion
     }
-
-    //public class Selfable<T> : Valuable<Selfable<T>> where T : IElement
-    //{
-    //    #region Public Members
-
-    //    public Keepable<T> Values { get; set; }
-
-    //    #endregion
-
-    //    public Selfable()
-    //    {
-    //        Values = new Keepable<T>();
-    //    }
-
-    //    #region Helper Methods
-
-    //    /// <summary>
-    //    /// http://stackoverflow.com/questions/11830174/how-to-flatten-tree-via-linq/20335369?stw=2#20335369
-    //    /// </summary>
-    //    public IEnumerable<Selfable<T>> Flatten()
-    //    {
-    //        var stack = new Stack<Selfable<T>>();
-
-    //        stack.Push(this);
-
-    //        while (stack.Count > 0)
-    //        {
-    //            var current = stack.Pop();
-
-    //            yield return current;
-
-    //            foreach (var child in current)
-    //            {
-    //                stack.Push(child);
-    //            }
-    //        }
-    //    }
-
-    //    #endregion
-
-    //    #region Keepable Members
-
-    //    #region IElement Members
-
-    //    public override Guid Id
-    //    {
-    //        get { return base.Id; }
-    //        set
-    //        {
-    //            Values.Id = value;
-    //            base.Id = value;
-    //        }
-    //    }
-
-    //    #endregion
-
-    //    public override IProgress Progress { get { return Values.Progress; } }
-
-    //    #endregion
-    //}
 
     #endregion
 
@@ -879,11 +819,11 @@ namespace Blink.Shared.Domain.NewThings
     {
         #region Private Members
 
-        public Keepable<T> Parent { get; set; }
+        private Keepable<T> _parent;
 
         private IList<IProgress> _Values 
         {
-            get { return (Parent != null) ? Parent.Select(e => e.Progress).ToList() : null; } 
+            get { return (_parent != null) ? _parent.Select(e => e.Progress).ToList() : null; } 
         }
 
         private bool _HasValues 
@@ -909,7 +849,7 @@ namespace Blink.Shared.Domain.NewThings
 
         public InternalProgress(Keepable<T> parent)
         {
-            Parent = parent;
+            _parent = parent;
         }
         
         #region IProgress Members
