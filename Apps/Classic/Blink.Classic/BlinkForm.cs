@@ -115,6 +115,8 @@ namespace Blink.Classic
             #endregion
         }
 
+        Guid _treeElementId;
+        Guid _noteElementId;
         Guid _folderElementId;
 
         //private void button1_Click(object sender, EventArgs e)
@@ -136,6 +138,7 @@ namespace Blink.Classic
 
             var noteElement = new NoteElement();
             noteElement.Id = Guid.NewGuid();
+            _noteElementId = noteElement.Id;
             noteElement.Name = "My New Note";
 
             var noteElementTwo = new NoteElement();
@@ -152,6 +155,7 @@ namespace Blink.Classic
             locationProgress.Destination = new Tuple<double, double>(20.02, 20.03);
             var textElement = new TextElement();
             textElement.Id = Guid.NewGuid();
+            textElement.Text = "Nico";
             textElement.Progress = locationProgress;
 
             var dateTimeProgress = new DateTimeProgress();
@@ -159,7 +163,7 @@ namespace Blink.Classic
             dateTimeProgress.Completion = DateTime.UtcNow.Subtract(new TimeSpan(100000));
             var fileElement = new FileElement();
             fileElement.Id = Guid.NewGuid();
-            fileElement.FileData = null;
+            fileElement.FileData = System.Text.Encoding.ASCII.GetBytes("Mihai");
             fileElement.FilePath = "C:\\Text.txt";
             fileElement.FileType = FileTypes.Other;
             fileElement.Progress = dateTimeProgress;
@@ -180,10 +184,22 @@ namespace Blink.Classic
 
             noteElementTwo.Add(textElementTwo);
 
-            subFolderElement.Values.Add(pageElement);
-            subFolderElement.Values.Add(noteElementTwo);
+            //subFolderElement.Values.Add(pageElement);
+            //subFolderElement.Values.Add(noteElementTwo);
 
-            folderElement.Add(subFolderElement);
+            //folderElement.Childs.Add(subFolderElement);
+
+
+
+            var treeElement = new TreeElement();
+            treeElement.Id = Guid.NewGuid();
+            _treeElementId = treeElement.Id;
+            //treeElement.Values.Add(fileElement);
+
+            var treeElementTwo = new TreeElement();
+            treeElementTwo.Id = Guid.NewGuid();
+            //treeElement.Childs.Add(treeElementTwo);
+
 
             //folderElement.ElementType = ElementTypes.Root;
             //RootElement.Instance.Add(folderElement);
@@ -197,24 +213,12 @@ namespace Blink.Classic
 
             //var folderType = typeof(FolderElement);
 
+
+
+
             await Sterling.Database.SaveAsync(folderElement);
-
-
-
-            // implement ICollection<T>?!
-
-
-
             //await Sterling.Database.SaveAsync(noteElement);
-
-
-
-            //await Sterling.Database.SaveAsync(folderElement);
-            //await Sterling.Database.SaveAsync(folderElement);
-            //await Sterling.Database.SaveAsync(folderElement);
-            //await Sterling.Database.SaveAsync(folderElement);
-
-
+            //await Sterling.Database.SaveAsync(treeElement);
 
             await Sterling.Database.FlushAsync();
 
@@ -230,8 +234,13 @@ namespace Blink.Classic
 
             //var folderElement = await Sterling.Database.LoadAsync<ValuableEntity>(_folderElementId);
 
-            var folderElement = await Sterling.Database.LoadAsync<FolderElement>(_folderElementId);
 
+
+
+            var folderElement = await Sterling.Database.LoadAsync<FolderElement>(_folderElementId);
+            //var noteElement = await Sterling.Database.LoadAsync<NoteElement>(_noteElementId);
+            //var treeElement = await Sterling.Database.LoadAsync<TreeElement>(_treeElementId);
+            
             MessageBox.Show(this, @"folderElement loaded.", @"Loaded", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 

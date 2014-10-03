@@ -35,6 +35,7 @@ namespace Blink.Shared.Engine
             Logger = new SterlingDefaultLogger(Engine.SterlingDatabase, SterlingLogLevel.Information);
 
             //Engine.SterlingDatabase.RegisterSerializer<FolderSerializer>();
+            Engine.SterlingDatabase.RegisterSerializer<TupleOfTwoDoubleSerializer>();
 
             Engine.Activate();
 
@@ -60,9 +61,36 @@ namespace Blink.Shared.Engine
                 //CreateTableDefinition<Domain.DataModel.Notes.Content, Guid>(i => i.Id),
                 //CreateTableDefinition<Domain.DataModel.Notes.Category, Guid>(i => i.Id)
 
-                CreateTableDefinition<Domain.NewThings.FolderElement, Guid>(f => f.Id),
 
-                //CreateTableDefinition<Domain.NewThings.NoteElement, Guid>(n => n.Id),
+
+
+
+
+
+                // Concretes
+                CreateTableDefinition<Domain.NewThings.TextElement, Guid>(e => e.Id),
+                CreateTableDefinition<Domain.NewThings.TweetElement, Guid>(e => e.Id),
+                CreateTableDefinition<Domain.NewThings.FileElement, Guid>(e => e.Id),
+                // Containers
+                CreateTableDefinition<Domain.NewThings.ListElement, Guid>(e => e.Id),
+                CreateTableDefinition<Domain.NewThings.GridElement, Guid>(e => e.Id),
+                CreateTableDefinition<Domain.NewThings.TreeElement, Guid>(e => e.Id),
+                // Groupables
+                CreateTableDefinition<Domain.NewThings.GroupElement, Guid>(e => e.Id),
+                // Notables
+                CreateTableDefinition<Domain.NewThings.NoteElement, Guid>(e => e.Id),
+                // Pageables
+                CreateTableDefinition<Domain.NewThings.PageElement, Guid>(e => e.Id),
+                // Foldables
+                CreateTableDefinition<Domain.NewThings.FolderElement, Guid>(e => e.Id),
+
+
+
+
+                
+
+
+
 
                 //CreateTableDefinition<Domain.NewThings.ElementEntity, Guid>(e => e.Id),
                 //CreateTableDefinition<Domain.NewThings.ConcreteEntity, Guid>(e => e.Id),
@@ -118,6 +146,26 @@ namespace Blink.Shared.Engine
     //                            };
     //    }
     //}
+
+    public class TupleOfTwoDoubleSerializer : BaseSerializer
+    {
+        public override bool CanSerialize(Type targetType)
+        {
+            return targetType.Equals(typeof(Tuple<double, double>));
+        }
+
+        public override void Serialize(object target, System.IO.BinaryWriter writer)
+        {
+            var data = (Tuple<double, double>)target;
+            writer.Write(data.Item1);
+            writer.Write(data.Item2);
+        }
+
+        public override object Deserialize(Type type, System.IO.BinaryReader reader)
+        {
+            return new Tuple<double, double>(reader.ReadDouble(), reader.ReadDouble());
+        }
+    }
 
     // use own entities or SerializeAs BaseElement, Concrete/Valuable, actual entity's serialization, etc???
 }
