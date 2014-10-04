@@ -64,8 +64,10 @@ namespace Blink.Shared.Engine
 
 
 
-
-
+                // Progress
+                CreateTableDefinition<Domain.NewThings.ManualProgress, Guid>(e => e.Id),
+                CreateTableDefinition<Domain.NewThings.DateTimeProgress, Guid>(e => e.Id),
+                CreateTableDefinition<Domain.NewThings.LocationProgress, Guid>(e => e.Id),
 
                 // Concretes
                 CreateTableDefinition<Domain.NewThings.TextElement, Guid>(e => e.Id),

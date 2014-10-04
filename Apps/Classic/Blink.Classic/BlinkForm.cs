@@ -149,43 +149,45 @@ namespace Blink.Classic
             groupElement.Name = "My New Group";
             groupElement.Id = Guid.NewGuid();
 
-            var locationProgress = new LocationProgress();
-            locationProgress.Id = Guid.NewGuid();
-            locationProgress.Current = new Tuple<double, double>(10.00, 10.01);
-            locationProgress.Destination = new Tuple<double, double>(20.02, 20.03);
+            var mp1 = new ManualProgress();
+            mp1.Id = Guid.NewGuid();
+            mp1.Completed = true;
             var textElement = new TextElement();
             textElement.Id = Guid.NewGuid();
             textElement.Text = "Nico";
-            textElement.Progress = locationProgress;
+            textElement.Progress = mp1;
 
-            var dateTimeProgress = new DateTimeProgress();
-            dateTimeProgress.Id = Guid.NewGuid();
-            dateTimeProgress.Completion = DateTime.UtcNow.Subtract(new TimeSpan(100000));
+            var mp3 = new ManualProgress();
+            mp3.Id = Guid.NewGuid();
+            mp3.Completed = false;
+            var textElementTwo = new TextElement();
+            textElementTwo.Id = Guid.NewGuid();
+            textElementTwo.Progress = mp3;
+
+            var mp2 = new ManualProgress();
+            mp2.Id = Guid.NewGuid();
+            mp2.Completed = true;
             var fileElement = new FileElement();
             fileElement.Id = Guid.NewGuid();
             fileElement.FileData = System.Text.Encoding.ASCII.GetBytes("Mihai");
             fileElement.FilePath = "C:\\Text.txt";
             fileElement.FileType = FileTypes.Other;
-            fileElement.Progress = dateTimeProgress;
-
-            var dateTimeProgressTwo = new ManualProgress();
-            dateTimeProgressTwo.Id = Guid.NewGuid();
-            dateTimeProgressTwo.Completed = true;
-            var textElementTwo = new TextElement();
-            textElementTwo.Id = Guid.NewGuid();
-            textElementTwo.Progress = dateTimeProgressTwo;
+            fileElement.Progress = mp2;
 
             groupElement.Add(fileElement);
+            groupElement.Add(textElement);
 
-            noteElement.Add(textElement);
+            noteElement.Add(textElementTwo);
             noteElement.Add(groupElement);
 
             pageElement.Add(noteElement);
 
-            noteElementTwo.Add(textElementTwo);
+            var pep = pageElement.Progress;
+
+            //noteElementTwo.Add(textElementTwo);
 
             subFolderElement.Values.Add(pageElement);
-            subFolderElement.Values.Add(noteElementTwo);
+            //subFolderElement.Values.Add(noteElementTwo);
 
             //folderElement.Values.Add(pageElement);
             //folderElement.Values.Add(noteElementTwo);
@@ -220,12 +222,12 @@ namespace Blink.Classic
 
 
             await Sterling.Database.SaveAsync(folderElement);
-            //await Sterling.Database.SaveAsync(noteElement);
-            //await Sterling.Database.SaveAsync(treeElement);
+
+            var folderProgress = folderElement[0].Progress.Percentage;
 
             await Sterling.Database.FlushAsync();
 
-            MessageBox.Show(this, @"folderElement saved at: " + DateTime.Now /*newNote.UtcTime.ToLocal()*/, @"Saved", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            //MessageBox.Show(this, @"folderElement saved at: " + DateTime.Now /*newNote.UtcTime.ToLocal()*/, @"Saved", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         //private void button2_Click(object sender, EventArgs e)
@@ -241,10 +243,10 @@ namespace Blink.Classic
 
 
             var folderElement = await Sterling.Database.LoadAsync<FolderElement>(_folderElementId);
-            //var noteElement = await Sterling.Database.LoadAsync<NoteElement>(_noteElementId);
-            //var treeElement = await Sterling.Database.LoadAsync<TreeElement>(_treeElementId);
-            
-            MessageBox.Show(this, @"folderElement loaded.", @"Loaded", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+            var folderProgress = folderElement[0].Progress.Percentage;
+
+            //MessageBox.Show(this, @"folderElement loaded.", @"Loaded", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         public const string ApiKey = "0000000048111E64";

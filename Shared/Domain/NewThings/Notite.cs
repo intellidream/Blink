@@ -77,14 +77,17 @@ namespace Blink.Shared.Domain.NewThings
 
         public virtual IProgress Progress
         {
-            get { return _progress ?? (_internalProgress = new InternalProgress<T>(this)); }
+            get 
+            {
+                return _progress ?? (_internalProgress = new InternalProgress<T>(this)); 
+            }
             set
             {
-                if (value != _progress)
-                {
-                    _progress = value;
-                    NotifyPropertyChanged();
-                }
+                if (value.ProgressType == ProgressTypes.Internal) return;
+                if (value == _progress) return;
+
+                _progress = value;
+                NotifyPropertyChanged();
             }
         }
 
@@ -117,7 +120,7 @@ namespace Blink.Shared.Domain.NewThings
             item.ParentId = this.Id;
             item.Position = index;
             Data[index] = item;
-            //NotifyPropertyChanged("Data");
+            NotifyPropertyChanged("Data");
         }
 
         #endregion
@@ -129,7 +132,7 @@ namespace Blink.Shared.Domain.NewThings
             item.ParentId = this.Id;
             item.Position = index;
             Data.Insert(index, item);
-            //NotifyPropertyChanged("Data");
+            NotifyPropertyChanged("Data");
         }
 
         public void Add(T item)
@@ -137,20 +140,20 @@ namespace Blink.Shared.Domain.NewThings
             item.ParentId = this.Id;
             item.Position = Data.Count;
             Data.Add(item);
-            //NotifyPropertyChanged("Data");
+            NotifyPropertyChanged("Data");
         }
 
         public void Remove(int index)
         {
             Data.RemoveAt(index);
-            //NotifyPropertyChanged("Data");
+            NotifyPropertyChanged("Data");
         }
 
         public bool Remove(T item)
         {
             if (Data.Remove(item))
             {
-                //NotifyPropertyChanged("Data");
+                NotifyPropertyChanged("Data");
                 return true;
             }
             else
@@ -162,7 +165,7 @@ namespace Blink.Shared.Domain.NewThings
         public void Clear()
         {
             Data.Clear();
-            //NotifyPropertyChanged("Data");
+            NotifyPropertyChanged("Data");
         }
 
         public bool Contains(T item)
@@ -208,7 +211,7 @@ namespace Blink.Shared.Domain.NewThings
                 if (value != _id)
                 {
                     _id = value;
-                    //NotifyPropertyChanged();
+                    NotifyPropertyChanged();
                 }
             }
         }
@@ -221,7 +224,7 @@ namespace Blink.Shared.Domain.NewThings
                 if (value != _parentId)
                 {
                     _parentId = value;
-                    //NotifyPropertyChanged();
+                    NotifyPropertyChanged();
                 }
             }
         }
@@ -234,7 +237,7 @@ namespace Blink.Shared.Domain.NewThings
                 if (value != _position)
                 {
                     _position = value;
-                    //NotifyPropertyChanged();
+                    NotifyPropertyChanged();
                 }
             }
         }
@@ -247,7 +250,7 @@ namespace Blink.Shared.Domain.NewThings
                 if (!value.Equals(_timestamp))
                 {
                     _timestamp = value;
-                    //NotifyPropertyChanged();
+                    NotifyPropertyChanged();
                 }
             }
         }
@@ -335,9 +338,9 @@ namespace Blink.Shared.Domain.NewThings
             }
         }
 
-        #endregion
-
         public override IProgress Progress { get { return Values.Progress; } }
+
+        #endregion
 
         #endregion
     }
@@ -970,12 +973,6 @@ namespace Blink.Shared.Domain.NewThings
         public Tuple<double, double> Destination { get; set; }
 
         #endregion
-
-        //public LocationProgress() 
-        //{
-        //    Current = new Tuple<double, double>(0, 0);
-        //    Destination = new Tuple<double, double>(0, 0);
-        //}
 
         #region IProgress Members
 
