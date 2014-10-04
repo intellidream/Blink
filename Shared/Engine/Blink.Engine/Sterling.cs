@@ -103,27 +103,27 @@ namespace Blink.Shared.Engine
         }
     }
 
-    public class AuditTrigger<T> : BaseSterlingTrigger<T, Guid> where T : ElementRecord, new()
-    {
-        public AuditTrigger(ISterlingDatabaseInstance database)
-        {
-        }
+    //public class AuditTrigger<T> : BaseSterlingTrigger<T, Guid> where T : IElement, new()
+    //{
+    //    public AuditTrigger(ISterlingDatabaseInstance database)
+    //    {
+    //    }
 
-        public override bool BeforeSave(T instance)
-        {
-            return true;
-        }
+    //    public override bool BeforeSave(T instance)
+    //    {
+    //        return true;
+    //    }
 
-        public override void AfterSave(T instance)
-        {
-            return;
-        }
+    //    public override void AfterSave(T instance)
+    //    {
+    //        return;
+    //    }
 
-        public override bool BeforeDelete(Guid key)
-        {
-            return true;
-        }
-    }
+    //    public override bool BeforeDelete(Guid key)
+    //    {
+    //        return true;
+    //    }
+    //}
 
     //public class FolderSerializer : BaseSerializer 
     //{
@@ -168,6 +168,4 @@ namespace Blink.Shared.Engine
             return new Tuple<double, double>(reader.ReadDouble(), reader.ReadDouble());
         }
     }
-
-    // use own entities or SerializeAs BaseElement, Concrete/Valuable, actual entity's serialization, etc???
 }

@@ -3,7 +3,7 @@
   <Class Name="Blink.Shared.Domain.NewThings.ProgressBase" Collapsed="true">
     <Position X="10.5" Y="5.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAACAAAAAAAAAAAAAAAAAAAAQAgACBAAAAAAAAAAIAA=</HashCode>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAAAQAgAABAAAAAAAAAAAAA=</HashCode>
       <FileName>NewThings\Model.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -19,10 +19,9 @@
   <Class Name="Blink.Shared.Domain.NewThings.DateTimeProgress" Collapsed="true">
     <Position X="10.5" Y="7.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAEAAAQAAACQAAAABAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAACQAAAABAAAAAAAAAAAAA=</HashCode>
       <FileName>NewThings\Model.cs</FileName>
     </TypeIdentifier>
-    <Lollipop Position="0.2" />
   </Class>
   <Class Name="Blink.Shared.Domain.NewThings.LocationProgress" Collapsed="true">
     <Position X="12.75" Y="7.5" Width="1.5" />
@@ -30,15 +29,13 @@
       <HashCode>AAAAAACAAAAAAAAAAACAAAAAQAAAARAEAAAAAAAAAAA=</HashCode>
       <FileName>NewThings\Model.cs</FileName>
     </TypeIdentifier>
-    <Lollipop Position="0.2" />
   </Class>
   <Class Name="Blink.Shared.Domain.NewThings.TextElement" Collapsed="true" BaseTypeListCollapsed="true">
     <Position X="0.5" Y="4.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAABAAAAAAAAAAAAAAAAAEAAAAAQAAIAAAACAAAAAA=</HashCode>
+      <HashCode>AAAABAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAACAAAAAA=</HashCode>
       <FileName>NewThings\Model.cs</FileName>
     </TypeIdentifier>
-    <Lollipop Position="0.2" />
   </Class>
   <Class Name="Blink.Shared.Domain.NewThings.TweetElement" Collapsed="true" BaseTypeListCollapsed="true">
     <Position X="2.75" Y="4.25" Width="1.5" />
@@ -50,10 +47,9 @@
   <Class Name="Blink.Shared.Domain.NewThings.FileElement" Collapsed="true" BaseTypeListCollapsed="true">
     <Position X="5" Y="4.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AgAABgAAAAAAAAAAAAgAAAAAAAABAAAAAABAAABAAAA=</HashCode>
+      <HashCode>AgAABgAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAABAAAA=</HashCode>
       <FileName>NewThings\Model.cs</FileName>
     </TypeIdentifier>
-    <Lollipop Position="0.2" />
   </Class>
   <Class Name="Blink.Shared.Domain.NewThings.ListElement" Collapsed="true">
     <Position X="8.25" Y="2.25" Width="1.5" />
@@ -121,7 +117,7 @@
   <Class Name="Blink.Shared.Domain.NewThings.Concrete" Collapsed="true">
     <Position X="2.75" Y="6.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>GAACBAAAAAwgAIAgAABCAAAIoACAAAAAAgAAgACAAAA=</HashCode>
+      <HashCode>EAACBAAAAAAAAIAgAABCAAAIoACAAAAAAgAAgACAAAA=</HashCode>
       <FileName>NewThings\Model.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -139,34 +135,6 @@
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAASAAAABAAAAA=</HashCode>
       <FileName>NewThings\Model.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="Blink.Shared.Domain.NewThings.ElementRecord" Collapsed="true">
-    <Position X="0.5" Y="8.25" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAACAAAAAAAAAAAgAAAAAAAAAAAAAAAAAwAAAAAEAAA=</HashCode>
-      <FileName>NewThings\Entities.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="Blink.Shared.Domain.NewThings.ValuableRecord" Collapsed="true">
-    <Position X="4.5" Y="8.25" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAACAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>NewThings\Entities.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="Blink.Shared.Domain.NewThings.ConcreteRecord" Collapsed="true">
-    <Position X="2.5" Y="8.25" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAACAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>NewThings\Entities.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="Blink.Shared.Domain.NewThings.FileRecord" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="6.5" Y="8.25" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AgACAgAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAABAAAA=</HashCode>
-      <FileName>NewThings\Entities.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Blink.Shared.Domain.NewThings.Selfable&lt;T&gt;" Collapsed="true">
@@ -244,20 +212,6 @@
     <TypeIdentifier>
       <HashCode>AAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>NewThings\Model.cs</FileName>
-    </TypeIdentifier>
-  </Interface>
-  <Interface Name="Blink.Shared.Domain.NewThings.IElementEntity" Collapsed="true">
-    <Position X="2.75" Y="7.25" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>CAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>NewThings\Entities.cs</FileName>
-    </TypeIdentifier>
-  </Interface>
-  <Interface Name="Blink.Shared.Domain.NewThings.IValuableEntity&lt;T&gt;" Collapsed="true">
-    <Position X="5.25" Y="7.25" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAgAAAAAAAAA=</HashCode>
-      <FileName>NewThings\Entities.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Enum Name="Blink.Shared.Domain.NewThings.ElementTypes" Collapsed="true">

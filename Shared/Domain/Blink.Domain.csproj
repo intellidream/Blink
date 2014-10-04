@@ -55,7 +55,6 @@
     <Compile Include="DataModel\Notes\Sources.cs" />
     <Compile Include="DataModel\Notes\TimeStamp.cs" />
     <Compile Include="NewThings\Audit.cs" />
-    <Compile Include="NewThings\Entities.cs" />
     <Compile Include="NewThings\Model.cs" />
     <Compile Include="NewThings\Repos.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

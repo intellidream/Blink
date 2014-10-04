@@ -352,7 +352,7 @@ namespace Blink.Shared.Domain.NewThings
 
     #region Concretes
 
-    public abstract class Concrete : IElement, MGroupable, MNotable, IConcreteEntity
+    public abstract class Concrete : IElement, MGroupable, MNotable
     {
         #region Private Members
 
@@ -444,45 +444,6 @@ namespace Blink.Shared.Domain.NewThings
 
         #endregion
 
-        #region IConcreteEntity Members
-
-        public ConcreteRecord ToConcreteEntity()
-        {
-            return new ConcreteRecord
-            {
-                Id = this.Id,
-                ProgressId = this.Progress.Id
-            };
-        }
-
-        public Concrete FromConcreteEntity()
-        {
-            throw new NotImplementedException();
-        }
-
-        #endregion
-
-        #region IElementEntity Members
-
-        public ElementRecord ToElementEntity()
-        {
-            return new ElementRecord
-            {
-                Id = this.Id,
-                ParentId = this.ParentId,
-                Position = this.Position,
-                TimestampId = this.Timestamp.Id,
-                Type = this.ElementType
-            };
-        }
-
-        public IElement FromElementEntity()
-        {
-            throw new NotImplementedException();
-        }
-
-        #endregion
-
         #region INotifyPropertyChanged Members
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -498,7 +459,7 @@ namespace Blink.Shared.Domain.NewThings
         #endregion
     }
 
-    public class TextElement : Concrete, ITextEntity
+    public class TextElement : Concrete
     {
         #region Private Members
 
@@ -526,24 +487,6 @@ namespace Blink.Shared.Domain.NewThings
         #region IElement Members
 
         public override ElementTypes ElementType { get { return ElementTypes.Text; } }
-
-        #endregion
-
-        #region ITextEntity Members
-
-        public TextRecord ToTextEntity()
-        {
-            return new TextRecord
-            {
-                Id = this.Id,
-                Text = this.Text
-            };
-        }
-
-        public TextElement FromTextEntity()
-        {
-            throw new NotImplementedException();
-        }
 
         #endregion
     }
@@ -575,7 +518,7 @@ namespace Blink.Shared.Domain.NewThings
         Video = 3
     }
 
-    public class FileElement : Concrete, IFileEntity
+    public class FileElement : Concrete
     {
         #region Public Members
 
@@ -589,26 +532,6 @@ namespace Blink.Shared.Domain.NewThings
         #region IElement Members
 
         public override ElementTypes ElementType { get { return ElementTypes.File; } }
-
-        #endregion
-
-        #region IFileEntity Members
-
-        public FileRecord ToFileEntity()
-        {
-            return new FileRecord
-            {
-                FileName = this.FileName,
-                FileType = this.FileType,
-                FilePath = this.FilePath,
-                FileData = this.FileData
-            };
-        }
-
-        public FileElement FromFileEntity()
-        {
-            throw new NotImplementedException();
-        }
 
         #endregion
     }
@@ -782,7 +705,7 @@ namespace Blink.Shared.Domain.NewThings
         bool IsCompleted();
     }
 
-    public abstract class ProgressBase : IProgress, IProgressEntity
+    public abstract class ProgressBase : IProgress
     {
         #region IProgress Members
 
@@ -799,24 +722,6 @@ namespace Blink.Shared.Domain.NewThings
         }
 
         public abstract bool IsCompleted();
-
-        #endregion
-
-        #region IProgressEntity Members
-
-        public ProgressRecord ToProgressEntity()
-        {
-            return new ProgressRecord
-            {
-                Id = this.Id,
-                ProgressType = this.ProgressType
-            };
-        }
-
-        public IProgress FromProgressEntity()
-        {
-            throw new NotImplementedException();
-        }
 
         #endregion
     }
@@ -887,7 +792,7 @@ namespace Blink.Shared.Domain.NewThings
         #endregion
     }
 
-    public class ManualProgress : ProgressBase, IManualProgressEntity
+    public class ManualProgress : ProgressBase
     {
         #region Public Members
 
@@ -908,27 +813,9 @@ namespace Blink.Shared.Domain.NewThings
         }
 
         #endregion
-
-        #region IManualProgressEntity Members
-
-        public ManualProgressRecord ToManualProgressEntity()
-        {
-            return new ManualProgressRecord 
-            { 
-                Id = this.Id, 
-                Completed = this.Completed 
-            };
-        }
-
-        public ManualProgress FromManualProgressEntity()
-        {
-            throw new NotImplementedException();
-        }
-
-        #endregion
     }
 
-    public class DateTimeProgress : ProgressBase, IDateTimeProgressEntity
+    public class DateTimeProgress : ProgressBase
     {
         #region Public Members
 
@@ -949,26 +836,8 @@ namespace Blink.Shared.Domain.NewThings
         }
 
         #endregion
-
-        #region IDateTimeProgressEntity Members
-
-        public DateTimeProgressRecord ToDateTimeProgressEntity()
-        {
-            return new DateTimeProgressRecord 
-            {
-                Id = this.Id,
-                Completion = this.Completion
-            };
-        }
-
-        public DateTimeProgress FromDateTimeProgressEntity()
-        {
-            throw new NotImplementedException();
-        }
-
-        #endregion
     }
-    public class LocationProgress : ProgressBase, ILocationProgressEntity
+    public class LocationProgress : ProgressBase
     {
         #region Public Members
 
@@ -987,25 +856,6 @@ namespace Blink.Shared.Domain.NewThings
         public override bool IsCompleted()
         {
             return Current.Equals(Destination);
-        }
-
-        #endregion
-
-        #region ILocationProgressEntity Members
-
-        public LocationProgressRecord ToLocationProgressEntity()
-        {
-            return new LocationProgressRecord
-            {
-                Id = this.Id,
-                Current = this.Current,
-                Destination = this.Destination
-            };
-        }
-
-        public LocationProgress FromLocationProgressEntity()
-        {
-            throw new NotImplementedException();
         }
 
         #endregion
