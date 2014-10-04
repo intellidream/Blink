@@ -9,8 +9,6 @@ using System.Runtime.CompilerServices;
 
 namespace Blink.Shared.Domain.NewThings
 {
-    // TODO: rename file to Model.cs
-
     #region Elements
 
     public enum ElementTypes : int
