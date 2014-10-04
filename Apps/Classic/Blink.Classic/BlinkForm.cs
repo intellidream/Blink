@@ -223,7 +223,11 @@ namespace Blink.Classic
 
             await Sterling.Database.SaveAsync(folderElement);
 
-            var folderProgress = folderElement[0].Progress.Percentage;
+            //var folderProgress = folderElement[0].Progress.Percentage;
+
+
+            var sfe = folderElement.First(f => f.Id == subFolderElement.Id) as FolderElement;
+            var folderProgress = sfe.Progress.Percentage;
 
             await Sterling.Database.FlushAsync();
 
@@ -244,7 +248,7 @@ namespace Blink.Classic
 
             var folderElement = await Sterling.Database.LoadAsync<FolderElement>(_folderElementId);
 
-            var folderProgress = folderElement[0].Progress.Percentage;
+            //var folderProgress = folderElement[0].Progress.Percentage;
 
             //MessageBox.Show(this, @"folderElement loaded.", @"Loaded", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }

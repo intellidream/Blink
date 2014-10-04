@@ -103,25 +103,30 @@ namespace Blink.Shared.Domain.NewThings
 
         #region Collection Indexer
 
+        [System.Runtime.CompilerServices.IndexerName("Item")]
         public T this[int index]
         {
             get
             {
                 return this.Data[index];
             }
+            private set 
+            {
+                Set(index, value);
+            }
         }
-
-        #endregion
 
         #region Collection Setter
 
-        public void Set(int index, T item) 
+        private void Set(int index, T item)
         {
             item.ParentId = this.Id;
             item.Position = index;
             Data[index] = item;
             NotifyPropertyChanged("Data");
         }
+
+        #endregion
 
         #endregion
 
@@ -848,9 +853,9 @@ namespace Blink.Shared.Domain.NewThings
 
         #endregion
 
-        public InternalProgress() { }
+        public InternalProgress() { this.Id = Guid.Empty; }
 
-        public InternalProgress(Keepable<T> parent)
+        public InternalProgress(Keepable<T> parent) : this()
         {
             _parent = parent;
         }
