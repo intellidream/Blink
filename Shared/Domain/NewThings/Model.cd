@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="Blink.Shared.Domain.NewThings.ProgressBase" Collapsed="true">
-    <Position X="10.5" Y="5.75" Width="1.5" />
+    <Position X="2.75" Y="7.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAACAAAAAAAAAAAAAAAAAAAAQAgAABAAAAAAAAAAAAA=</HashCode>
       <FileName>NewThings\Model.cs</FileName>
@@ -9,7 +9,7 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="Blink.Shared.Domain.NewThings.InternalProgress&lt;T&gt;" Collapsed="true">
-    <Position X="8.25" Y="7.5" Width="1.5" />
+    <Position X="0.5" Y="9.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAACAAAAAAAAAAAACAAAQAAQQBgAABAAAAAAAAEAAAA=</HashCode>
       <FileName>NewThings\Model.cs</FileName>
@@ -17,16 +17,16 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="Blink.Shared.Domain.NewThings.DateTimeProgress" Collapsed="true">
-    <Position X="10.5" Y="7.5" Width="1.5" />
+    <Position X="2.75" Y="9.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAACQAAAABAAAAAAAAAAAAA=</HashCode>
       <FileName>NewThings\Model.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Blink.Shared.Domain.NewThings.LocationProgress" Collapsed="true">
-    <Position X="12.75" Y="7.5" Width="1.5" />
+    <Position X="5" Y="9.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAACAAAAAAAAAAACAAAAAQAAAARAEAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAACAAAAAQAAAABAEAAAAAAAAAAA=</HashCode>
       <FileName>NewThings\Model.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -145,14 +145,14 @@
     </TypeIdentifier>
   </Class>
   <Interface Name="Blink.Shared.Domain.NewThings.IProgress" Collapsed="true">
-    <Position X="15" Y="7.5" Width="1.5" />
+    <Position X="0.5" Y="7.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAACAAAAAAAAAAAAAAAAAAAAQAgAABAAAAAAAAAAAAA=</HashCode>
       <FileName>NewThings\Model.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="Blink.Shared.Domain.NewThings.ISchedule" Collapsed="true">
-    <Position X="17.25" Y="7.5" Width="1.5" />
+    <Position X="8.25" Y="7.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAgAAAAAAA=</HashCode>
       <FileName>NewThings\Model.cs</FileName>

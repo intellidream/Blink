@@ -34,7 +34,6 @@ namespace Blink.Shared.Engine
             Engine = new SterlingEngine(platformAdapter);
             Logger = new SterlingDefaultLogger(Engine.SterlingDatabase, SterlingLogLevel.Information);
 
-            //Engine.SterlingDatabase.RegisterSerializer<FolderSerializer>();
             Engine.SterlingDatabase.RegisterSerializer<TupleOfTwoDoubleSerializer>();
 
             Engine.Activate();
@@ -57,13 +56,6 @@ namespace Blink.Shared.Engine
         {
             return new List<ITableDefinition>
             {
-                //CreateTableDefinition<Domain.DataModel.Notes.BlinkNote, Guid>(i => i.Id),
-                //CreateTableDefinition<Domain.DataModel.Notes.Content, Guid>(i => i.Id),
-                //CreateTableDefinition<Domain.DataModel.Notes.Category, Guid>(i => i.Id)
-
-
-
-
                 // Progress
                 CreateTableDefinition<Domain.NewThings.ManualProgress, Guid>(e => e.Id),
                 CreateTableDefinition<Domain.NewThings.DateTimeProgress, Guid>(e => e.Id),
@@ -85,20 +77,8 @@ namespace Blink.Shared.Engine
                 CreateTableDefinition<Domain.NewThings.PageElement, Guid>(e => e.Id),
                 // Foldables
                 CreateTableDefinition<Domain.NewThings.FolderElement, Guid>(e => e.Id),
-
-
-
-
-                
-
-
-
-
-                //CreateTableDefinition<Domain.NewThings.ElementEntity, Guid>(e => e.Id),
-                //CreateTableDefinition<Domain.NewThings.ConcreteEntity, Guid>(e => e.Id),
-                //CreateTableDefinition<Domain.NewThings.ValuableEntity, Guid>(e => e.Id),
-                //CreateTableDefinition<Domain.NewThings.TextEntity, Guid>(e => e.Id),
-                //CreateTableDefinition<Domain.NewThings.FileEntity, Guid>(e => e.Id)
+                // Rootables
+                CreateTableDefinition<Domain.NewThings.RootElement, bool>(e => true)
             };
         }
     }
@@ -122,30 +102,6 @@ namespace Blink.Shared.Engine
     //    public override bool BeforeDelete(Guid key)
     //    {
     //        return true;
-    //    }
-    //}
-
-    //public class FolderSerializer : BaseSerializer 
-    //{
-    //    public override bool CanSerialize(Type targetType)
-    //    {
-    //        return targetType.Equals(typeof(FolderElement));
-    //    }
-
-    //    public override void Serialize(object target, System.IO.BinaryWriter writer)
-    //    {
-    //        var data = (FolderElement)target;
-    //        //writer.Write(data.Id);
-    //        writer.Write(data.Name);
-    //    }
-
-    //    public override object Deserialize(Type type, System.IO.BinaryReader reader)
-    //    {
-    //        return new FolderElement
-    //                            {
-    //                                //Id = ,
-    //                                Name = reader.ReadString()
-    //                            };
     //    }
     //}
 

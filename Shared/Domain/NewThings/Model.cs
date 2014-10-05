@@ -91,6 +91,12 @@ namespace Blink.Shared.Domain.NewThings
 
         #endregion
 
+        #region Properties Injector
+
+        public virtual void InjectProperties(T t) { }
+
+        #endregion
+
         #endregion
 
         public Keepable()
@@ -118,6 +124,7 @@ namespace Blink.Shared.Domain.NewThings
 
         private void Set(int index, T item)
         {
+            InjectProperties(item);
             item.ParentId = this.Id;
             item.Position = index;
             Data[index] = item;
@@ -132,6 +139,7 @@ namespace Blink.Shared.Domain.NewThings
 
         public void Insert(int index, T item)
         {
+            InjectProperties(item);
             item.ParentId = this.Id;
             item.Position = index;
             Data.Insert(index, item);
@@ -140,6 +148,7 @@ namespace Blink.Shared.Domain.NewThings
 
         public void Add(T item)
         {
+            InjectProperties(item);
             item.ParentId = this.Id;
             item.Position = Data.Count;
             Data.Add(item);
@@ -631,7 +640,7 @@ namespace Blink.Shared.Domain.NewThings
 
     public interface MFoldable : IElement { }
 
-    public class FolderElement : Selfable<MFoldable>, IRootable
+    public class FolderElement : Selfable<MFoldable>, IRootable // MRootable - no type switch needed - rootelement always has same guid and loads children!!!
     {
         #region IElement Members
 
@@ -658,7 +667,7 @@ namespace Blink.Shared.Domain.NewThings
         new ElementTypes ElementType { get; set; }
     }
 
-    public sealed class RootElement : Valuable<IRootable>
+    public sealed class RootElement : Keepable<IRootable>
     {
         private static readonly Lazy<RootElement> lazy =
             new Lazy<RootElement>(() => new RootElement());
@@ -667,7 +676,12 @@ namespace Blink.Shared.Domain.NewThings
 
         public bool IsReady { get { return lazy.IsValueCreated; } }
 
-        private RootElement() { }
+        public RootElement() { }
+
+        public override void InjectProperties(IRootable t)
+        {
+            t.ElementType = ElementTypes.Root;
+        }
     } 
 
     #endregion
