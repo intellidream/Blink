@@ -682,6 +682,8 @@ namespace Blink.Shared.Domain.NewThings
         {
             t.ElementType = ElementTypes.Root;
         }
+
+        // load and add things as root and do serialization/deserialization here
     } 
 
     #endregion
