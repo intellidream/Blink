@@ -1,29 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
-  <Class Name="Blink.Data.Domain.Model.Keepable&lt;T&gt;" Collapsed="true">
-    <Position X="8.75" Y="0.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>EEICAEAAAAAABJAgCABCBAQIoACAABAEAwAAgADQIAA=</HashCode>
-      <FileName>Domain\Model.cs</FileName>
-    </TypeIdentifier>
-    <Lollipop Position="0.2" />
-  </Class>
-  <Class Name="Blink.Data.Domain.Model.Valuable&lt;T&gt;" Collapsed="true">
-    <Position X="7.75" Y="1.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Domain\Model.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="Blink.Data.Domain.Model.Selfable&lt;T&gt;" Collapsed="true">
-    <Position X="6.5" Y="3.25" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAACAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAgAACAAAA=</HashCode>
-      <FileName>Domain\Model.cs</FileName>
-    </TypeIdentifier>
-  </Class>
   <Class Name="Blink.Data.Domain.Model.Concrete" Collapsed="true">
-    <Position X="10.75" Y="9.5" Width="1.5" />
+    <Position X="2.75" Y="6.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>EAACAAAAAAAAAIAgAABCAAAIoACAAAAAAwAAgACAAAA=</HashCode>
       <FileName>Domain\Model.cs</FileName>
@@ -31,28 +9,28 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="Blink.Data.Domain.Model.TextElement" Collapsed="true">
-    <Position X="8.5" Y="10.75" Width="1.5" />
+    <Position X="0.5" Y="8" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAQAACAAAAAA=</HashCode>
       <FileName>Domain\Model.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Blink.Data.Domain.Model.TweetElement" Collapsed="true">
-    <Position X="10.75" Y="10.75" Width="1.5" />
+    <Position X="2.75" Y="8" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAA=</HashCode>
       <FileName>Domain\Model.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Blink.Data.Domain.Model.FileElement" Collapsed="true">
-    <Position X="13" Y="10.75" Width="1.5" />
+    <Position X="5" Y="8" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AgAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAQBAAABAAAA=</HashCode>
       <FileName>Domain\Model.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Blink.Data.Domain.Model.ListElement" Collapsed="true">
-    <Position X="10" Y="3.25" Width="1.5" />
+    <Position X="10.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAA=</HashCode>
       <FileName>Domain\Model.cs</FileName>
@@ -60,7 +38,7 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="Blink.Data.Domain.Model.GridElement" Collapsed="true">
-    <Position X="14.5" Y="3.25" Width="1.5" />
+    <Position X="8.25" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAQAAAAAAAAA=</HashCode>
       <FileName>Domain\Model.cs</FileName>
@@ -68,7 +46,7 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="Blink.Data.Domain.Model.TreeElement" Collapsed="true">
-    <Position X="5.5" Y="4.75" Width="1.5" />
+    <Position X="8.25" Y="2.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAA=</HashCode>
       <FileName>Domain\Model.cs</FileName>
@@ -76,7 +54,7 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="Blink.Data.Domain.Model.GroupElement" Collapsed="true">
-    <Position X="3.25" Y="3.25" Width="1.5" />
+    <Position X="12.75" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAA=</HashCode>
       <FileName>Domain\Model.cs</FileName>
@@ -84,7 +62,7 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="Blink.Data.Domain.Model.NoteElement" Collapsed="true">
-    <Position X="12.25" Y="3.25" Width="1.5" />
+    <Position X="15" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAA=</HashCode>
       <FileName>Domain\Model.cs</FileName>
@@ -92,7 +70,7 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="Blink.Data.Domain.Model.PageElement" Collapsed="true">
-    <Position X="1" Y="3.25" Width="1.5" />
+    <Position X="17.25" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAA=</HashCode>
       <FileName>Domain\Model.cs</FileName>
@@ -100,138 +78,95 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="Blink.Data.Domain.Model.FolderElement" Collapsed="true">
-    <Position X="7.75" Y="4.75" Width="1.5" />
+    <Position X="8.25" Y="4.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAA=</HashCode>
       <FileName>Domain\Model.cs</FileName>
     </TypeIdentifier>
-    <Lollipop Position="0.2" />
+    <Lollipop Orientation="Right" Position="0.1" />
   </Class>
   <Class Name="Blink.Data.Domain.Model.RootElement" Collapsed="true">
-    <Position X="16.75" Y="1.75" Width="1.5" />
+    <Position X="17.25" Y="4.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAwAAAAAAAAA=</HashCode>
       <FileName>Domain\Model.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Blink.Data.Domain.Model.ProgressBase" Collapsed="true">
-    <Position X="2.75" Y="9.5" Width="1.5" />
+  <Class Name="Blink.Data.Domain.Model.Keepable&lt;T&gt;" Collapsed="true">
+    <Position X="12.75" Y="4.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAACAAAAAAAAAAAAAAAAAAAAQAgAABAAAAAAAAAAAAA=</HashCode>
+      <HashCode>EEICAEAAAAAABJAgCABCBAQIoACAABAEAwAAgADQIAA=</HashCode>
       <FileName>Domain\Model.cs</FileName>
     </TypeIdentifier>
-    <Lollipop Position="0.2" />
+    <Lollipop Orientation="Left" Position="0.1" />
   </Class>
-  <Class Name="Blink.Data.Domain.Model.InternalProgress&lt;T&gt;" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="19.25" Y="0.5" Width="1.5" />
+  <Class Name="Blink.Data.Domain.Model.Valuable&lt;T&gt;" Collapsed="true">
+    <Position X="12.75" Y="2.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAACAAAAAAAAAAAACAAAQAAQQBgAABAAAAAAAAEAAAA=</HashCode>
-      <FileName>Domain\Model.cs</FileName>
-    </TypeIdentifier>
-    <Lollipop Position="0.2" Collapsed="true" />
-  </Class>
-  <Class Name="Blink.Data.Domain.Model.ManualProgress" Collapsed="true">
-    <Position X="2.75" Y="10.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAIAAAAAAAAAQAAAABAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Domain\Model.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Blink.Data.Domain.Model.DateTimeProgress" Collapsed="true">
-    <Position X="5" Y="10.75" Width="1.5" />
+  <Class Name="Blink.Data.Domain.Model.Selfable&lt;T&gt;" Collapsed="true">
+    <Position X="10.5" Y="2.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAACQAAAABAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAgAACAAAA=</HashCode>
       <FileName>Domain\Model.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Blink.Data.Domain.Model.LocationProgress" Collapsed="true">
-    <Position X="0.5" Y="10.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAACAAAAAQAAAABAEAAAAAAAAAAA=</HashCode>
-      <FileName>Domain\Model.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Struct Name="Blink.Data.Domain.Model.Timestamp" Collapsed="true">
-    <Position X="19.25" Y="1.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAACAAAAAAAAAAACABAAAAAAAAAAAAQAAAAAAAAAAAA=</HashCode>
-      <FileName>Domain\Model.cs</FileName>
-    </TypeIdentifier>
-  </Struct>
   <Interface Name="Blink.Data.Domain.Model.IElement" Collapsed="true">
-    <Position X="5" Y="6.5" Width="1.5" />
+    <Position X="2.75" Y="2" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAACAAAAAAAAAAAgAAACAAAAAAAAAAAAAwAAAACAAAA=</HashCode>
       <FileName>Domain\Model.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="Blink.Data.Domain.Model.MGroupable" Collapsed="true">
-    <Position X="0.5" Y="8" Width="1.5" />
+    <Position X="0.5" Y="3.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Domain\Model.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="Blink.Data.Domain.Model.MNotable" Collapsed="true">
-    <Position X="5" Y="8" Width="1.5" />
+    <Position X="2.75" Y="3.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Domain\Model.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="Blink.Data.Domain.Model.MPageable" Collapsed="true">
-    <Position X="9.5" Y="8" Width="1.5" />
+    <Position X="5" Y="3.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Domain\Model.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="Blink.Data.Domain.Model.MFoldable" Collapsed="true">
-    <Position X="2.75" Y="8" Width="1.5" />
+    <Position X="5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Domain\Model.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="Blink.Data.Domain.Model.MRootable" Collapsed="true">
-    <Position X="7.25" Y="8" Width="1.5" />
+    <Position X="0.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Domain\Model.cs</FileName>
     </TypeIdentifier>
   </Interface>
-  <Interface Name="Blink.Data.Domain.Model.IProgress" Collapsed="true">
-    <Position X="19.25" Y="3" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAACAAAAAAAAAAAAAAAAAAAAQAgAABAAAAAAAAAAAAA=</HashCode>
-      <FileName>Domain\Model.cs</FileName>
-    </TypeIdentifier>
-  </Interface>
-  <Interface Name="Blink.Data.Domain.Model.ISchedule" Collapsed="true">
-    <Position X="21" Y="3" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAgAAAAAAA=</HashCode>
-      <FileName>Domain\Model.cs</FileName>
-    </TypeIdentifier>
-  </Interface>
   <Enum Name="Blink.Data.Domain.Model.ElementTypes" Collapsed="true">
-    <Position X="19.25" Y="4" Width="1.5" />
+    <Position X="0.5" Y="2" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAkAAAACQACAAAAAAAAAAAAAEAAQAAAAACAEABAI=</HashCode>
       <FileName>Domain\Model.cs</FileName>
     </TypeIdentifier>
   </Enum>
   <Enum Name="Blink.Data.Domain.Model.FileTypes" Collapsed="true">
-    <Position X="21" Y="4" Width="1.5" />
+    <Position X="5" Y="6.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>BAAAAAAAAAAAAAAAAAEAAAAAAAAAABAAAAAAAAAAAAg=</HashCode>
-      <FileName>Domain\Model.cs</FileName>
-    </TypeIdentifier>
-  </Enum>
-  <Enum Name="Blink.Data.Domain.Model.ProgressTypes" Collapsed="true">
-    <Position X="19.25" Y="4.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAQAAAAAAAAIIAAAAAAAAAAAQAAAAAAAAAAAA=</HashCode>
       <FileName>Domain\Model.cs</FileName>
     </TypeIdentifier>
   </Enum>

@@ -6,6 +6,7 @@ using Wintellect.Sterling.Core;
 using Wintellect.Sterling.Core.Database;
 using Blink.Data.Domain.Model;
 using Wintellect.Sterling.Core.Serialization;
+using Blink.Data.Domain.Support;
 
 namespace Blink.Data.Engine
 {

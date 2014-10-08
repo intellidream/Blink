@@ -1,5 +1,8 @@
 ﻿// Suggestions
 
+	AuditRecord
+		// audit support
+
 	TextElement
 		// in UI, allow user to input or pick title of a Note from one of IElement(IConcrete/IContainer) names/titles
 		// in UI, add possibility to open Links internally/externally, and/or mobilize via a library (like Nreadablity) or service (like rdd.me)

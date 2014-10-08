@@ -4,8 +4,8 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
-using System.Text;
 using System.Runtime.CompilerServices;
+using Blink.Data.Domain.Support;
 
 namespace Blink.Data.Domain.Model
 {
@@ -38,8 +38,202 @@ namespace Blink.Data.Domain.Model
     }
 
     #endregion
+        
+    #region Concretes
+
+    #region Foundation
+
+    public abstract class Concrete : IElement, MGroupable, MNotable
+    {
+        #region Private Members
+
+        private Guid _id;
+        private Guid _parentId;
+        private int _position;
+        private Timestamp _timestamp;
+        private ProgressBase _progress;
+
+        #endregion
+
+        #region Public Members
+
+        public ProgressBase Progress 
+        {
+            get 
+            {
+                return _progress; 
+            }
+            set 
+            {
+                if (value != _progress)
+                {
+                    _progress = value;
+                    NotifyPropertyChanged();
+                }
+            } 
+        }
+
+        #endregion
+
+        #region IElement Members
+
+        public Guid Id 
+        {
+            get { return _id; }
+            set 
+            {
+                if (value != _id)
+                {
+                    _id = value;
+                    NotifyPropertyChanged();
+                }
+            } 
+        }
+
+        public Guid ParentId
+        {
+            get { return _parentId; }
+            set
+            {
+                if (value != _parentId)
+                {
+                    _parentId = value;
+                    NotifyPropertyChanged();
+                }
+            }
+        }
+
+        public int Position
+        {
+            get { return _position; }
+            set
+            {
+                if (value != _position)
+                {
+                    _position = value;
+                    NotifyPropertyChanged();
+                }
+            }
+        }
+
+        public Timestamp Timestamp
+        {
+            get { return _timestamp; }
+            set
+            {
+                if (!value.Equals(_timestamp))
+                {
+                    _timestamp = value;
+                    NotifyPropertyChanged();
+                }
+            }
+        }
+
+        public abstract ElementTypes Type { get; }
+
+        IProgress IElement.Progress { get { return Progress; } }
+
+        #endregion
+
+        #region INotifyPropertyChanged Members
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
+
+        #endregion
+    }
+
+    #endregion
+
+    public class TextElement : Concrete
+    {
+        #region Private Members
+
+        private string _text;
+
+        #endregion
+
+        #region Public Members
+
+        public string Text
+        {
+            get { return _text; }
+            set
+            {
+                if (value != _text)
+                {
+                    _text = value;
+                    NotifyPropertyChanged();
+                }
+            }
+        }
+
+        #endregion
+
+        #region IElement Members
+
+        public override ElementTypes Type { get { return ElementTypes.Text; } }
+
+        #endregion
+    }
+
+    public class TweetElement : Concrete
+    {
+        #region Public Members
+
+        #region Commented Tweet Implementation
+        //public TweetSource Source { get; set; } //name, twitterid and icon
+        //public TweetContent Content { get; set; } //text and image
+        //public DateTime TweetTime { get; set; }
+        #endregion
+
+        #endregion
+
+        #region IElement Members
+
+        public override ElementTypes Type { get { return ElementTypes.Tweet; } }
+
+        #endregion
+    }
+
+    public enum FileTypes
+    {
+        Other = 0,
+        Image = 1,
+        Audio = 2,
+        Video = 3
+    }
+
+    public class FileElement : Concrete
+    {
+        #region Public Members
+
+        public string FileName { get; set; }
+        public FileTypes FileType { get; set; }
+        public string FilePath { get; set; }
+        public byte[] FileData { get; set; }
+
+        #endregion
+
+        #region IElement Members
+
+        public override ElementTypes Type { get { return ElementTypes.File; } }
+
+        #endregion
+    }
+
+    #endregion
 
     #region Valuables
+
+    #region Foundation
 
     public class Keepable<T> : IElement, IEnumerable<T>, IEnumerable where T : IElement
     {
@@ -75,9 +269,9 @@ namespace Blink.Data.Domain.Model
 
         public virtual IProgress Progress
         {
-            get 
+            get
             {
-                return _progress ?? (_internalProgress = new InternalProgress<T>(this)); 
+                return _progress ?? (_internalProgress = new InternalProgress<T>(this.Data.Select(e => e.Progress)));
             }
             set
             {
@@ -96,7 +290,7 @@ namespace Blink.Data.Domain.Model
         public Keepable()
         {
             Data = new Collection<T>();
-            _internalProgress = new InternalProgress<T>(this);
+            _internalProgress = new InternalProgress<T>(this.Data.Select(e => e.Progress));
         }
 
         #region Collection Indexer
@@ -108,7 +302,7 @@ namespace Blink.Data.Domain.Model
             {
                 return this.Data[index];
             }
-            private set 
+            private set
             {
                 Set(index, value);
             }
@@ -203,7 +397,7 @@ namespace Blink.Data.Domain.Model
         }
 
         #endregion
-        
+
         #region IElement Members
 
         public virtual Guid Id
@@ -350,194 +544,6 @@ namespace Blink.Data.Domain.Model
 
     #endregion
 
-    #region Concretes
-
-    public abstract class Concrete : IElement, MGroupable, MNotable
-    {
-        #region Private Members
-
-        private Guid _id;
-        private Guid _parentId;
-        private int _position;
-        private Timestamp _timestamp;
-        private ProgressBase _progress;
-
-        #endregion
-
-        #region Public Members
-
-        public ProgressBase Progress 
-        {
-            get 
-            {
-                return _progress; 
-            }
-            set 
-            {
-                if (value != _progress)
-                {
-                    _progress = value;
-                    NotifyPropertyChanged();
-                }
-            } 
-        }
-
-        #endregion
-
-        #region IElement Members
-
-        public Guid Id 
-        {
-            get { return _id; }
-            set 
-            {
-                if (value != _id)
-                {
-                    _id = value;
-                    NotifyPropertyChanged();
-                }
-            } 
-        }
-
-        public Guid ParentId
-        {
-            get { return _parentId; }
-            set
-            {
-                if (value != _parentId)
-                {
-                    _parentId = value;
-                    NotifyPropertyChanged();
-                }
-            }
-        }
-
-        public int Position
-        {
-            get { return _position; }
-            set
-            {
-                if (value != _position)
-                {
-                    _position = value;
-                    NotifyPropertyChanged();
-                }
-            }
-        }
-
-        public Timestamp Timestamp
-        {
-            get { return _timestamp; }
-            set
-            {
-                if (!value.Equals(_timestamp))
-                {
-                    _timestamp = value;
-                    NotifyPropertyChanged();
-                }
-            }
-        }
-
-        public abstract ElementTypes Type { get; }
-
-        IProgress IElement.Progress { get { return Progress; } }
-
-        #endregion
-
-        #region INotifyPropertyChanged Members
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        public void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
-        }
-
-        #endregion
-    }
-
-    public class TextElement : Concrete
-    {
-        #region Private Members
-
-        private string _text;
-
-        #endregion
-
-        #region Public Members
-
-        public string Text
-        {
-            get { return _text; }
-            set
-            {
-                if (value != _text)
-                {
-                    _text = value;
-                    NotifyPropertyChanged();
-                }
-            }
-        }
-
-        #endregion
-
-        #region IElement Members
-
-        public override ElementTypes Type { get { return ElementTypes.Text; } }
-
-        #endregion
-    }
-
-    public class TweetElement : Concrete
-    {
-        #region Public Members
-
-        #region Commented Tweet Implementation
-        //public TweetSource Source { get; set; } //name, twitterid and icon
-        //public TweetContent Content { get; set; } //text and image
-        //public DateTime TweetTime { get; set; }
-        #endregion
-
-        #endregion
-
-        #region IElement Members
-
-        public override ElementTypes Type { get { return ElementTypes.Tweet; } }
-
-        #endregion
-    }
-
-    public enum FileTypes
-    {
-        Other = 0,
-        Image = 1,
-        Audio = 2,
-        Video = 3
-    }
-
-    public class FileElement : Concrete
-    {
-        #region Public Members
-
-        public string FileName { get; set; }
-        public FileTypes FileType { get; set; }
-        public string FilePath { get; set; }
-        public byte[] FileData { get; set; }
-
-        #endregion
-
-        #region IElement Members
-
-        public override ElementTypes Type { get { return ElementTypes.File; } }
-
-        #endregion
-    }
-
-    #endregion
-
     #region Containers
 
     public class ListElement : Valuable<Concrete>, MGroupable, MNotable
@@ -660,206 +666,6 @@ namespace Blink.Data.Domain.Model
     }
 
     #endregion
-
-    #region Timestamping
-
-    public struct Timestamp
-    {
-        public Guid Id { get; set; }
-        public DateTime Created { get; set; }
-        public DateTime Modified { get; set; }
-        public DateTime Accessed { get; set; }
-    }
-
-    #endregion
-
-    #region Progressing
-
-    public enum ProgressTypes : int
-    {
-        Manual,
-        DateTime,
-        Location,
-        Internal
-    }
-
-    public interface IProgress
-    {
-        Guid Id { get; set; }
-
-        ProgressTypes ProgressType { get; }
-
-        int Percentage { get; }
-
-        bool IsCompleted();
-    }
-
-    public abstract class ProgressBase : IProgress
-    {
-        #region IProgress Members
-
-        public Guid Id { get; set; }
-
-        public abstract ProgressTypes ProgressType { get; }
-
-        public virtual int Percentage 
-        {
-            get 
-            {
-                return IsCompleted() ? 100 : 0;
-            } 
-        }
-
-        public abstract bool IsCompleted();
-
-        #endregion
-    }
-
-    public class InternalProgress<T> : IProgress where T : IElement
-    {
-        #region Private Members
-
-        private Keepable<T> _parent;
-
-        private IList<IProgress> _Values 
-        {
-            get { return (_parent != null) ? _parent.Select(e => e.Progress).ToList() : null; } 
-        }
-
-        private bool _HasValues 
-        {
-            get { return ((_Values != null) && (_Values.Count > 0)); } 
-        }
-
-        private int _Total { get { return _HasValues ? _Values.Count : 0; } }
-
-        private int _Completed
-        {
-            get
-            {
-                return (this._Total > 0)
-                        ? _Values.Count(p => p != null && p.IsCompleted())
-                        : 0;
-            }
-        }
-
-        #endregion
-
-        public InternalProgress() { this.Id = Guid.Empty; }
-
-        public InternalProgress(Keepable<T> parent) : this()
-        {
-            _parent = parent;
-        }
-        
-        #region IProgress Members
-
-        public Guid Id { get; set; }
-
-        public ProgressTypes ProgressType 
-        {
-            get { return ProgressTypes.Internal; } 
-        }
-
-        public int Percentage
-        {
-            get
-            {
-                var completed = this._Completed;
-
-                return (completed > 0)
-                        ? (int)Math.Round((double)(100 * completed) / _Total)
-                        : 0;
-            }
-        }
-
-        public bool IsCompleted()
-        {
-            return _HasValues && (_Completed == _Total);
-        }
-
-        #endregion
-    }
-
-    public class ManualProgress : ProgressBase
-    {
-        #region Public Members
-
-        public bool Completed { get; set; }
-
-        #endregion
-
-        #region IProgress Members
-
-        public override ProgressTypes ProgressType
-        {
-            get { return ProgressTypes.Manual; }
-        }
-
-        public override bool IsCompleted()
-        {
-            return Completed;
-        }
-
-        #endregion
-    }
-
-    public class DateTimeProgress : ProgressBase
-    {
-        #region Public Members
-
-        public DateTime Completion { get; set; }
-
-        #endregion
-
-        #region IProgress Members
-
-        public override ProgressTypes ProgressType
-        {
-            get { return ProgressTypes.DateTime; }
-        }
-
-        public override bool IsCompleted()
-        {
-            return Completion.ToUniversalTime().Equals(DateTime.UtcNow);
-        }
-
-        #endregion
-    }
-    public class LocationProgress : ProgressBase
-    {
-        #region Public Members
-
-        public Tuple<double, double> Current { get; set; }
-        public Tuple<double, double> Destination { get; set; }
-
-        #endregion
-
-        #region IProgress Members
-
-        public override ProgressTypes ProgressType
-        {
-            get { return ProgressTypes.Location; }
-        }
-
-        public override bool IsCompleted()
-        {
-            return Current.Equals(Destination);
-        }
-
-        #endregion
-    }
-
-    #endregion
-
-    #region Scheduling
-
-    public interface ISchedule 
-    {
-        Guid Id { get; set; }
-        Guid ParentId { get; set; }
-        DateTime Value { get; set; } 
-    }
 
     #endregion
 }
