@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Blink.Shared.Domain.NewThings
+namespace Blink.Data.Domain.Audit
 {
     public class AuditRecord
     {

@@ -2,14 +2,12 @@
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
-using Blink.Shared.Domain;
-using Blink.Shared.Domain.DataModel.Notes;
-using Blink.Shared.Engine;
+using Blink.Data.Domain.Model;
+using Blink.Data.Engine; // will use access.repos here instead
 using Blink.Shared.Engine.SkyDrive;
 using Microsoft.Live;
 using SkyNet.Client;
 using SkyNet.Model;
-using Blink.Shared.Domain.NewThings;
 using Wintellect.Sterling.Core.Database;
 using Wintellect.Sterling.Core;
 
@@ -111,8 +109,7 @@ namespace Blink.Classic
             await Sterling.Database.FlushAsync();
         }
 
-        // separate between repo/model/engine///see who does what, where and who calls who?!
-
+        // this will be in root repo
         private static RootElement _default = null;
 
         public static RootElement Default

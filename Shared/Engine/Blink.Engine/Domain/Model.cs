@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Runtime.CompilerServices;
 
-namespace Blink.Shared.Domain.NewThings
+namespace Blink.Data.Domain.Model
 {
     #region Elements
 

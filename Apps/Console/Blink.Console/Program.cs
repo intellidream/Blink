@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using Blink.Shared.Domain.DataModel.Notes;
 using Blink.Shared.Engine;
 using SkyNet.Model;
 using Wintellect.Sterling.Core;

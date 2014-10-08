@@ -4,11 +4,10 @@ using System.Linq;
 using System.Text;
 using Wintellect.Sterling.Core;
 using Wintellect.Sterling.Core.Database;
-using Blink.Shared.Domain;
-using Blink.Shared.Domain.NewThings;
+using Blink.Data.Domain.Model;
 using Wintellect.Sterling.Core.Serialization;
 
-namespace Blink.Shared.Engine
+namespace Blink.Data.Engine
 {
     public static class Sterling
     {
@@ -57,29 +56,49 @@ namespace Blink.Shared.Engine
             return new List<ITableDefinition>
             {
                 // Progress
-                CreateTableDefinition<Domain.NewThings.ManualProgress, Guid>(e => e.Id),
-                CreateTableDefinition<Domain.NewThings.DateTimeProgress, Guid>(e => e.Id),
-                CreateTableDefinition<Domain.NewThings.LocationProgress, Guid>(e => e.Id),
+                CreateTableDefinition<ManualProgress, Guid>(e => e.Id),
+                CreateTableDefinition<DateTimeProgress, Guid>(e => e.Id),
+                CreateTableDefinition<LocationProgress, Guid>(e => e.Id),
 
                 // Concretes
-                CreateTableDefinition<Domain.NewThings.TextElement, Guid>(e => e.Id),
-                CreateTableDefinition<Domain.NewThings.TweetElement, Guid>(e => e.Id),
-                CreateTableDefinition<Domain.NewThings.FileElement, Guid>(e => e.Id),
+                CreateTableDefinition<TextElement, Guid>(e => e.Id),
+                CreateTableDefinition<TweetElement, Guid>(e => e.Id),
+                CreateTableDefinition<FileElement, Guid>(e => e.Id),
                 // Containers
-                CreateTableDefinition<Domain.NewThings.ListElement, Guid>(e => e.Id),
-                CreateTableDefinition<Domain.NewThings.GridElement, Guid>(e => e.Id),
-                CreateTableDefinition<Domain.NewThings.TreeElement, Guid>(e => e.Id),
+                CreateTableDefinition<ListElement, Guid>(e => e.Id),
+                CreateTableDefinition<GridElement, Guid>(e => e.Id),
+                CreateTableDefinition<TreeElement, Guid>(e => e.Id),
                 // Groupables
-                CreateTableDefinition<Domain.NewThings.GroupElement, Guid>(e => e.Id),
+                CreateTableDefinition<GroupElement, Guid>(e => e.Id),
                 // Notables
-                CreateTableDefinition<Domain.NewThings.NoteElement, Guid>(e => e.Id),
+                CreateTableDefinition<NoteElement, Guid>(e => e.Id),
                 // Pageables
-                CreateTableDefinition<Domain.NewThings.PageElement, Guid>(e => e.Id),
+                CreateTableDefinition<PageElement, Guid>(e => e.Id),
                 // Foldables
-                CreateTableDefinition<Domain.NewThings.FolderElement, Guid>(e => e.Id),
+                CreateTableDefinition<FolderElement, Guid>(e => e.Id),
                 // Rootables
-                CreateTableDefinition<Domain.NewThings.RootElement, bool>(c => true)
+                CreateTableDefinition<RootElement, bool>(c => true)
             };
+        }
+    }
+
+    public class TupleOfTwoDoubleSerializer : BaseSerializer
+    {
+        public override bool CanSerialize(Type targetType)
+        {
+            return targetType.Equals(typeof(Tuple<double, double>));
+        }
+
+        public override void Serialize(object target, System.IO.BinaryWriter writer)
+        {
+            var data = (Tuple<double, double>)target;
+            writer.Write(data.Item1);
+            writer.Write(data.Item2);
+        }
+
+        public override object Deserialize(Type type, System.IO.BinaryReader reader)
+        {
+            return new Tuple<double, double>(reader.ReadDouble(), reader.ReadDouble());
         }
     }
 
@@ -104,24 +123,4 @@ namespace Blink.Shared.Engine
     //        return true;
     //    }
     //}
-
-    public class TupleOfTwoDoubleSerializer : BaseSerializer
-    {
-        public override bool CanSerialize(Type targetType)
-        {
-            return targetType.Equals(typeof(Tuple<double, double>));
-        }
-
-        public override void Serialize(object target, System.IO.BinaryWriter writer)
-        {
-            var data = (Tuple<double, double>)target;
-            writer.Write(data.Item1);
-            writer.Write(data.Item2);
-        }
-
-        public override object Deserialize(Type type, System.IO.BinaryReader reader)
-        {
-            return new Tuple<double, double>(reader.ReadDouble(), reader.ReadDouble());
-        }
-    }
 }

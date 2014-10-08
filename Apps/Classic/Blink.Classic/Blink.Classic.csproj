@@ -72,9 +72,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\..\Console\Blink.Console\Shared\Domain\DataLayer\DataAccess.cs">
-      <Link>Shared\Domain\DataLayer\DataAccess.cs</Link>
-    </Compile>
     <Compile Include="BlinkForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -96,7 +93,6 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <None Include="Fonts\LiveSymbol.ttf" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -112,13 +108,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Shared\Domain\Blink.Domain.csproj">
-      <Project>{515f724d-3c95-453f-93b9-6b1cf64fe9c2}</Project>
-      <Name>Blink.Domain</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\Shared\Engine\Blink.Engine\Blink.Engine.csproj">
+    <ProjectReference Include="..\..\..\Shared\Engine\Blink.Engine\Blink.Data.csproj">
       <Project>{7dc66c70-e402-483d-a3e4-84ae54b3ea40}</Project>
-      <Name>Blink.Engine</Name>
+      <Name>Blink.Data</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

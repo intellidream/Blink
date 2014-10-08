@@ -34,36 +34,11 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .NET Framework is automatically included -->
-    <Folder Include="DataModel\Users\" />
+    <Folder Include="NewThings\" />
     <Folder Include="ViewModel\" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataLayer\DataAccess.cs" />
-    <Compile Include="DataLayer\IRepository.cs" />
-    <Compile Include="DataModel\Notes\BlinkNote.cs" />
-    <Compile Include="DataModel\Notes\Category.cs" />
-    <Compile Include="DataModel\Notes\Content.cs" />
-    <Compile Include="DataModel\Notes\Helpers.cs" />
-    <Compile Include="DataModel\Notes\INoteBase.cs" />
-    <Compile Include="DataModel\Notes\Keywords.cs" />
-    <Compile Include="DataModel\Notes\NoteBase.cs" />
-    <Compile Include="DataModel\Notes\Priority.cs" />
-    <Compile Include="DataModel\Notes\Progress.cs" />
-    <Compile Include="DataModel\Notes\Relations.cs" />
-    <Compile Include="DataModel\Notes\Schedules.cs" />
-    <Compile Include="DataModel\Notes\Sharing.cs" />
-    <Compile Include="DataModel\Notes\Sources.cs" />
-    <Compile Include="DataModel\Notes\TimeStamp.cs" />
-    <Compile Include="NewThings\Audit.cs" />
-    <Compile Include="NewThings\Model.cs" />
-    <Compile Include="NewThings\Repos.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="NewThings\Suggestions.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="NewThings\Model.cd" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
