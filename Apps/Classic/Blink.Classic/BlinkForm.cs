@@ -105,18 +105,25 @@ namespace Blink.Classic
             treeElementTwo.Id = Guid.NewGuid();
             treeElement.Add(treeElementTwo);
 
-            //folderElement.ElementType = ElementTypes.Root;
-            RootElement.Instance.Add(folderElement);
+            Default.Add(folderElement);
 
-            await Sterling.Database.SaveAsync(RootElement.Instance);
+            var save = await Sterling.Database.SaveAsync(Default); // enforce "Default" policy via RootRepository 
             await Sterling.Database.FlushAsync();
+        }
+
+        // separate between repo/model/engine///see who does what, where and who calls who?!
+
+        private static RootElement _default = null;
+
+        public static RootElement Default
+        {
+            get { return _default ?? (_default = new RootElement()); }
+            set { _default = value; }
         }
 
         private async void button2_Click(object sender, EventArgs e)
         {
-            //var folderElement = await Sterling.Database.LoadAsync<FolderElement>(_folderElementId);
-            var root = await Sterling.Database.LoadAsync<RootElement>(true);
-            var brot = new RootElement();
+            Default = await Sterling.Database.LoadAsync<RootElement>(true); // enforce "Default" policy via RootRepository 
         }
 
         #region SkyDrive

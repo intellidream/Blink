@@ -78,7 +78,7 @@ namespace Blink.Shared.Engine
                 // Foldables
                 CreateTableDefinition<Domain.NewThings.FolderElement, Guid>(e => e.Id),
                 // Rootables
-                CreateTableDefinition<Domain.NewThings.RootElement, bool>(e => true)
+                CreateTableDefinition<Domain.NewThings.RootElement, bool>(c => true)
             };
         }
     }

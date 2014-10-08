@@ -33,7 +33,7 @@ namespace Blink.Shared.Domain.NewThings
         Guid ParentId { get; set; }
         int Position { get; set; }
         Timestamp Timestamp { get; set; }
-        ElementTypes ElementType { get; }
+        ElementTypes Type { get; }
         IProgress Progress { get; }
     }
 
@@ -91,12 +91,6 @@ namespace Blink.Shared.Domain.NewThings
 
         #endregion
 
-        #region Properties Injector
-
-        public virtual void InjectProperties(T t) { }
-
-        #endregion
-
         #endregion
 
         public Keepable()
@@ -124,7 +118,6 @@ namespace Blink.Shared.Domain.NewThings
 
         private void Set(int index, T item)
         {
-            InjectProperties(item);
             item.ParentId = this.Id;
             item.Position = index;
             Data[index] = item;
@@ -139,7 +132,6 @@ namespace Blink.Shared.Domain.NewThings
 
         public void Insert(int index, T item)
         {
-            InjectProperties(item);
             item.ParentId = this.Id;
             item.Position = index;
             Data.Insert(index, item);
@@ -148,7 +140,6 @@ namespace Blink.Shared.Domain.NewThings
 
         public void Add(T item)
         {
-            InjectProperties(item);
             item.ParentId = this.Id;
             item.Position = Data.Count;
             Data.Add(item);
@@ -267,7 +258,7 @@ namespace Blink.Shared.Domain.NewThings
             }
         }
 
-        public virtual ElementTypes ElementType { get { return ElementTypes.None; } }
+        public virtual ElementTypes Type { get { return ElementTypes.None; } }
 
         IProgress IElement.Progress { get { return Progress; } }
 
@@ -447,7 +438,7 @@ namespace Blink.Shared.Domain.NewThings
             }
         }
 
-        public abstract ElementTypes ElementType { get; }
+        public abstract ElementTypes Type { get; }
 
         IProgress IElement.Progress { get { return Progress; } }
 
@@ -495,7 +486,7 @@ namespace Blink.Shared.Domain.NewThings
 
         #region IElement Members
 
-        public override ElementTypes ElementType { get { return ElementTypes.Text; } }
+        public override ElementTypes Type { get { return ElementTypes.Text; } }
 
         #endregion
     }
@@ -514,7 +505,7 @@ namespace Blink.Shared.Domain.NewThings
 
         #region IElement Members
 
-        public override ElementTypes ElementType { get { return ElementTypes.Tweet; } }
+        public override ElementTypes Type { get { return ElementTypes.Tweet; } }
 
         #endregion
     }
@@ -540,7 +531,7 @@ namespace Blink.Shared.Domain.NewThings
 
         #region IElement Members
 
-        public override ElementTypes ElementType { get { return ElementTypes.File; } }
+        public override ElementTypes Type { get { return ElementTypes.File; } }
 
         #endregion
     }
@@ -553,7 +544,7 @@ namespace Blink.Shared.Domain.NewThings
     {
         #region IElement Members
 
-        public override ElementTypes ElementType { get { return ElementTypes.List; } }
+        public override ElementTypes Type { get { return ElementTypes.List; } }
 
         #endregion
     }
@@ -564,18 +555,18 @@ namespace Blink.Shared.Domain.NewThings
         {
             get
             {
-                return this.First(l => l.Name == name);
+                return this.First(l => l.Name.Equals(name));
             }
             set
             {
-                var element = this.First(l => l.Name == name);
+                var element = this.First(l => l.Name.Equals(name));
                 element = value;
             }
         }
 
         #region IElement Members
 
-        public override ElementTypes ElementType { get { return ElementTypes.Grid; } }
+        public override ElementTypes Type { get { return ElementTypes.Grid; } }
 
         #endregion
     }
@@ -584,7 +575,7 @@ namespace Blink.Shared.Domain.NewThings
     {
         #region IElement Members
 
-        public override ElementTypes ElementType { get { return ElementTypes.Tree; } }
+        public override ElementTypes Type { get { return ElementTypes.Tree; } }
 
         #endregion
     }
@@ -599,7 +590,7 @@ namespace Blink.Shared.Domain.NewThings
     {
         #region IElement Members
 
-        public override ElementTypes ElementType { get { return ElementTypes.Group; } }
+        public override ElementTypes Type { get { return ElementTypes.Group; } }
 
         #endregion
     }
@@ -614,7 +605,7 @@ namespace Blink.Shared.Domain.NewThings
     {
         #region IElement Members
 
-        public override ElementTypes ElementType { get { return ElementTypes.Note; } }
+        public override ElementTypes Type { get { return ElementTypes.Note; } }
 
         #endregion
     }
@@ -629,7 +620,7 @@ namespace Blink.Shared.Domain.NewThings
     {
         #region IElement Members
 
-        public override ElementTypes ElementType { get { return ElementTypes.Page; } }
+        public override ElementTypes Type { get { return ElementTypes.Page; } }
 
         #endregion
     }
@@ -640,20 +631,11 @@ namespace Blink.Shared.Domain.NewThings
 
     public interface MFoldable : IElement { }
 
-    public class FolderElement : Selfable<MFoldable>, IRootable // MRootable - no type switch needed - rootelement always has same guid and loads children!!!
+    public class FolderElement : Selfable<MFoldable>, MRootable
     {
         #region IElement Members
 
-        private ElementTypes? type;
-        new public ElementTypes ElementType
-        {
-            get
-            {
-                return type.HasValue ? type.Value : ElementTypes.Folder;
-            }
-
-            set { type = value; }
-        }
+        public override ElementTypes Type { get { return ElementTypes.Folder; } }
 
         #endregion
     }
@@ -662,29 +644,20 @@ namespace Blink.Shared.Domain.NewThings
 
     #region Rootables
 
-    public interface IRootable : IElement 
+    public interface MRootable : IElement { }
+
+    public class RootElement : Keepable<MRootable>
     {
-        new ElementTypes ElementType { get; set; }
+        #region IElement Members
+
+        public override Guid Id { get { return Guid.Empty; } }
+
+        public override Guid ParentId { get { return Guid.Empty; } }
+
+        public override ElementTypes Type { get { return ElementTypes.Root; } }
+
+        #endregion
     }
-
-    public sealed class RootElement : Keepable<IRootable>
-    {
-        private static readonly Lazy<RootElement> lazy =
-            new Lazy<RootElement>(() => new RootElement());
-
-        public static RootElement Instance { get { return lazy.Value; } }
-
-        public bool IsReady { get { return lazy.IsValueCreated; } }
-
-        public RootElement() { }
-
-        public override void InjectProperties(IRootable t)
-        {
-            t.ElementType = ElementTypes.Root;
-        }
-
-        // load and add things as root and do serialization/deserialization here
-    } 
 
     #endregion
 

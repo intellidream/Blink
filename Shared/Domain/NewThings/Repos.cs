@@ -2,16 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-//using Blink.Shared.Engine;
+using Blink.Shared.Engine;
 
+// will live in infrastructure
 namespace Blink.Shared.Domain.NewThings
 {
-    //public class ValuableRepo
-    //{
-    //    public async void SaveAsync<T>(Valuable<T> valuable) 
-    //    {
-    //        await Sterling.Database.SaveAsync(folderElement.ToElementEntity());
-    //        await Sterling.Database.SaveAsync(folderElement.ToValuableEntity());
-    //    }
-    //}
+    public class RootRepository 
+    {
+
+    }
 }
