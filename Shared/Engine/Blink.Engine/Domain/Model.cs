@@ -5,7 +5,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using Blink.Data.Domain.Support;
+using Blink.Data.Domain.Infrastructure;
 
 namespace Blink.Data.Domain.Model
 {

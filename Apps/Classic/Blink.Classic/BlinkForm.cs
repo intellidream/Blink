@@ -10,7 +10,7 @@ using SkyNet.Client;
 using SkyNet.Model;
 using Wintellect.Sterling.Core.Database;
 using Wintellect.Sterling.Core;
-using Blink.Data.Domain.Support;
+using Blink.Data.Domain.Infrastructure;
 
 namespace Blink.Classic
 {

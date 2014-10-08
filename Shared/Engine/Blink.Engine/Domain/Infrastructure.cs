@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Blink.Data.Domain.Support
+namespace Blink.Data.Domain.Infrastructure
 {
     #region Timestamping
 
