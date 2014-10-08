@@ -11,6 +11,7 @@ using SkyNet.Model;
 using Wintellect.Sterling.Core.Database;
 using Wintellect.Sterling.Core;
 using Blink.Data.Domain.Infrastructure;
+using Blink.Data.Access.Repos;
 
 namespace Blink.Classic
 {
@@ -104,24 +105,18 @@ namespace Blink.Classic
             treeElementTwo.Id = Guid.NewGuid();
             treeElement.Add(treeElementTwo);
 
-            Default.Add(folderElement);
+            RootRepository.Instance.Add(folderElement);
 
-            var save = await Sterling.Database.SaveAsync(Default); // enforce "Default" policy via RootRepository 
+            var result = await RootRepository.SaveAsync();
             await Sterling.Database.FlushAsync();
         }
 
         // this will be in root repo
-        private static RootElement _default = null;
-
-        public static RootElement Default
-        {
-            get { return _default ?? (_default = new RootElement()); }
-            set { _default = value; }
-        }
+        
 
         private async void button2_Click(object sender, EventArgs e)
         {
-            Default = await Sterling.Database.LoadAsync<RootElement>(true); // enforce "Default" policy via RootRepository 
+            await RootRepository.LoadAsync(); // enforce "Default" policy via RootRepository 
         }
 
         #region SkyDrive
