@@ -1,5 +1,8 @@
 ﻿// Suggestions
 
+	Repository
+		// findById & loadAll (queries) & otherQueriesForEachCase/Aggregate&VRoot
+
 	AuditRecord
 		// audit support
 

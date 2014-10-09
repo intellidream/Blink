@@ -37,7 +37,7 @@
   <ItemGroup>
     <Compile Include="Domain\IAggregate.cs" />
     <Compile Include="Domain\Model.cs" />
-    <Compile Include="Access\Repos\RootRepository.cs" />
+    <Compile Include="Access\Repository.cs" />
     <Compile Include="Domain\Infrastructure.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Engine\SkyDrive\AsyncLock.cs" />

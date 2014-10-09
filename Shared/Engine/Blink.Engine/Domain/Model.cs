@@ -39,13 +39,6 @@ namespace Blink.Data.Domain.Model
 
     #endregion
 
-    #region Aggregates
-
-    public interface IAggregate { }
-    public interface IAggregateRoot { }
-
-    #endregion
-
     #region Concretes
 
     #region Foundation
