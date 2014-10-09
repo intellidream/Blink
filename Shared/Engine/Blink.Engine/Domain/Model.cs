@@ -38,12 +38,19 @@ namespace Blink.Data.Domain.Model
     }
 
     #endregion
-        
+
+    #region Aggregates
+
+    public interface IAggregate { }
+    public interface IAggregateRoot { }
+
+    #endregion
+
     #region Concretes
 
     #region Foundation
 
-    public abstract class Concrete : IElement, MGroupable, MNotable
+    public abstract class Concrete : IElement, IGroupable, INotable, IAggregate
     {
         #region Private Members
 
@@ -473,7 +480,7 @@ namespace Blink.Data.Domain.Model
         #endregion
     }
 
-    public class Valuable<T> : Keepable<T> where T : IElement
+    public class Valuable<T> : Keepable<T>, IAggregateRoot where T : IElement
     {
         #region Public Members
 
@@ -546,7 +553,7 @@ namespace Blink.Data.Domain.Model
 
     #region Containers
 
-    public class ListElement : Valuable<Concrete>, MGroupable, MNotable
+    public class ListElement : Valuable<Concrete>, IGroupable, INotable
     {
         #region IElement Members
 
@@ -555,7 +562,7 @@ namespace Blink.Data.Domain.Model
         #endregion
     }
 
-    public class GridElement : Valuable<ListElement>, MGroupable, MNotable
+    public class GridElement : Valuable<ListElement>, IGroupable, INotable
     {
         public ListElement this[string name]
         {
@@ -577,7 +584,7 @@ namespace Blink.Data.Domain.Model
         #endregion
     }
 
-    public class TreeElement : Selfable<Concrete>, MGroupable, MNotable
+    public class TreeElement : Selfable<Concrete>, IGroupable, INotable
     {
         #region IElement Members
 
@@ -590,9 +597,9 @@ namespace Blink.Data.Domain.Model
 
     #region Groupables
 
-    public interface MGroupable : IElement { }
+    public interface IGroupable : IElement { }
 
-    public class GroupElement : Valuable<MGroupable>, MNotable
+    public class GroupElement : Valuable<IGroupable>, INotable
     {
         #region IElement Members
 
@@ -605,9 +612,9 @@ namespace Blink.Data.Domain.Model
 
     #region Notables
 
-    public interface MNotable : IElement { }
+    public interface INotable : IElement { }
 
-    public class NoteElement : Valuable<MNotable>, MPageable, MFoldable
+    public class NoteElement : Valuable<INotable>, IPageable, IFoldable
     {
         #region IElement Members
 
@@ -620,9 +627,9 @@ namespace Blink.Data.Domain.Model
 
     #region Pageables
 
-    public interface MPageable : IElement { }
+    public interface IPageable : IElement { }
 
-    public class PageElement : Valuable<MPageable>, MFoldable
+    public class PageElement : Valuable<IPageable>, IFoldable
     {
         #region IElement Members
 
@@ -635,9 +642,9 @@ namespace Blink.Data.Domain.Model
 
     #region Foldables
 
-    public interface MFoldable : IElement { }
+    public interface IFoldable : IElement { }
 
-    public class FolderElement : Selfable<MFoldable>, MRootable
+    public class FolderElement : Selfable<IFoldable>, IRootable
     {
         #region IElement Members
 
@@ -650,9 +657,9 @@ namespace Blink.Data.Domain.Model
 
     #region Rootables
 
-    public interface MRootable : IElement { }
+    public interface IRootable : IElement { }
 
-    public class RootElement : Keepable<MRootable>
+    public class RootElement : Keepable<IRootable>
     {
         #region IElement Members
 

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Wintellect.Sterling.Core.Serialization;
 
 namespace Blink.Data.Domain.Infrastructure
 {
@@ -58,6 +59,7 @@ namespace Blink.Data.Domain.Infrastructure
         #endregion
     }
 
+    [SterlingIgnore]
     public class InternalProgress<T> : IProgress
     {
         #region Private Members

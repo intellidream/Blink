@@ -105,10 +105,9 @@ namespace Blink.Classic
             treeElementTwo.Id = Guid.NewGuid();
             treeElement.Add(treeElementTwo);
 
-            RootRepository.Instance.Add(folderElement);
+            RootRepository.Root.Add(folderElement);
 
-            var result = await RootRepository.SaveAsync();
-            await Sterling.Database.FlushAsync();
+            var result = await RootRepository.Root.SaveAsync();
         }
 
         // this will be in root repo
@@ -116,7 +115,7 @@ namespace Blink.Classic
 
         private async void button2_Click(object sender, EventArgs e)
         {
-            await RootRepository.LoadAsync(); // enforce "Default" policy via RootRepository 
+            await RootRepository.Root.LoadAsync(); // enforce "Default" policy via RootRepository 
         }
 
         #region SkyDrive
