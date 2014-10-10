@@ -105,22 +105,39 @@ namespace Blink.Classic
             treeElementTwo.Id = Guid.NewGuid();
             treeElement.Add(treeElementTwo);
 
-            var resfl = await Repository.SaveAsync<FolderElement>(folderElement);
+            Repository.Root.Add(folderElement);
 
-            //Repository.Root.Add(folderElement);
-
-            //var result = await Repository.Root.SaveAsync();
+            var result = await Repository.Root.SaveAsync();
         }
-
-        // this will be in root repo
-        
 
         private async void button2_Click(object sender, EventArgs e)
         {
-            var folder = await Repository.LoadAsync<FolderElement>(_folderElementId);
+            await Repository.Root.LoadAsync();
 
-            //await Repository.Root.LoadAsync(); // enforce "Default" policy via RootRepository 
+            LoadTreeNode();
         }
+
+        private void LoadTreeNode()
+        {
+            foreach (FolderElement folder in Repository.Root)
+            {
+                var node = new TreeNode(folder.Name);
+                treeView1.Nodes.Add(node);
+                LoadChildren(folder, node);
+            }
+        }
+
+        private void LoadChildren(FolderElement parentFolder, TreeNode parentNode)
+        {
+            foreach (FolderElement childFolder in parentFolder)
+            {
+                var childNode = new TreeNode(childFolder.Name);
+                parentNode.Nodes.Add(childNode);
+                LoadChildren(childFolder, childNode);
+            }
+        }
+
+        //private void LoadValues(Valuable) { }
 
         #region SkyDrive
         public const string ApiKey = "0000000048111E64";
