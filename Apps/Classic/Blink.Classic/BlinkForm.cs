@@ -114,30 +114,54 @@ namespace Blink.Classic
         {
             await Repository.Root.LoadAsync();
 
-            LoadTreeNode();
+            //LoadRootNode();
+
+            treeView1.Nodes.Add(new TreeNode("Root"));
+
+            //foreach (FolderElement//IRootable child in Repository.Root.Data)
+            //{ LoadSelfable(child, treeView1.Nodes[0]); }
         }
 
-        private void LoadTreeNode()
+        private void LoadSelfable<T>(Selfable<T> selfable, TreeNode parent) where T : IElement
+        {
+            foreach (var value in selfable)
+            {
+                var node = new TreeNode(value.Name);
+                parent.Nodes.Add(node);
+                LoadSelfable(value, node);
+            }
+        }
+
+        //LoadValuable?!
+
+        private void LoadRootNode()
         {
             foreach (FolderElement folder in Repository.Root)
             {
                 var node = new TreeNode(folder.Name);
                 treeView1.Nodes.Add(node);
-                LoadChildren(folder, node);
+                LoadChildNodes(folder, node);
             }
         }
 
-        private void LoadChildren(FolderElement parentFolder, TreeNode parentNode)
+        private void LoadChildNodes(FolderElement parentFolder, TreeNode parentNode)
         {
             foreach (FolderElement childFolder in parentFolder)
             {
                 var childNode = new TreeNode(childFolder.Name);
                 parentNode.Nodes.Add(childNode);
-                LoadChildren(childFolder, childNode);
+
+                LoadChildNodes(childFolder, childNode);
             }
         }
 
-        //private void LoadValues(Valuable) { }
+        //private void LoadValues<T>(Keepable<T> values) 
+        //{
+        //    foreach (var value in values) 
+        //    {
+        //        var v = value.Type
+        //    }
+        //}
 
         #region SkyDrive
         public const string ApiKey = "0000000048111E64";

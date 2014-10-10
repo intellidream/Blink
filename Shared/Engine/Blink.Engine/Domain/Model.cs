@@ -685,8 +685,14 @@ namespace Blink.Data.Domain.Model
 
     public interface IRootable : IElement { }
 
-    public class RootElement : Keepable<IRootable>
+    public class RootElement : Valuable<IRootable>
     {
+        #region Public Members
+
+        public override string Name { get { return String.Empty; } }
+
+        #endregion
+
         #region IElement Members
 
         public override Guid Id { get { return Guid.Empty; } }
