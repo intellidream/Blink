@@ -63,7 +63,7 @@ namespace Blink.Data.Engine
 
                 // Concretes
                 CreateTableDefinition<TextElement, Guid>(e => e.Id),
-                CreateTableDefinition<TweetElement, Guid>(e => e.Id),
+                CreateTableDefinition<TwitElement, Guid>(e => e.Id),
                 CreateTableDefinition<FileElement, Guid>(e => e.Id),
                 // Containers
                 CreateTableDefinition<ListElement, Guid>(e => e.Id),

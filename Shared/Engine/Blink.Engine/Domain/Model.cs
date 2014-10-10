@@ -15,6 +15,7 @@ namespace Blink.Data.Domain.Model
     {
         None,
         Text,
+        Byte,
         Tweet,
         File,
         List,
@@ -43,7 +44,7 @@ namespace Blink.Data.Domain.Model
 
     #region Foundation
 
-    public abstract class Concrete : IElement, IGroupable, INotable, IAggregate
+    public abstract class Concrete : IElement, IGroupable, INotable
     {
         #region Private Members
 
@@ -184,7 +185,39 @@ namespace Blink.Data.Domain.Model
         #endregion
     }
 
-    public class TweetElement : Concrete
+    public class ByteElement : Concrete
+    {
+        #region Private Members
+
+        private byte[] _data;
+
+        #endregion
+
+        #region Public Members
+
+        public byte[] Data
+        {
+            get { return _data; }
+            set
+            {
+                if (value != _data)
+                {
+                    _data = value;
+                    NotifyPropertyChanged();
+                }
+            }
+        }
+
+        #endregion
+
+        #region IElement Members
+
+        public override ElementTypes Type { get { return ElementTypes.Byte; } }
+
+        #endregion
+    }
+
+    public class TwitElement : Concrete
     {
         #region Public Members
 
@@ -473,7 +506,7 @@ namespace Blink.Data.Domain.Model
         #endregion
     }
 
-    public class Valuable<T> : Keepable<T>, IAggregateRoot where T : IElement
+    public class Valuable<T> : Keepable<T> where T : IElement
     {
         #region Public Members
 

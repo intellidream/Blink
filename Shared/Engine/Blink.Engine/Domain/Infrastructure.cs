@@ -202,11 +202,4 @@ namespace Blink.Data.Domain.Infrastructure
     }
 
     #endregion
-
-    #region Aggregates
-
-    public interface IAggregate { }
-    public interface IAggregateRoot { }
-
-    #endregion
 }
