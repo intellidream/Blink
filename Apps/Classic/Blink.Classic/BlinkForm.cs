@@ -114,46 +114,48 @@ namespace Blink.Classic
         {
             await Repository.Root.LoadAsync();
 
-            //LoadRootNode();
-
-            treeView1.Nodes.Add(new TreeNode("Root"));
-
-            //foreach (FolderElement//IRootable child in Repository.Root.Data)
-            //{ LoadSelfable(child, treeView1.Nodes[0]); }
+            LoadRootElement();
         }
 
-        private void LoadSelfable<T>(Selfable<T> selfable, TreeNode parent) where T : IElement
-        {
-            foreach (var value in selfable)
-            {
-                var node = new TreeNode(value.Name);
-                parent.Nodes.Add(node);
-                LoadSelfable(value, node);
-            }
-        }
-
-        //LoadValuable?!
-
-        private void LoadRootNode()
+        private void LoadRootElement()
         {
             foreach (FolderElement folder in Repository.Root)
             {
                 var node = new TreeNode(folder.Name);
                 treeView1.Nodes.Add(node);
-                LoadChildNodes(folder, node);
+         
+                LoadFolderElement(folder, node);
             }
         }
 
-        private void LoadChildNodes(FolderElement parentFolder, TreeNode parentNode)
+        private void LoadFolderElement(FolderElement parentFolder, TreeNode parentNode)
         {
             foreach (FolderElement childFolder in parentFolder)
             {
                 var childNode = new TreeNode(childFolder.Name);
                 parentNode.Nodes.Add(childNode);
 
-                LoadChildNodes(childFolder, childNode);
+                LoadFolderElement(childFolder, childNode);
             }
         }
+
+        //private void LoadFolderValues(FolderElement folder)
+        //{
+        //    foreach (var value in folder.Values)
+        //    {
+        //        switch (value.Type)
+        //        {
+        //            case ElementTypes.
+        //        }
+        //    }
+        //}
+
+        private void LoadRootables() 
+        {
+
+        }
+
+        // Foldable types??!
 
         //private void LoadValues<T>(Keepable<T> values) 
         //{
