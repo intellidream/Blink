@@ -94,7 +94,7 @@
   <Class Name="Blink.Data.Domain.Model.RootElement" Collapsed="true">
     <Position X="15.5" Y="7.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAwAAAAAAAAA=</HashCode>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAQAAAAAAAAAAwAAAAAAAAA=</HashCode>
       <FileName>Domain\Model.cs</FileName>
     </TypeIdentifier>
   </Class>

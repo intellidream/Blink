@@ -677,13 +677,30 @@ namespace Blink.Data.Domain.Model
         public override ElementTypes Type { get { return ElementTypes.Folder; } }
 
         #endregion
+
+        #region IRootable Members
+
+        //public RootableTypes RootableType
+        //{
+        //    get { return RootableTypes.Folder; }
+        //}
+
+        #endregion
     }
 
     #endregion
 
     #region Rootables
 
-    public interface IRootable : IElement { }
+    //public enum RootableTypes : int
+    //{
+    //    Folder
+    //}
+
+    public interface IRootable : IElement 
+    {
+        //RootableTypes RootableType { get; }
+    }
 
     public class RootElement : Valuable<IRootable>
     {

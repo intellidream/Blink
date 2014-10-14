@@ -33,7 +33,7 @@
             this.button3 = new System.Windows.Forms.Button();
             this.webBrowser1 = new System.Windows.Forms.WebBrowser();
             this.treeView1 = new System.Windows.Forms.TreeView();
-            this.listView1 = new System.Windows.Forms.ListView();
+            this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.SuspendLayout();
             // 
             // button1
@@ -81,20 +81,20 @@
             this.treeView1.Size = new System.Drawing.Size(279, 509);
             this.treeView1.TabIndex = 4;
             // 
-            // listView1
+            // flowLayoutPanel1
             // 
-            this.listView1.Location = new System.Drawing.Point(297, 12);
-            this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(575, 509);
-            this.listView1.TabIndex = 5;
-            this.listView1.UseCompatibleStateImageBehavior = false;
+            this.flowLayoutPanel1.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(297, 12);
+            this.flowLayoutPanel1.Name = "flowLayoutPanel1";
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(575, 509);
+            this.flowLayoutPanel1.TabIndex = 6;
             // 
             // BlinkForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(884, 562);
-            this.Controls.Add(this.listView1);
+            this.Controls.Add(this.flowLayoutPanel1);
             this.Controls.Add(this.treeView1);
             this.Controls.Add(this.webBrowser1);
             this.Controls.Add(this.button3);
@@ -114,7 +114,7 @@
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.WebBrowser webBrowser1;
         private System.Windows.Forms.TreeView treeView1;
-        private System.Windows.Forms.ListView listView1;
+        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
     }
 }
 

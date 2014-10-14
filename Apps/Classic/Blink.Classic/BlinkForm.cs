@@ -114,45 +114,25 @@ namespace Blink.Classic
         {
             await Repository.Root.LoadAsync();
 
-            LoadRootElement();
+            PresentRoot();
         }
 
-        private void LoadRootElement()
+        private void PresentRoot()
         {
-            foreach (FolderElement folder in Repository.Root)
+            Repository.Root
+                .ToList()
+                .ForEach(folder => PresentRootable(folder as FolderElement, treeView1.Nodes));
+        }
+
+        private void PresentRootable(FolderElement folder, TreeNodeCollection nodes) 
+        {
+            var node = new TreeNode(folder.Name);
+            nodes.Add(node);
+
+            foreach (FolderElement value in folder)
             {
-                var node = new TreeNode(folder.Name);
-                treeView1.Nodes.Add(node);
-         
-                LoadFolderElement(folder, node);
+                PresentRootable(value, node.Nodes);
             }
-        }
-
-        private void LoadFolderElement(FolderElement parentFolder, TreeNode parentNode)
-        {
-            foreach (FolderElement childFolder in parentFolder)
-            {
-                var childNode = new TreeNode(childFolder.Name);
-                parentNode.Nodes.Add(childNode);
-
-                LoadFolderElement(childFolder, childNode);
-            }
-        }
-
-        //private void LoadFolderValues(FolderElement folder)
-        //{
-        //    foreach (var value in folder.Values)
-        //    {
-        //        switch (value.Type)
-        //        {
-        //            case ElementTypes.
-        //        }
-        //    }
-        //}
-
-        private void LoadRootables() 
-        {
-
         }
 
         // Foldable types??!
