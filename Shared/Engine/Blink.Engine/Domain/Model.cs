@@ -142,6 +142,12 @@ namespace Blink.Data.Domain.Model
 
         #endregion
 
+        #region INotable Members
+
+        public abstract NotableTypes NotableType { get; }
+
+        #endregion
+
         #region INotifyPropertyChanged Members
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -195,6 +201,12 @@ namespace Blink.Data.Domain.Model
         public override GroupableTypes GroupableType { get { return GroupableTypes.Text; } }
 
         #endregion
+        
+        #region INotable Members
+
+        public override NotableTypes NotableType { get { return NotableTypes.Text; } }
+
+        #endregion
     }
 
     public class ByteElement : Concrete
@@ -233,6 +245,12 @@ namespace Blink.Data.Domain.Model
         public override GroupableTypes GroupableType { get { return GroupableTypes.Byte; } }
 
         #endregion
+
+        #region INotable Members
+
+        public override NotableTypes NotableType { get { return NotableTypes.Byte; } }
+
+        #endregion
     }
 
     public class TwitElement : Concrete
@@ -256,6 +274,12 @@ namespace Blink.Data.Domain.Model
         #region IGroupable Members
 
         public override GroupableTypes GroupableType { get { return GroupableTypes.Twit; } }
+
+        #endregion
+
+        #region INotable Members
+
+        public override NotableTypes NotableType { get { return NotableTypes.Twit; } }
 
         #endregion
     }
@@ -288,6 +312,12 @@ namespace Blink.Data.Domain.Model
         #region IGroupable Members
 
         public override GroupableTypes GroupableType { get { return GroupableTypes.File; } }
+
+        #endregion
+
+        #region INotable Members
+
+        public override NotableTypes NotableType { get { return NotableTypes.File; } }
 
         #endregion
     }
@@ -622,10 +652,18 @@ namespace Blink.Data.Domain.Model
         public GroupableTypes GroupableType { get { return GroupableTypes.List; } }
 
         #endregion
+
+        #region INotable Members
+
+        public NotableTypes NotableType { get { return NotableTypes.List; } }
+
+        #endregion
     }
 
     public class GridElement : Valuable<ListElement>, IGroupable, INotable
     {
+        #region Public Indexer
+
         public ListElement this[string name]
         {
             get
@@ -639,6 +677,8 @@ namespace Blink.Data.Domain.Model
             }
         }
 
+        #endregion
+
         #region IElement Members
 
         public override ElementTypes ElementType { get { return ElementTypes.Grid; } }
@@ -648,6 +688,12 @@ namespace Blink.Data.Domain.Model
         #region IGroupable Members
 
         public GroupableTypes GroupableType { get { return GroupableTypes.Grid; } }
+
+        #endregion
+
+        #region INotable Members
+
+        public NotableTypes NotableType { get { return NotableTypes.Grid; } }
 
         #endregion
     }
@@ -663,6 +709,12 @@ namespace Blink.Data.Domain.Model
         #region IGroupable Members
 
         public GroupableTypes GroupableType { get { return GroupableTypes.Tree; } }
+
+        #endregion
+
+        #region INotable Members
+
+        public NotableTypes NotableType { get { return NotableTypes.Tree; } }
 
         #endregion
     }
@@ -692,6 +744,12 @@ namespace Blink.Data.Domain.Model
         #region IElement Members
 
         public override ElementTypes ElementType { get { return ElementTypes.Group; } }
+
+        #endregion
+
+        #region INotable Members
+
+        public NotableTypes NotableType { get { return NotableTypes.Group; } }
 
         #endregion
     }
@@ -743,7 +801,16 @@ namespace Blink.Data.Domain.Model
 
     #region Foldables
 
-    public interface IFoldable : IElement { }
+    public enum FoldableTypes : int
+    {
+        Note = ElementTypes.Note,
+        Page = ElementTypes.Page
+    }
+
+    public interface IFoldable : IElement 
+    {
+        FoldableTypes FoldableType { get; }
+    }
 
     public class FolderElement : Selfable<IFoldable>
     {
