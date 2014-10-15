@@ -354,7 +354,24 @@ namespace Blink.Data.Domain.Model
 
         #region Wrapped Collection
 
-        public Collection<T> Data { get; set; }
+        private Lazy<Collection<T>> _data;
+
+        //public Collection<T> Data { get; set; }
+
+        // valorile setate pe membrul privat si adaugate pe cel public
+        // si/sau doar sterg setter-ul din indexer si metoda Set
+
+        public Collection<T> Data 
+        {
+            get 
+            {
+                return _data.Value;
+            }
+            set 
+            {
+                _data = new Lazy<Collection<T>>(() => { return value; }); 
+            }
+        }
 
         #endregion
 
@@ -382,7 +399,8 @@ namespace Blink.Data.Domain.Model
 
         public Keepable()
         {
-            Data = new Collection<T>();
+            //Data = new Collection<T>();
+            _data = new Lazy<Collection<T>>(() => { return new Collection<T>(); });
             _internalProgress = new InternalProgress<T>(this.Data.Select(e => e.Progress));
         }
 
@@ -782,6 +800,12 @@ namespace Blink.Data.Domain.Model
         public override ElementTypes ElementType { get { return ElementTypes.Note; } }
 
         #endregion
+
+        #region IFoldable Members
+
+        public FoldableTypes FoldableType { get { return FoldableTypes.Note; } }
+
+        #endregion
     }
 
     #endregion
@@ -793,6 +817,12 @@ namespace Blink.Data.Domain.Model
         #region IElement Members
 
         public override ElementTypes ElementType { get { return ElementTypes.Page; } }
+
+        #endregion
+
+        #region IFoldable Members
+
+        public FoldableTypes FoldableType { get { return FoldableTypes.Page; } }
 
         #endregion
     }
