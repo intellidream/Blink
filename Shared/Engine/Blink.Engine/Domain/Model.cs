@@ -13,19 +13,19 @@ namespace Blink.Data.Domain.Model
 
     public enum ElementTypes : int
     {
-        None,
-        Text,
-        Byte,
-        Tweet,
-        File,
-        List,
-        Grid,
-        Tree,
-        Group,
-        Note,
-        Page,
-        Folder,
-        Root
+        None = 0,
+        Text = 1,
+        Byte = 2,
+        Twit = 3,
+        File = 4,
+        List = 5,
+        Grid = 6,
+        Tree = 7,
+        Group = 8,
+        Note = 9,
+        Page = 10,
+        Folder = 11,
+        Root = 12
     }
 
     public interface IElement : INotifyPropertyChanged
@@ -34,7 +34,7 @@ namespace Blink.Data.Domain.Model
         Guid ParentId { get; set; }
         int Position { get; set; }
         Timestamp Timestamp { get; set; }
-        ElementTypes Type { get; }
+        ElementTypes ElementType { get; }
         IProgress Progress { get; }
     }
 
@@ -130,9 +130,15 @@ namespace Blink.Data.Domain.Model
             }
         }
 
-        public abstract ElementTypes Type { get; }
+        public abstract ElementTypes ElementType { get; }
 
         IProgress IElement.Progress { get { return Progress; } }
+
+        #endregion
+
+        #region IGroupable Members
+
+        public abstract GroupableTypes GroupableType { get; }
 
         #endregion
 
@@ -180,7 +186,13 @@ namespace Blink.Data.Domain.Model
 
         #region IElement Members
 
-        public override ElementTypes Type { get { return ElementTypes.Text; } }
+        public override ElementTypes ElementType { get { return ElementTypes.Text; } }
+
+        #endregion
+
+        #region IGroupable Members
+
+        public override GroupableTypes GroupableType { get { return GroupableTypes.Text; } }
 
         #endregion
     }
@@ -212,7 +224,13 @@ namespace Blink.Data.Domain.Model
 
         #region IElement Members
 
-        public override ElementTypes Type { get { return ElementTypes.Byte; } }
+        public override ElementTypes ElementType { get { return ElementTypes.Byte; } }
+
+        #endregion
+
+        #region IGroupable Members
+
+        public override GroupableTypes GroupableType { get { return GroupableTypes.Byte; } }
 
         #endregion
     }
@@ -231,7 +249,13 @@ namespace Blink.Data.Domain.Model
 
         #region IElement Members
 
-        public override ElementTypes Type { get { return ElementTypes.Tweet; } }
+        public override ElementTypes ElementType { get { return ElementTypes.Twit; } }
+
+        #endregion
+
+        #region IGroupable Members
+
+        public override GroupableTypes GroupableType { get { return GroupableTypes.Twit; } }
 
         #endregion
     }
@@ -257,7 +281,13 @@ namespace Blink.Data.Domain.Model
 
         #region IElement Members
 
-        public override ElementTypes Type { get { return ElementTypes.File; } }
+        public override ElementTypes ElementType { get { return ElementTypes.File; } }
+
+        #endregion
+
+        #region IGroupable Members
+
+        public override GroupableTypes GroupableType { get { return GroupableTypes.File; } }
 
         #endregion
     }
@@ -485,7 +515,7 @@ namespace Blink.Data.Domain.Model
             }
         }
 
-        public virtual ElementTypes Type { get { return ElementTypes.None; } }
+        public virtual ElementTypes ElementType { get { return ElementTypes.None; } }
 
         IProgress IElement.Progress { get { return Progress; } }
 
@@ -583,7 +613,13 @@ namespace Blink.Data.Domain.Model
     {
         #region IElement Members
 
-        public override ElementTypes Type { get { return ElementTypes.List; } }
+        public override ElementTypes ElementType { get { return ElementTypes.List; } }
+
+        #endregion
+
+        #region IGroupable Members
+
+        public GroupableTypes GroupableType { get { return GroupableTypes.List; } }
 
         #endregion
     }
@@ -605,7 +641,13 @@ namespace Blink.Data.Domain.Model
 
         #region IElement Members
 
-        public override ElementTypes Type { get { return ElementTypes.Grid; } }
+        public override ElementTypes ElementType { get { return ElementTypes.Grid; } }
+
+        #endregion
+
+        #region IGroupable Members
+
+        public GroupableTypes GroupableType { get { return GroupableTypes.Grid; } }
 
         #endregion
     }
@@ -614,7 +656,13 @@ namespace Blink.Data.Domain.Model
     {
         #region IElement Members
 
-        public override ElementTypes Type { get { return ElementTypes.Tree; } }
+        public override ElementTypes ElementType { get { return ElementTypes.Tree; } }
+
+        #endregion
+
+        #region IGroupable Members
+
+        public GroupableTypes GroupableType { get { return GroupableTypes.Tree; } }
 
         #endregion
     }
@@ -623,13 +671,27 @@ namespace Blink.Data.Domain.Model
 
     #region Groupables
 
-    public interface IGroupable : IElement { }
+    public enum GroupableTypes : int
+    {
+        Text = ElementTypes.Text,
+        Byte = ElementTypes.Byte,
+        Twit = ElementTypes.Twit,
+        File = ElementTypes.File,
+        List = ElementTypes.List,
+        Grid = ElementTypes.Grid,
+        Tree = ElementTypes.Tree
+    }
+
+    public interface IGroupable : IElement 
+    {
+        GroupableTypes GroupableType { get; }
+    }
 
     public class GroupElement : Valuable<IGroupable>, INotable
     {
         #region IElement Members
 
-        public override ElementTypes Type { get { return ElementTypes.Group; } }
+        public override ElementTypes ElementType { get { return ElementTypes.Group; } }
 
         #endregion
     }
@@ -638,13 +700,28 @@ namespace Blink.Data.Domain.Model
 
     #region Notables
 
-    public interface INotable : IElement { }
+    public enum NotableTypes : int
+    {
+        Text = ElementTypes.Text,
+        Byte = ElementTypes.Byte,
+        Twit = ElementTypes.Twit,
+        File = ElementTypes.File,
+        List = ElementTypes.List,
+        Grid = ElementTypes.Grid,
+        Tree = ElementTypes.Tree,
+        Group = ElementTypes.Group
+    }
 
-    public class NoteElement : Valuable<INotable>, IPageable, IFoldable
+    public interface INotable : IElement
+    {
+        NotableTypes NotableType { get; }
+    }
+
+    public class NoteElement : Valuable<INotable>, IFoldable
     {
         #region IElement Members
 
-        public override ElementTypes Type { get { return ElementTypes.Note; } }
+        public override ElementTypes ElementType { get { return ElementTypes.Note; } }
 
         #endregion
     }
@@ -653,13 +730,11 @@ namespace Blink.Data.Domain.Model
 
     #region Pageables
 
-    public interface IPageable : IElement { }
-
-    public class PageElement : Valuable<IPageable>, IFoldable
+    public class PageElement : Valuable<NoteElement>, IFoldable
     {
         #region IElement Members
 
-        public override ElementTypes Type { get { return ElementTypes.Page; } }
+        public override ElementTypes ElementType { get { return ElementTypes.Page; } }
 
         #endregion
     }
@@ -670,20 +745,11 @@ namespace Blink.Data.Domain.Model
 
     public interface IFoldable : IElement { }
 
-    public class FolderElement : Selfable<IFoldable>, IRootable
+    public class FolderElement : Selfable<IFoldable>
     {
         #region IElement Members
 
-        public override ElementTypes Type { get { return ElementTypes.Folder; } }
-
-        #endregion
-
-        #region IRootable Members
-
-        //public RootableTypes RootableType
-        //{
-        //    get { return RootableTypes.Folder; }
-        //}
+        public override ElementTypes ElementType { get { return ElementTypes.Folder; } }
 
         #endregion
     }
@@ -692,17 +758,7 @@ namespace Blink.Data.Domain.Model
 
     #region Rootables
 
-    //public enum RootableTypes : int
-    //{
-    //    Folder
-    //}
-
-    public interface IRootable : IElement 
-    {
-        //RootableTypes RootableType { get; }
-    }
-
-    public class RootElement : Valuable<IRootable>
+    public class RootElement : Valuable<FolderElement>
     {
         #region Public Members
 
@@ -716,7 +772,7 @@ namespace Blink.Data.Domain.Model
 
         public override Guid ParentId { get { return Guid.Empty; } }
 
-        public override ElementTypes Type { get { return ElementTypes.Root; } }
+        public override ElementTypes ElementType { get { return ElementTypes.Root; } }
 
         #endregion
     }

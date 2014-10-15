@@ -135,6 +135,10 @@ namespace Blink.Classic
             }
         }
 
+        // rename regions for notables/foldables/rootables/etc.
+
+        // lazy load Data via Sterling!!!
+
         // Foldable types??!
 
         //private void LoadValues<T>(Keepable<T> values) 
