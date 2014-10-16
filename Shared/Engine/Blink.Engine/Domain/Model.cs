@@ -332,6 +332,12 @@ namespace Blink.Data.Domain.Model
     {
         #region Private Members
 
+        #region Wrapped Collection
+
+        private Lazy<Collection<T>> _data;
+
+        #endregion
+
         #region IElement Members
 
         private Guid _id;
@@ -354,7 +360,17 @@ namespace Blink.Data.Domain.Model
 
         #region Wrapped Collection
 
-        public Collection<T> Data { get; set; }
+        public Collection<T> Data 
+        {
+            get
+            {
+                return _data.Value; 
+            }
+            set 
+            {
+                _data = new Lazy<Collection<T>>(() => { return value; });
+            }
+        }
 
         #endregion
 
@@ -382,7 +398,7 @@ namespace Blink.Data.Domain.Model
 
         public Keepable()
         {
-            Data = new Collection<T>();
+            _data = new Lazy<Collection<T>>(() => { return new Collection<T>(); });
             _internalProgress = GetInternalProgress();
         }
 
@@ -844,6 +860,12 @@ namespace Blink.Data.Domain.Model
 
     public class RootElement : Valuable<FolderElement>
     {
+        #region Static Members
+
+        public static readonly Guid RootId = new Guid("5C60F693-BEF5-E011-A485-80EE7300C695");
+
+        #endregion
+
         #region Public Members
 
         public override string Name { get { return String.Empty; } }
@@ -852,7 +874,7 @@ namespace Blink.Data.Domain.Model
 
         #region IElement Members
 
-        public override Guid Id { get { return Guid.Empty; } }
+        public override Guid Id { get { return RootId; } }
 
         public override Guid ParentId { get { return Guid.Empty; } }
 

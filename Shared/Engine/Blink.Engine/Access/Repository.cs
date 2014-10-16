@@ -93,12 +93,15 @@ namespace Blink.Data.Domain.Model
     {
         public static async Task<object> SaveAsync(this RootElement instance) 
         {
+            //var d = instance.Data;
             return await Repository.SaveAsync<RootElement>(instance);
         }
 
         public static async Task LoadAsync(this RootElement instance)
         {
-            instance = await Repository.LoadAsync<RootElement>(true);
+            //var d = instance.Data;
+            var a = await Repository.LoadAsync<RootElement>(RootElement.RootId);
+            instance = a;
         }
 
         public static async Task DeleteAsync(this RootElement instance)

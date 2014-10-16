@@ -57,28 +57,28 @@ namespace Blink.Data.Engine
             return new List<ITableDefinition>
             {
                 // Progress
-                CreateTableDefinition<ManualProgress, Guid>(e => e.Id),
-                CreateTableDefinition<DateTimeProgress, Guid>(e => e.Id),
-                CreateTableDefinition<LocationProgress, Guid>(e => e.Id),
+                CreateTableDefinition<ManualProgress, Guid>(e => e.Id).WithIndex<ManualProgress, bool, Guid>("IndexParentId", e => e.IsCompleted()),
+                CreateTableDefinition<DateTimeProgress, Guid>(e => e.Id).WithIndex<DateTimeProgress, bool, Guid>("IndexParentId", e => e.IsCompleted()),
+                CreateTableDefinition<LocationProgress, Guid>(e => e.Id).WithIndex<LocationProgress, bool, Guid>("IndexParentId", e => e.IsCompleted()),
 
                 // Concretes
-                CreateTableDefinition<TextElement, Guid>(e => e.Id),
-                CreateTableDefinition<TwitElement, Guid>(e => e.Id),
-                CreateTableDefinition<FileElement, Guid>(e => e.Id),
+                CreateTableDefinition<TextElement, Guid>(e => e.Id).WithIndex<TextElement, Guid, Guid>("IndexParentId", e => e.ParentId),
+                CreateTableDefinition<TwitElement, Guid>(e => e.Id).WithIndex<TwitElement, Guid, Guid>("IndexParentId", e => e.ParentId),
+                CreateTableDefinition<FileElement, Guid>(e => e.Id).WithIndex<FileElement, Guid, Guid>("IndexParentId", e => e.ParentId),
                 // Containers
-                CreateTableDefinition<ListElement, Guid>(e => e.Id),
-                CreateTableDefinition<GridElement, Guid>(e => e.Id),
-                CreateTableDefinition<TreeElement, Guid>(e => e.Id),
+                CreateTableDefinition<ListElement, Guid>(e => e.Id).WithIndex<ListElement, Guid, Guid>("IndexParentId", e => e.ParentId),
+                CreateTableDefinition<GridElement, Guid>(e => e.Id).WithIndex<GridElement, Guid, Guid>("IndexParentId", e => e.ParentId),
+                CreateTableDefinition<TreeElement, Guid>(e => e.Id).WithIndex<TreeElement, Guid, Guid>("IndexParentId", e => e.ParentId),
                 // Groupables
-                CreateTableDefinition<GroupElement, Guid>(e => e.Id),
+                CreateTableDefinition<GroupElement, Guid>(e => e.Id).WithIndex<GroupElement, Guid, Guid>("IndexParentId", e => e.ParentId),
                 // Notables
-                CreateTableDefinition<NoteElement, Guid>(e => e.Id),
+                CreateTableDefinition<NoteElement, Guid>(e => e.Id).WithIndex<NoteElement, Guid, Guid>("IndexParentId", e => e.ParentId),
                 // Pageables
-                CreateTableDefinition<PageElement, Guid>(e => e.Id),
+                CreateTableDefinition<PageElement, Guid>(e => e.Id).WithIndex<PageElement, Guid, Guid>("IndexParentId", e => e.ParentId),
                 // Foldables
-                CreateTableDefinition<FolderElement, Guid>(e => e.Id),
+                CreateTableDefinition<FolderElement, Guid>(e => e.Id).WithIndex<FolderElement, Guid, Guid>("IndexParentId", e => e.ParentId),
                 // Rootables
-                CreateTableDefinition<RootElement, bool>(c => true)
+                CreateTableDefinition<RootElement, Guid>(e => e.Id)
             };
         }
     }

@@ -105,7 +105,7 @@ namespace Blink.Classic
             treeElementTwo.Id = Guid.NewGuid();
             treeElement.Add(treeElementTwo);
 
-            AddManyFolders(folderElement, 1000); // don't present all ;)
+            AddManyFolders(folderElement, 10000);
 
             Repository.Root.Add(folderElement);
 
@@ -126,9 +126,7 @@ namespace Blink.Classic
 
         private async void button2_Click(object sender, EventArgs e)
         {
-            //await Repository.Root.LoadAsync();
-
-            Repository.Root.Query();
+            await Repository.Root.LoadAsync();
 
             //PresentRoot();
         }
