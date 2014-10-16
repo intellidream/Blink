@@ -78,9 +78,9 @@ namespace Blink.Data.Access
             await _repo.DeleteAsync<T>(instance);
         }
 
-        public static List<TableKey<T, TKey>> Query<T, TKey>() where T : class, IElement, new()
+        public static Lazy<T> Query<T, TKey>() where T : class, IElement, new()
         {
-            return _repo.Query<T, TKey>();
+            return (from tableKey in _repo.Query<T, TKey>() select tableKey.LazyValue).FirstOrDefault();
         }
     }
 }
@@ -108,9 +108,7 @@ namespace Blink.Data.Domain.Model
 
         public static Lazy<RootElement> Query(this RootElement instance)
         {
-            return (from tableKey in Repository.Query<RootElement, bool>() 
-                    select tableKey.LazyValue)
-                    .FirstOrDefault();
+            return Repository.Query<RootElement, bool>();
         }
     }
 }
