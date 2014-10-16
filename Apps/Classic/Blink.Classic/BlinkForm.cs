@@ -149,6 +149,8 @@ namespace Blink.Classic
             }
         }
 
+        // simplify root into only keeping id's of root folders, and see the rest
+
         // lazy load Data via Sterling = query!!!
 
         //private void LoadValues<T>(Keepable<T> values) 
