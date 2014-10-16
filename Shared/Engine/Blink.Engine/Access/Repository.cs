@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Blink.Data.Domain.Model;
 using Blink.Data.Engine;
+using Wintellect.Sterling.Core.Keys;
 
 namespace Blink.Data.Access
 {
@@ -13,6 +14,7 @@ namespace Blink.Data.Access
         Task<T> LoadAsync<T>(object key) where T : class, IElement, new();
         Task<object> SaveAsync<T>(T instance) where T : class, IElement, new();
         Task DeleteAsync<T>(T instance) where T : class, IElement;
+        List<TableKey<T, TKey>> Query<T, TKey>() where T : class, IElement, new();
     }
 
     internal class SterlingRepository : ISterlingRepository
@@ -39,6 +41,11 @@ namespace Blink.Data.Access
         public async Task DeleteAsync<T>(T instance) where T : class, IElement
         {
             await Sterling.Database.DeleteAsync<T>(instance);
+        }
+
+        public List<TableKey<T, TKey>> Query<T, TKey>() where T : class, IElement, new() 
+        {
+            return Sterling.Database.Query<T, TKey>();
         }
 
         #endregion
@@ -70,6 +77,11 @@ namespace Blink.Data.Access
         {
             await _repo.DeleteAsync<T>(instance);
         }
+
+        public static List<TableKey<T, TKey>> Query<T, TKey>() where T : class, IElement, new()
+        {
+            return _repo.Query<T, TKey>();
+        }
     }
 }
 
@@ -92,6 +104,13 @@ namespace Blink.Data.Domain.Model
         public static async Task DeleteAsync(this RootElement instance)
         {
             await Repository.DeleteAsync<RootElement>(instance);
+        }
+
+        public static Lazy<RootElement> Query(this RootElement instance)
+        {
+            return (from tableKey in Repository.Query<RootElement, bool>() 
+                    select tableKey.LazyValue)
+                    .FirstOrDefault();
         }
     }
 }

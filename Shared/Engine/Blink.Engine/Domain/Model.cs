@@ -354,24 +354,7 @@ namespace Blink.Data.Domain.Model
 
         #region Wrapped Collection
 
-        private Lazy<Collection<T>> _data;
-
-        //public Collection<T> Data { get; set; }
-
-        // valorile setate pe membrul privat si adaugate pe cel public
-        // si/sau doar sterg setter-ul din indexer si metoda Set
-
-        public Collection<T> Data 
-        {
-            get 
-            {
-                return _data.Value;
-            }
-            set 
-            {
-                _data = new Lazy<Collection<T>>(() => { return value; }); 
-            }
-        }
+        public Collection<T> Data { get; set; }
 
         #endregion
 
@@ -381,7 +364,7 @@ namespace Blink.Data.Domain.Model
         {
             get
             {
-                return _progress ?? (_internalProgress = new InternalProgress<T>(this.Data.Select(e => e.Progress)));
+                return _progress ?? (_internalProgress = GetInternalProgress());
             }
             set
             {
@@ -399,9 +382,8 @@ namespace Blink.Data.Domain.Model
 
         public Keepable()
         {
-            //Data = new Collection<T>();
-            _data = new Lazy<Collection<T>>(() => { return new Collection<T>(); });
-            _internalProgress = new InternalProgress<T>(this.Data.Select(e => e.Progress));
+            Data = new Collection<T>();
+            _internalProgress = GetInternalProgress();
         }
 
         #region Collection Indexer
@@ -569,6 +551,15 @@ namespace Blink.Data.Domain.Model
 
         #endregion
 
+        #region Helper Methods
+
+        private InternalProgress<T> GetInternalProgress()
+        {
+            return new InternalProgress<T>(this.Data.Select(e => e.Progress));
+        }
+
+        #endregion
+
         #region INotifyPropertyChanged Members
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -606,6 +597,22 @@ namespace Blink.Data.Domain.Model
             Values = new Keepable<T>();
         }
 
+        #region IElement Members
+
+        public override Guid Id
+        {
+            get { return base.Id; }
+            set
+            {
+                Values.Id = value;
+                base.Id = value;
+            }
+        }
+
+        public override IProgress Progress { get { return Values.Progress; } }
+
+        #endregion
+
         #region Helper Methods
 
         /// <summary>
@@ -629,26 +636,6 @@ namespace Blink.Data.Domain.Model
                 }
             }
         }
-
-        #endregion
-
-        #region Keepable Members
-
-        #region IElement Members
-
-        public override Guid Id
-        {
-            get { return base.Id; }
-            set
-            {
-                Values.Id = value;
-                base.Id = value;
-            }
-        }
-
-        public override IProgress Progress { get { return Values.Progress; } }
-
-        #endregion
 
         #endregion
     }

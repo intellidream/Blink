@@ -105,16 +105,32 @@ namespace Blink.Classic
             treeElementTwo.Id = Guid.NewGuid();
             treeElement.Add(treeElementTwo);
 
+            AddManyFolders(folderElement, 1000); // don't present all ;)
+
             Repository.Root.Add(folderElement);
 
             var result = await Repository.Root.SaveAsync();
         }
 
+        private void AddManyFolders(FolderElement rootFolder, int howMany) 
+        {
+            for (int i = 0; i < howMany; i++)
+            {
+                rootFolder.Add(new FolderElement
+                {
+                    Id = Guid.NewGuid(),
+                    Name = i.ToString()
+                });
+            }
+        }
+
         private async void button2_Click(object sender, EventArgs e)
         {
-            await Repository.Root.LoadAsync();
+            //await Repository.Root.LoadAsync();
 
-            PresentRoot();
+            Repository.Root.Query();
+
+            //PresentRoot();
         }
 
         private void PresentRoot()
@@ -135,7 +151,7 @@ namespace Blink.Classic
             }
         }
 
-        // lazy load Data via Sterling!!!
+        // lazy load Data via Sterling = query!!!
 
         //private void LoadValues<T>(Keepable<T> values) 
         //{
