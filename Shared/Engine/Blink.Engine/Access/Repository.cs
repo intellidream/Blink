@@ -7,111 +7,115 @@ using Blink.Data.Domain.Model;
 using Blink.Data.Engine;
 using Wintellect.Sterling.Core.Keys;
 
-namespace Blink.Data.Access
-{
-    internal interface ISterlingRepository
-    {
-        Task<T> LoadAsync<T>(object key) where T : class, IElement, new();
-        Task<object> SaveAsync<T>(T instance) where T : class, IElement, new();
-        Task DeleteAsync<T>(T instance) where T : class, IElement;
-        List<TableKey<T, TKey>> Query<T, TKey>() where T : class, IElement, new();
-    }
+#region Older
 
-    internal class SterlingRepository : ISterlingRepository
-    {
-        #region ISterlingRepository Members
+//namespace Blink.Data.Access
+//{
+//    internal interface ISterlingRepository
+//    {
+//        Task<T> LoadAsync<T>(object key) where T : class, IElement, new();
+//        Task<object> SaveAsync<T>(T instance) where T : class, IElement, new();
+//        Task DeleteAsync<T>(T instance) where T : class, IElement;
+//        List<TableKey<T, TKey>> Query<T, TKey>() where T : class, IElement, new();
+//    }
 
-        public async Task<T> LoadAsync<T>(object key) where T : class, IElement, new()
-        {
-            return await Sterling.Database.LoadAsync<T>(key);
-        }
+//    internal class SterlingRepository : ISterlingRepository
+//    {
+//        #region ISterlingRepository Members
 
-        public async Task<object> SaveAsync<T>(T instance) where T : class, IElement, new()
-        {
-            var result = await Sterling.Database.SaveAsync<T>(instance);
+//        public async Task<T> LoadAsync<T>(object key) where T : class, IElement, new()
+//        {
+//            return await Sterling.Database.LoadAsync<T>(key);
+//        }
 
-            if (result != null)
-            {
-                await Sterling.Database.FlushAsync();
-            }
+//        public async Task<object> SaveAsync<T>(T instance) where T : class, IElement, new()
+//        {
+//            var result = await Sterling.Database.SaveAsync<T>(instance);
 
-            return result;
-        }
+//            if (result != null)
+//            {
+//                await Sterling.Database.FlushAsync();
+//            }
 
-        public async Task DeleteAsync<T>(T instance) where T : class, IElement
-        {
-            await Sterling.Database.DeleteAsync<T>(instance);
-        }
+//            return result;
+//        }
 
-        public List<TableKey<T, TKey>> Query<T, TKey>() where T : class, IElement, new() 
-        {
-            return Sterling.Database.Query<T, TKey>();
-        }
+//        public async Task DeleteAsync<T>(T instance) where T : class, IElement
+//        {
+//            await Sterling.Database.DeleteAsync<T>(instance);
+//        }
 
-        #endregion
-    }
+//        public List<TableKey<T, TKey>> Query<T, TKey>() where T : class, IElement, new() 
+//        {
+//            return Sterling.Database.Query<T, TKey>();
+//        }
 
-    public static class Repository 
-    {
-        private static readonly SterlingRepository _repo;
+//        #endregion
+//    }
 
-        public static RootElement Root { get; private set; }
+//    public static class Repository 
+//    {
+//        private static readonly SterlingRepository _repo;
 
-        static Repository() 
-        {
-            _repo = new SterlingRepository();
-            Root = new RootElement();
-        }
+//        public static RootElement Root { get; private set; }
 
-        public static async Task<T> LoadAsync<T>(object key) where T : class, IElement, new()
-        {
-            return await _repo.LoadAsync<T>(key);
-        }
+//        static Repository() 
+//        {
+//            _repo = new SterlingRepository();
+//            Root = new RootElement();
+//        }
 
-        public static async Task<object> SaveAsync<T>(T instance) where T : class, IElement, new() 
-        {
-            return await _repo.SaveAsync<T>(instance);
-        }
+//        public static async Task<T> LoadAsync<T>(object key) where T : class, IElement, new()
+//        {
+//            return await _repo.LoadAsync<T>(key);
+//        }
 
-        public static async Task DeleteAsync<T>(T instance) where T : class, IElement 
-        {
-            await _repo.DeleteAsync<T>(instance);
-        }
+//        public static async Task<object> SaveAsync<T>(T instance) where T : class, IElement, new() 
+//        {
+//            return await _repo.SaveAsync<T>(instance);
+//        }
 
-        public static Lazy<T> Query<T, TKey>() where T : class, IElement, new()
-        {
-            return (from tableKey in _repo.Query<T, TKey>() select tableKey.LazyValue).FirstOrDefault();
-        }
-    }
-}
+//        public static async Task DeleteAsync<T>(T instance) where T : class, IElement 
+//        {
+//            await _repo.DeleteAsync<T>(instance);
+//        }
 
-namespace Blink.Data.Domain.Model 
-{
-    using Blink.Data.Access;
+//        public static Lazy<T> Query<T, TKey>() where T : class, IElement, new()
+//        {
+//            return (from tableKey in _repo.Query<T, TKey>() select tableKey.LazyValue).FirstOrDefault();
+//        }
+//    }
+//}
 
-    public static class RootExtensions 
-    {
-        public static async Task<object> SaveAsync(this RootElement instance) 
-        {
-            //var d = instance.Data;
-            return await Repository.SaveAsync<RootElement>(instance);
-        }
+//namespace Blink.Data.Domain.Model 
+//{
+//    using Blink.Data.Access;
 
-        public static async Task LoadAsync(this RootElement instance)
-        {
-            //var d = instance.Data;
-            var a = await Repository.LoadAsync<RootElement>(RootElement.RootId);
-            instance = a;
-        }
+//    public static class RootExtensions 
+//    {
+//        public static async Task<object> SaveAsync(this RootElement instance) 
+//        {
+//            //var d = instance.Data;
+//            return await Repository.SaveAsync<RootElement>(instance);
+//        }
 
-        public static async Task DeleteAsync(this RootElement instance)
-        {
-            await Repository.DeleteAsync<RootElement>(instance);
-        }
+//        public static async Task LoadAsync(this RootElement instance)
+//        {
+//            //var d = instance.Data;
+//            var a = await Repository.LoadAsync<RootElement>(RootElement.RootId);
+//            instance = a;
+//        }
 
-        public static Lazy<RootElement> Query(this RootElement instance)
-        {
-            return Repository.Query<RootElement, bool>();
-        }
-    }
-}
+//        public static async Task DeleteAsync(this RootElement instance)
+//        {
+//            await Repository.DeleteAsync<RootElement>(instance);
+//        }
+
+//        public static Lazy<RootElement> Query(this RootElement instance)
+//        {
+//            return Repository.Query<RootElement, bool>();
+//        }
+//    }
+//}
+
+#endregion

@@ -5,201 +5,205 @@ using Wintellect.Sterling.Core.Serialization;
 
 namespace Blink.Data.Domain.Infrastructure
 {
-    #region Timestamping
+    #region Older
 
-    public struct Timestamp
-    {
-        public Guid Id { get; set; }
-        public DateTime Created { get; set; }
-        public DateTime Modified { get; set; }
-        public DateTime Accessed { get; set; }
-    }
+    //#region Timestamping
 
-    #endregion
+    //public struct Timestamp
+    //{
+    //    public Guid Id { get; set; }
+    //    public DateTime Created { get; set; }
+    //    public DateTime Modified { get; set; }
+    //    public DateTime Accessed { get; set; }
+    //}
 
-    #region Progressing
+    //#endregion
 
-    public enum ProgressTypes : int
-    {
-        Manual,
-        DateTime,
-        Location,
-        Internal
-    }
+    //#region Progressing
 
-    public interface IProgress
-    {
-        Guid Id { get; set; }
+    //public enum ProgressTypes : int
+    //{
+    //    Manual,
+    //    DateTime,
+    //    Location,
+    //    Internal
+    //}
 
-        ProgressTypes ProgressType { get; }
+    //public interface IProgress
+    //{
+    //    Guid Id { get; set; }
 
-        int Percentage { get; }
+    //    ProgressTypes ProgressType { get; }
 
-        bool IsCompleted();
-    }
+    //    int Percentage { get; }
 
-    public abstract class ProgressBase : IProgress
-    {
-        #region IProgress Members
+    //    bool IsCompleted();
+    //}
 
-        public Guid Id { get; set; }
+    //public abstract class ProgressBase : IProgress
+    //{
+    //    #region IProgress Members
 
-        public abstract ProgressTypes ProgressType { get; }
+    //    public Guid Id { get; set; }
 
-        public virtual int Percentage
-        {
-            get
-            {
-                return IsCompleted() ? 100 : 0;
-            }
-        }
+    //    public abstract ProgressTypes ProgressType { get; }
 
-        public abstract bool IsCompleted();
+    //    public virtual int Percentage
+    //    {
+    //        get
+    //        {
+    //            return IsCompleted() ? 100 : 0;
+    //        }
+    //    }
 
-        #endregion
-    }
+    //    public abstract bool IsCompleted();
 
-    [SterlingIgnore]
-    public class InternalProgress<T> : IProgress
-    {
-        #region Private Members
+    //    #endregion
+    //}
 
-        private IList<IProgress> _values = null;
+    //[SterlingIgnore]
+    //public class InternalProgress<T> : IProgress
+    //{
+    //    #region Private Members
 
-        private bool _HasValues
-        {
-            get { return ((_values != null) && (_values.Count > 0)); }
-        }
+    //    private IList<IProgress> _values = null;
 
-        private int _Total { get { return _HasValues ? _values.Count : 0; } }
+    //    private bool _HasValues
+    //    {
+    //        get { return ((_values != null) && (_values.Count > 0)); }
+    //    }
 
-        private int _Completed
-        {
-            get
-            {
-                return (this._Total > 0)
-                        ? _values.Count(p => p != null && p.IsCompleted())
-                        : 0;
-            }
-        }
+    //    private int _Total { get { return _HasValues ? _values.Count : 0; } }
 
-        #endregion
+    //    private int _Completed
+    //    {
+    //        get
+    //        {
+    //            return (this._Total > 0)
+    //                    ? _values.Count(p => p != null && p.IsCompleted())
+    //                    : 0;
+    //        }
+    //    }
 
-        public InternalProgress() { this.Id = Guid.Empty; }
+    //    #endregion
 
-        public InternalProgress(IEnumerable<IProgress> values) : this()
-        {
-            _values = values != null ? values.ToList() : null;
-        }
+    //    public InternalProgress() { this.Id = Guid.Empty; }
 
-        #region IProgress Members
+    //    public InternalProgress(IEnumerable<IProgress> values) : this()
+    //    {
+    //        _values = values != null ? values.ToList() : null;
+    //    }
 
-        public Guid Id { get; set; }
+    //    #region IProgress Members
 
-        public ProgressTypes ProgressType
-        {
-            get { return ProgressTypes.Internal; }
-        }
+    //    public Guid Id { get; set; }
 
-        public int Percentage
-        {
-            get
-            {
-                var completed = this._Completed;
+    //    public ProgressTypes ProgressType
+    //    {
+    //        get { return ProgressTypes.Internal; }
+    //    }
 
-                return (completed > 0)
-                        ? (int)Math.Round((double)(100 * completed) / _Total)
-                        : 0;
-            }
-        }
+    //    public int Percentage
+    //    {
+    //        get
+    //        {
+    //            var completed = this._Completed;
 
-        public bool IsCompleted()
-        {
-            return _HasValues && (_Completed == _Total);
-        }
+    //            return (completed > 0)
+    //                    ? (int)Math.Round((double)(100 * completed) / _Total)
+    //                    : 0;
+    //        }
+    //    }
 
-        #endregion
-    }
+    //    public bool IsCompleted()
+    //    {
+    //        return _HasValues && (_Completed == _Total);
+    //    }
 
-    public class ManualProgress : ProgressBase
-    {
-        #region Public Members
+    //    #endregion
+    //}
 
-        public bool Completed { get; set; }
+    //public class ManualProgress : ProgressBase
+    //{
+    //    #region Public Members
 
-        #endregion
+    //    public bool Completed { get; set; }
 
-        #region IProgress Members
+    //    #endregion
 
-        public override ProgressTypes ProgressType
-        {
-            get { return ProgressTypes.Manual; }
-        }
+    //    #region IProgress Members
 
-        public override bool IsCompleted()
-        {
-            return Completed;
-        }
+    //    public override ProgressTypes ProgressType
+    //    {
+    //        get { return ProgressTypes.Manual; }
+    //    }
 
-        #endregion
-    }
+    //    public override bool IsCompleted()
+    //    {
+    //        return Completed;
+    //    }
 
-    public class DateTimeProgress : ProgressBase
-    {
-        #region Public Members
+    //    #endregion
+    //}
 
-        public DateTime Completion { get; set; }
+    //public class DateTimeProgress : ProgressBase
+    //{
+    //    #region Public Members
 
-        #endregion
+    //    public DateTime Completion { get; set; }
 
-        #region IProgress Members
+    //    #endregion
 
-        public override ProgressTypes ProgressType
-        {
-            get { return ProgressTypes.DateTime; }
-        }
+    //    #region IProgress Members
 
-        public override bool IsCompleted()
-        {
-            return Completion.ToUniversalTime().Equals(DateTime.UtcNow);
-        }
+    //    public override ProgressTypes ProgressType
+    //    {
+    //        get { return ProgressTypes.DateTime; }
+    //    }
 
-        #endregion
-    }
-    public class LocationProgress : ProgressBase
-    {
-        #region Public Members
+    //    public override bool IsCompleted()
+    //    {
+    //        return Completion.ToUniversalTime().Equals(DateTime.UtcNow);
+    //    }
 
-        public Tuple<double, double> Current { get; set; }
-        public Tuple<double, double> Destination { get; set; }
+    //    #endregion
+    //}
+    //public class LocationProgress : ProgressBase
+    //{
+    //    #region Public Members
 
-        #endregion
+    //    public Tuple<double, double> Current { get; set; }
+    //    public Tuple<double, double> Destination { get; set; }
 
-        #region IProgress Members
+    //    #endregion
 
-        public override ProgressTypes ProgressType
-        {
-            get { return ProgressTypes.Location; }
-        }
+    //    #region IProgress Members
 
-        public override bool IsCompleted()
-        {
-            return Current.Equals(Destination);
-        }
+    //    public override ProgressTypes ProgressType
+    //    {
+    //        get { return ProgressTypes.Location; }
+    //    }
 
-        #endregion
-    }
+    //    public override bool IsCompleted()
+    //    {
+    //        return Current.Equals(Destination);
+    //    }
 
-    #endregion
+    //    #endregion
+    //}
 
-    #region Scheduling
+    //#endregion
 
-    public interface ISchedule
-    {
-        Guid Id { get; set; }
-        Guid ParentId { get; set; }
-        DateTime Value { get; set; }
-    }
+    //#region Scheduling
+
+    //public interface ISchedule
+    //{
+    //    Guid Id { get; set; }
+    //    Guid ParentId { get; set; }
+    //    DateTime Value { get; set; }
+    //}
+
+    //#endregion
 
     #endregion
 }

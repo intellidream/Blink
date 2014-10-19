@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
-using Blink.Data.Domain.Model;
+//using Blink.Data.Domain.Model;
 using Blink.Data.Engine; // will use access.repos here instead
 using Blink.Shared.Engine.SkyDrive;
 using Microsoft.Live;
@@ -10,8 +10,8 @@ using SkyNet.Client;
 using SkyNet.Model;
 using Wintellect.Sterling.Core.Database;
 using Wintellect.Sterling.Core;
-using Blink.Data.Domain.Infrastructure;
-using Blink.Data.Access;
+//using Blink.Data.Domain.Infrastructure;
+//using Blink.Data.Access;
 
 namespace Blink.Classic
 {
@@ -22,132 +22,134 @@ namespace Blink.Classic
             InitializeComponent();
         }
 
-        Guid _folderElementId;
+        #region Older
+
+        //Guid _folderElementId;
 
         private async void button1_Click(object sender, EventArgs e)
         {
-            var folderElement = new FolderElement();
-            folderElement.Name = "My New Folder";
-            _folderElementId = Guid.NewGuid();
-            folderElement.Id = _folderElementId;
-            folderElement.ParentId = Guid.Empty;
+            //var folderElement = new FolderElement();
+            //folderElement.Name = "My New Folder";
+            //_folderElementId = Guid.NewGuid();
+            //folderElement.Id = _folderElementId;
+            //folderElement.ParentId = Guid.Empty;
 
-            var subFolderElement = new FolderElement();
-            subFolderElement.Name = "My New SubFolder";
-            subFolderElement.Id = Guid.NewGuid();
-            subFolderElement.ParentId = Guid.Empty;
+            //var subFolderElement = new FolderElement();
+            //subFolderElement.Name = "My New SubFolder";
+            //subFolderElement.Id = Guid.NewGuid();
+            //subFolderElement.ParentId = Guid.Empty;
 
-            var pageElement = new PageElement();
-            pageElement.Id = Guid.NewGuid();
+            //var pageElement = new PageElement();
+            //pageElement.Id = Guid.NewGuid();
 
-            var noteElement = new NoteElement();
-            noteElement.Id = Guid.NewGuid();
-            noteElement.Name = "My New Note";
+            //var noteElement = new NoteElement();
+            //noteElement.Id = Guid.NewGuid();
+            //noteElement.Name = "My New Note";
 
-            var noteElementTwo = new NoteElement();
-            noteElementTwo.Id = Guid.NewGuid();
-            noteElementTwo.Name = "My New Note Two";
+            //var noteElementTwo = new NoteElement();
+            //noteElementTwo.Id = Guid.NewGuid();
+            //noteElementTwo.Name = "My New Note Two";
 
-            var groupElement = new GroupElement();
-            groupElement.Name = "My New Group";
-            groupElement.Id = Guid.NewGuid();
+            //var groupElement = new GroupElement();
+            //groupElement.Name = "My New Group";
+            //groupElement.Id = Guid.NewGuid();
 
-            var mp1 = new ManualProgress();
-            mp1.Id = Guid.NewGuid();
-            mp1.Completed = true;
-            var textElement = new TextElement();
-            textElement.Id = Guid.NewGuid();
-            textElement.Text = "Nico";
-            textElement.Progress = mp1;
+            //var mp1 = new ManualProgress();
+            //mp1.Id = Guid.NewGuid();
+            //mp1.Completed = true;
+            //var textElement = new TextElement();
+            //textElement.Id = Guid.NewGuid();
+            //textElement.Text = "Nico";
+            //textElement.Progress = mp1;
 
-            var mp3 = new ManualProgress();
-            mp3.Id = Guid.NewGuid();
-            mp3.Completed = false;
-            var textElementTwo = new TextElement();
-            textElementTwo.Id = Guid.NewGuid();
-            textElementTwo.Progress = mp3;
+            //var mp3 = new ManualProgress();
+            //mp3.Id = Guid.NewGuid();
+            //mp3.Completed = false;
+            //var textElementTwo = new TextElement();
+            //textElementTwo.Id = Guid.NewGuid();
+            //textElementTwo.Progress = mp3;
 
-            var mp2 = new ManualProgress();
-            mp2.Id = Guid.NewGuid();
-            mp2.Completed = true;
-            var fileElement = new FileElement();
-            fileElement.Id = Guid.NewGuid();
-            fileElement.FileData = System.Text.Encoding.ASCII.GetBytes("Mihai");
-            fileElement.FilePath = "C:\\Text.txt";
-            fileElement.FileType = FileTypes.Other;
-            fileElement.Progress = mp2;
+            //var mp2 = new ManualProgress();
+            //mp2.Id = Guid.NewGuid();
+            //mp2.Completed = true;
+            //var fileElement = new FileElement();
+            //fileElement.Id = Guid.NewGuid();
+            //fileElement.FileData = System.Text.Encoding.ASCII.GetBytes("Mihai");
+            //fileElement.FilePath = "C:\\Text.txt";
+            //fileElement.FileType = FileTypes.Other;
+            //fileElement.Progress = mp2;
 
-            groupElement.Add(fileElement);
-            groupElement.Add(textElement);
+            //groupElement.Add(fileElement);
+            //groupElement.Add(textElement);
 
-            noteElement.Add(textElementTwo);
-            noteElement.Add(groupElement);
+            //noteElement.Add(textElementTwo);
+            //noteElement.Add(groupElement);
 
-            pageElement.Add(noteElement);
+            //pageElement.Add(noteElement);
 
-            var pep = pageElement.Progress;
+            //var pep = pageElement.Progress;
 
-            noteElementTwo.Add(textElementTwo);
+            //noteElementTwo.Add(textElementTwo);
 
-            subFolderElement.Values.Add(pageElement);
-            subFolderElement.Values.Add(noteElementTwo);
+            //subFolderElement.Values.Add(pageElement);
+            //subFolderElement.Values.Add(noteElementTwo);
 
-            folderElement.Values.Add(pageElement);
-            folderElement.Values.Add(noteElementTwo);
+            //folderElement.Values.Add(pageElement);
+            //folderElement.Values.Add(noteElementTwo);
             
-            folderElement.Add(subFolderElement);
+            //folderElement.Add(subFolderElement);
 
-            var treeElement = new TreeElement();
-            treeElement.Id = Guid.NewGuid();
-            treeElement.Values.Add(fileElement);
+            //var treeElement = new TreeElement();
+            //treeElement.Id = Guid.NewGuid();
+            //treeElement.Values.Add(fileElement);
 
-            var treeElementTwo = new TreeElement();
-            treeElementTwo.Id = Guid.NewGuid();
-            treeElement.Add(treeElementTwo);
+            //var treeElementTwo = new TreeElement();
+            //treeElementTwo.Id = Guid.NewGuid();
+            //treeElement.Add(treeElementTwo);
 
-            AddManyFolders(folderElement, 10000);
+            //AddManyFolders(folderElement, 10000);
 
-            Repository.Root.Add(folderElement);
+            //Repository.Root.Add(folderElement);
 
-            var result = await Repository.Root.SaveAsync();
+            //var result = await Repository.Root.SaveAsync();
         }
 
-        private void AddManyFolders(FolderElement rootFolder, int howMany) 
-        {
-            for (int i = 0; i < howMany; i++)
-            {
-                rootFolder.Add(new FolderElement
-                {
-                    Id = Guid.NewGuid(),
-                    Name = i.ToString()
-                });
-            }
-        }
+        //private void AddManyFolders(FolderElement rootFolder, int howMany) 
+        //{
+        //    for (int i = 0; i < howMany; i++)
+        //    {
+        //        rootFolder.Add(new FolderElement
+        //        {
+        //            Id = Guid.NewGuid(),
+        //            Name = i.ToString()
+        //        });
+        //    }
+        //}
 
         private async void button2_Click(object sender, EventArgs e)
         {
-            await Repository.Root.LoadAsync();
+            //await Repository.Root.LoadAsync();
 
             //PresentRoot();
         }
 
-        private void PresentRoot()
-        {
-            Repository.Root
-                .ToList()
-                .ForEach(folder => PresentRootable(folder as FolderElement, treeView1.Nodes));
-        }
+        //private void PresentRoot()
+        //{
+        //    Repository.Root
+        //        .ToList()
+        //        .ForEach(folder => PresentRootable(folder as FolderElement, treeView1.Nodes));
+        //}
 
-        private void PresentRootable(FolderElement folder, TreeNodeCollection nodes) 
-        {
-            var node = new TreeNode(folder.Name);
-            nodes.Add(node);
+        //private void PresentRootable(FolderElement folder, TreeNodeCollection nodes) 
+        //{
+        //    var node = new TreeNode(folder.Name);
+        //    nodes.Add(node);
 
-            foreach (FolderElement value in folder)
-            {
-                PresentRootable(value, node.Nodes);
-            }
-        }
+        //    foreach (FolderElement value in folder)
+        //    {
+        //        PresentRootable(value, node.Nodes);
+        //    }
+        //}
 
         // simplify root into only keeping id's of root folders, and see the rest
 
@@ -261,6 +263,8 @@ namespace Blink.Classic
             //{
             //}
         }
+        #endregion
+
         #endregion
     }
 }
