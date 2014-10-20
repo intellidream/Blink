@@ -982,9 +982,14 @@ namespace Blink.Data.Domain.Model
         File
     }
 
-    public class Concrete : Element
+    public interface IConcrete : IElement
     {
-        public ConcreteTypes ConcreteType { get; }
+    }
+
+    public class Concrete : Element, IConcrete
+    {
+        //Guid Id { get; set; }
+        ConcreteTypes ConcreteType { get; }
         public bool Progress { get; set; }
     }
 
