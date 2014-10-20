@@ -266,5 +266,7 @@ namespace Blink.Classic
         #endregion
 
         #endregion
+
+        // create db in another location on desktop (for testing mainly)
     }
 }
