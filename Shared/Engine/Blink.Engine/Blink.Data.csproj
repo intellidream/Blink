@@ -50,6 +50,9 @@
     <Reference Include="SkyNet">
       <HintPath>..\..\..\..\SkyNet\SkyNet\bin\Debug\SkyNet.dll</HintPath>
     </Reference>
+    <Reference Include="SQLitePCL">
+      <HintPath>..\..\..\packages\SQLitePCL.3.8.5.1\lib\portable-net45+sl50+win+wpa81+wp80+MonoAndroid10+MonoTouch10\SQLitePCL.dll</HintPath>
+    </Reference>
     <Reference Include="Wintellect.Sterling.Core">
       <HintPath>..\..\..\..\SterlingDB\Wintellect.Sterling.Core\bin\Debug\Wintellect.Sterling.Core.dll</HintPath>
     </Reference>
@@ -60,6 +63,7 @@
   <ItemGroup>
     <None Include="Domain\Infrastructure.cd" />
     <None Include="Domain\Model.cd" />
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using Blink.Data.Domain.Infrastructure;
+using SQLitePCL;
 
 namespace Blink.Data.Domain.Model
 {
@@ -991,6 +992,11 @@ namespace Blink.Data.Domain.Model
         //Guid Id { get; set; }
         ConcreteTypes ConcreteType { get; }
         public bool Progress { get; set; }
+
+        public void mmm() 
+        {
+            var sql = new SQLiteConnection()
+        }
     }
 
     public class TextEntity : Concrete
