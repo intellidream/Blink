@@ -995,7 +995,7 @@ namespace Blink.Data.Domain.Model
 
         public void mmm() 
         {
-            var sql = new SQLiteConnection()
+            //var sql = new SQLiteConnection()
         }
     }
 
