@@ -38,6 +38,7 @@
     <Compile Include="Domain\Model.cs" />
     <Compile Include="Access\Repository.cs" />
     <Compile Include="Domain\Infrastructure.cs" />
+    <Compile Include="Engine\Massive.Sqlite.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Engine\SkyDrive\AsyncLock.cs" />
     <Compile Include="Engine\SkyDrive\SkyDriveHelper.cs" />

@@ -892,115 +892,115 @@ namespace Blink.Data.Domain.Model
 
     #endregion
 
-    //public interface IAggregate 
-    //{
-    //    bool IsDirty { get; set; }
-    //}
+    public interface IAggregate 
+    {
+        bool IsDirty { get; set; }
+    }
 
-    //public enum ElementTypes 
-    //{
-    //    Concrete,
-    //    Container,
-    //    Note,
-    //    Folder
-    //}
+    public enum ElementTypes 
+    {
+        Concrete,
+        Container,
+        Note,
+        Folder
+    }
 
-    //public interface IElement
-    //{
-    //    Guid Id { get; set; }
-    //    Guid ParentId { get; set; }
-    //    ElementTypes ElementType { get; }
-    //    DateTime Timestamp { get; set; }
-    //    int Position { get; set; }
-    //}
+    public interface IElement
+    {
+        Guid Id { get; set; }
+        Guid ParentId { get; set; }
+        ElementTypes ElementType { get; }
+        DateTime Timestamp { get; set; }
+        int Position { get; set; }
+    }
 
-    //public class Element : IElement
-    //{
+    public class Element : IElement
+    {
 
-    //    #region IElement Members
+        #region IElement Members
 
-    //    public Guid Id
-    //    {
-    //        get
-    //        {
-    //            throw new NotImplementedException();
-    //        }
-    //        set
-    //        {
-    //            throw new NotImplementedException();
-    //        }
-    //    }
+        public Guid Id
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
 
-    //    public Guid ParentId
-    //    {
-    //        get
-    //        {
-    //            throw new NotImplementedException();
-    //        }
-    //        set
-    //        {
-    //            throw new NotImplementedException();
-    //        }
-    //    }
+        public Guid ParentId
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
 
-    //    public ElementTypes ElementType
-    //    {
-    //        get { throw new NotImplementedException(); }
-    //    }
+        public ElementTypes ElementType
+        {
+            get { throw new NotImplementedException(); }
+        }
 
-    //    public DateTime Timestamp
-    //    {
-    //        get
-    //        {
-    //            throw new NotImplementedException();
-    //        }
-    //        set
-    //        {
-    //            throw new NotImplementedException();
-    //        }
-    //    }
+        public DateTime Timestamp
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
 
-    //    public int Position
-    //    {
-    //        get
-    //        {
-    //            throw new NotImplementedException();
-    //        }
-    //        set
-    //        {
-    //            throw new NotImplementedException();
-    //        }
-    //    }
+        public int Position
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
 
-    //    #endregion
-    //}
+        #endregion
+    }
 
-    //public enum ConcreteTypes 
-    //{
-    //    Text,
-    //    Twit,
-    //    Byte,
-    //    File
-    //}
+    public enum ConcreteTypes 
+    {
+        Text,
+        Twit,
+        Byte,
+        File
+    }
 
-    //public interface IConcrete : IElement
-    //{
-    //}
+    public interface IConcrete : IElement
+    {
+    }
 
-    //public class Concrete : Element, IConcrete
-    //{
-    //    //Guid Id { get; set; }
-    //    ConcreteTypes ConcreteType { get; }
-    //    public bool Progress { get; set; }
+    public class Concrete : Element, IConcrete
+    {
+        //Guid Id { get; set; }
+        ConcreteTypes ConcreteType { get; }
+        public bool Progress { get; set; }
 
-    //    public void mmm() 
-    //    {
-    //        var sql = new SQLiteConnection()
-    //    }
-    //}
+        public void mmm() 
+        {
+            //var sql = new SQLiteConnection()
+        }
+    }
 
-    //public class TextEntity : Concrete
-    //{
-    //    public string Value { get; set; }
-    //}
+    public class TextEntity : Concrete
+    {
+        public string Value { get; set; }
+    }
 }
