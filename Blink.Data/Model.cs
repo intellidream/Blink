@@ -81,6 +81,8 @@ namespace Blink.Data
 
     //where is elementtype, in base or note/list etc?!
 
+    // check-out composite pattern for folder/note/content...
+
     public class NoteIdentity
     {
         public Guid Id { get; set; }
