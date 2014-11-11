@@ -6,10 +6,37 @@ using System.Threading.Tasks;
 
 namespace Blink.Data
 {
-    public enum ElementTypes
+    //public enum ElementTypes 
+    //{
+    //    Valuable,
+    //    Concrete
+    //}
+
+    public enum ValuableTypes 
     {
+        List,
+        Group,
+        Note,
+        Page,
         Folder,
-        Content
+        Root
+    }
+
+    public enum ConcreteTypes 
+    {
+        Text,
+        File,
+        Tweet,
+        Drawing
+    }
+
+
+    // TreeTypes - NodeTypes & LeafTypes
+
+    public enum ElementTypes // Tree (Element)
+    {
+        Folder, // Node (Valuable)
+        Content // Leaf (Concrete)
     }
 
     public class ElementBase
