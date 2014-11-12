@@ -112,6 +112,10 @@ namespace Blink.Data
 
     // Large file storage/Share VIA Blink from other Apps (fwd. ex.: Twitter)/Support both Sterling (see Azure Tables/Blobs but also OneDrive via 365 API) and PCLSQLite with new Model.
 
+    // Summit: Polyglot persistence - iQuark GitHub - NoSQL Distilled (Fowler)
+
+    // Summit: VSIX office 365 api -> VS -> Add connected service (see PCL version via nuget)
+
     public class NoteIdentity
     {
         public Guid Id { get; set; }
