@@ -106,9 +106,11 @@ namespace Blink.Data
         public string Name { get; set; }
     }
 
-    //where is elementtype, in base or note/list etc?!
+    // where is elementtype, in base or note/list etc?!
 
     // check-out composite pattern for folder/note/content...
+
+    // Large file storage/Share VIA Blink from other Apps (fwd. ex.: Twitter)/Support both Sterling (see Azure Tables/Blobs but also OneDrive via 365 API) and PCLSQLite with new Model.
 
     public class NoteIdentity
     {
