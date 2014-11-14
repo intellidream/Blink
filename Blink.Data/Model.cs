@@ -116,15 +116,9 @@ namespace Blink.Data
 
     // Summit: VSIX office 365 api -> VS -> Add connected service (see PCL version via nuget)
 
-    
-    
-    // Buy new big SSD and install windows 10 and VS 2015 and test VS 13/15 Community in VM.
+    // Summit: .Net as a .nuget package - watch Connect keynote.
 
-    // Vodafone new Lumia and contract upgrade to 4G in Feb. 2015.
-
-    // .Net as a .nuget package - watch Connect keynote.
-
-    // Genisoft MiniEF for SQLite Xamarin-based with sync (Genisoft GitHub).
+    // Summit: Genisoft MiniEF for SQLite Xamarin-based with sync (Genisoft GitHub).
 
     public class NoteIdentity
     {
