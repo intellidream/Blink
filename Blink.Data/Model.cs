@@ -6,15 +6,17 @@ using System.Threading.Tasks;
 
 namespace Blink.Data
 {
-    //public enum ElementTypes 
-    //{
-    //    Valuable,
-    //    Concrete
-    //}
+    public enum ElementTypes
+    {
+        Composite,
+        Material
+    }
 
-    public enum ValuableTypes 
+    public enum CompositeTypes 
     {
         List,
+        Tree,
+        Table,
         Group,
         Note,
         Page,
@@ -22,89 +24,98 @@ namespace Blink.Data
         Root
     }
 
-    public enum ConcreteTypes 
+    public enum MaterialTypes 
     {
         Text,
+        Link,
+        Byte,
         File,
-        Tweet,
-        Drawing
+        Drawing,
+        Social,
+        Media
     }
 
-
-    // TreeTypes - NodeTypes & LeafTypes
-
-    public enum ElementTypes // Tree (Element)
-    {
-        Folder, // Node (Valuable)
-        Content // Leaf (Concrete)
-    }
-
-    public class ElementBase
+    public abstract class Element
     {
         public Guid Id { get; set; }
         public Guid ParentId { get; set; }
+        public abstract ElementTypes ElementType { get; }
         public int Position { get; set; }
-        public ElementTypes Type { get; set; }
     }
 
-    public enum ContentTypes 
+    public class Composite : Element
     {
-        Text,
-        Tweet,
-        File,
-        Link,
-        Drawing
+        private List<Composite> _children = new List<Composite>();
+
+        public List<Composite> Children
+        {
+            get { return _children; }
+        }
+
+        public Element Value { get; set; }
+
+        public CompositeTypes CompositeType { get; set; }
+
+        public override ElementTypes ElementType
+        {
+            get { return ElementTypes.Composite; }
+        }
+
+        public Composite Add(Element child)
+        {
+            var entity = new Composite { Value = child };
+            _children.Add(entity);
+            return entity;
+        }
+
+        public void Remove(Guid id)
+        {
+            _children.RemoveAll(e => e.Id == id);
+        }
     }
 
-    public class ContentBase 
+    public class Material<T> : Element
     {
-        private ElementBase _Base { get; set; }
+        public T Value { get; set; }
 
-        public Guid Id { get { return _Base.Id; } set { _Base.Id = value; } }
-        public Guid ParentId { get { return _Base.ParentId; } set { _Base.ParentId = value; } }
-        public int Position { get { return _Base.Position; } set { _Base.Position = value; } }
-        public ElementTypes Type { get { return ElementTypes.Content; } }
+        public MaterialTypes MaterialType { get; private set; }
+
+        public override ElementTypes ElementType
+        {
+            get { return ElementTypes.Material; }
+        }
+
+        public Material(MaterialTypes type) { MaterialType = type; }
     }
 
-    public class TextContent
-    {
-        public ContentBase Base { get; set; }
-        public ContentTypes Type { get { return ContentTypes.Text; } }
-        public string Text { get; set; }
-    }
-    
-    public class FileContent
-    {
-        public ContentBase Base { get; set; }
-        public ContentTypes Type { get { return ContentTypes.File; } }
-        public string Name { get; set; }
-        public byte[] Data { get; set; }
-        public string Source { get; set; }
-        public string Extension { get; set; }
-    }
+    //public abstract class Material<T> : Element
+    //{
+    //    public abstract T Value { get; set; }
 
-    public struct Timestamp 
-    {
-        public DateTime Created { get; set; }
-        public DateTime Modified { get; set; }
-        public DateTime Synchronized { get; set; }
-    }
+    //    public abstract MaterialTypes MaterialType { get; }
+    //}
 
-    public class ListElement 
-    {
-        public ElementBase Base { get; set; }
+    //public class TextMaterial : Material<string>
+    //{
+    //    public override string Value { get; set; }
 
-    }
+    //    public override MaterialTypes MaterialType
+    //    {
+    //        get { return MaterialTypes.Text; }
+    //    }
+    //}
 
-    public class NoteElement
-    {
-        public ElementBase Base { get; set; }
-        public ElementTypes Type { get { return ElementTypes.Folder; } }
-        public Timestamp Timestamp { get; set; }
-        public List<ElementBase> Children { get; set; }
-        public List<ContentBase> Content { get; set; }
-        public string Name { get; set; }
-    }
+    //public class ByteMaterial : Material<byte[]>
+    //{
+    //    public override byte[] Value { get; set; }
+
+    //    public override MaterialTypes MaterialType
+    //    {
+    //        get { return MaterialTypes.Byte; }
+    //    }
+    //}
+
+    // timestamp and progress only on ome composites
 
     // where is elementtype, in base or note/list etc?!
 
@@ -119,17 +130,4 @@ namespace Blink.Data
     // Summit: .Net as a .nuget package - watch Connect keynote.
 
     // Summit: Genisoft MiniEF for SQLite Xamarin-based with sync (Genisoft GitHub).
-
-    public class NoteIdentity
-    {
-        public Guid Id { get; set; }
-        public Guid ParentId { get; set; }
-        //type
-    }
-
-    public class TextNote 
-    {
-        public NoteIdentity Identity { get; set; }
-        public string Text { get; set; }
-    }
 }
