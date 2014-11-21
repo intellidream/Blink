@@ -43,16 +43,16 @@ namespace Blink.Data
         public int Position { get; set; }
     }
 
-    public class Composite : Element
+    public class Composite<T> : Element where T : Element
     {
-        private List<Composite> _children = new List<Composite>();
+        private List<Composite<T>> _children = new List<Composite<T>>();
 
-        public List<Composite> Children
+        public List<Composite<T>> Children
         {
             get { return _children; }
         }
 
-        public Element Value { get; set; }
+        public T Value { get; set; }
 
         public CompositeTypes CompositeType { get; set; }
 
@@ -61,9 +61,9 @@ namespace Blink.Data
             get { return ElementTypes.Composite; }
         }
 
-        public Composite Add(Element child)
+        public Composite<T> Add(T child)
         {
-            var entity = new Composite { Value = child };
+            var entity = new Composite<T> { Value = child };
             _children.Add(entity);
             return entity;
         }
@@ -73,6 +73,8 @@ namespace Blink.Data
             _children.RemoveAll(e => e.Id == id);
         }
     }
+
+    public class Container { }
 
     public class Material<T> : Element
     {

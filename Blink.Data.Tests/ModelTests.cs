@@ -12,8 +12,8 @@ namespace Blink.Data.Tests
         [TestMethod]
         public void TestElements()
         {
-            var c00 = new Composite();
-            var c01 = new Composite();
+            var c00 = new Composite<Element>();
+            var c01 = new Composite<Element>();
             var s = new Material<string>(MaterialTypes.Text);
 
             c00.Add(c01);
