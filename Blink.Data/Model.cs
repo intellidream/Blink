@@ -4,27 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Blink.Data
+namespace Blink.Data.Model
 {
+    #region Enums
+
     public enum ElementTypes
-    {
-        Composite,
-        Material
-    }
-
-    public enum CompositeTypes 
-    {
-        List,
-        Tree,
-        Table,
-        Group,
-        Note,
-        Page,
-        Folder,
-        Root
-    }
-
-    public enum MaterialTypes 
     {
         Text,
         Link,
@@ -32,104 +16,112 @@ namespace Blink.Data
         File,
         Drawing,
         Social,
-        Media
+        Media,
+        List,
+        Table,
+        Group,
+        Note,
+        Page,
+        Tree,
+        Folder,
+        Root
     }
+
+    #endregion
+
+    #region Bases
 
     public abstract class Element
     {
         public Guid Id { get; set; }
-        public Guid ParentId { get; set; }
-        public abstract ElementTypes ElementType { get; }
+        public Guid? ParentId { get; set; }
         public int Position { get; set; }
+        public abstract ElementTypes Type { get; }
     }
 
-    public class Composite<T> : Element where T : Element
-    {
-        private List<Composite<T>> _children = new List<Composite<T>>();
-
-        public List<Composite<T>> Children
-        {
-            get { return _children; }
-        }
-
-        public T Value { get; set; }
-
-        public CompositeTypes CompositeType { get; set; }
-
-        public override ElementTypes ElementType
-        {
-            get { return ElementTypes.Composite; }
-        }
-
-        public Composite<T> Add(T child)
-        {
-            var entity = new Composite<T> { Value = child };
-            _children.Add(entity);
-            return entity;
-        }
-
-        public void Remove(Guid id)
-        {
-            _children.RemoveAll(e => e.Id == id);
-        }
-    }
-
-    public class Container { }
-
-    public class Material<T> : Element
+    public abstract class Material<T> : Element
     {
         public T Value { get; set; }
-
-        public MaterialTypes MaterialType { get; private set; }
-
-        public override ElementTypes ElementType
-        {
-            get { return ElementTypes.Material; }
-        }
-
-        public Material(MaterialTypes type) { MaterialType = type; }
     }
 
-    //public abstract class Material<T> : Element
-    //{
-    //    public abstract T Value { get; set; }
+    public abstract class Container<T> : Element where T : Element
+    {
+        public List<T> Values { get; set; }
 
-    //    public abstract MaterialTypes MaterialType { get; }
-    //}
+        public Container() 
+        {
+            Values = new List<T>(); 
+        }
+    }
 
-    //public class TextMaterial : Material<string>
-    //{
-    //    public override string Value { get; set; }
+    public abstract class Composite<T, U> : Element 
+        where T : Composite<T, U>
+        where U : Element
+    {
+        public string Name { get; set; }
 
-    //    public override MaterialTypes MaterialType
-    //    {
-    //        get { return MaterialTypes.Text; }
-    //    }
-    //}
+        public List<T> Children { get; set; }
 
-    //public class ByteMaterial : Material<byte[]>
-    //{
-    //    public override byte[] Value { get; set; }
+        public List<U> Values { get; set; }
 
-    //    public override MaterialTypes MaterialType
-    //    {
-    //        get { return MaterialTypes.Byte; }
-    //    }
-    //}
+        public Composite()
+        {
+            Children = new List<T>();
+            Values = new List<U>();
+        }
+    }
 
-    // timestamp and progress only on ome composites
+    #endregion
 
-    // where is elementtype, in base or note/list etc?!
+    #region Types
 
-    // check-out composite pattern for folder/note/content...
+    public class Text : Material<string>
+    {
+        public override ElementTypes Type
+        {
+            get { return ElementTypes.Text; }
+        }
+    }
 
-    // Large file storage/Share VIA Blink from other Apps (fwd. ex.: Twitter)/Support both Sterling (see Azure Tables/Blobs but also OneDrive via 365 API) and PCLSQLite with new Model.
+    public class List : Container<Element>
+    {
+        public override ElementTypes Type
+        {
+            get { return ElementTypes.List; }
+        }
+    }
 
-    // Summit: Polyglot persistence - iQuark GitHub - NoSQL Distilled (Fowler)
+    public class Tree : Composite<Tree, Element>
+    {
+        public override ElementTypes Type
+        {
+            get { return ElementTypes.Tree; }
+        }
+    }
 
-    // Summit: VSIX office 365 api -> VS -> Add connected service (see PCL version via nuget)
+    public class Note : Container<Element>
+    {
+        public override ElementTypes Type
+        {
+            get { return ElementTypes.Note; }
+        }
+    }
 
-    // Summit: .Net as a .nuget package - watch Connect keynote.
+    public class Folder : Composite<Folder, Note>
+    {
+        public override ElementTypes Type
+        {
+            get { return ElementTypes.Folder; }
+        }
+    }
 
-    // Summit: Genisoft MiniEF for SQLite Xamarin-based with sync (Genisoft GitHub).
+    public class Root : Composite<Folder, Note>
+    {
+        public override ElementTypes Type
+        {
+            get { return ElementTypes.Root; }
+        }
+    }
+
+    #endregion
 }

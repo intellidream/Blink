@@ -1,0 +1,15 @@
+timestamp and progress only on ome composites
+
+where is elementtype, in base or note/list etc?!
+
+check-out composite pattern for folder/note/content...
+
+Large file storage/Share VIA Blink from other Apps (fwd. ex.: Twitter)/Support both Sterling (see Azure Tables/Blobs but also OneDrive via 365 API) and PCLSQLite with new Model.
+
+Summit: Polyglot persistence - iQuark GitHub - NoSQL Distilled (Fowler)
+
+Summit: VSIX office 365 api -> VS -> Add connected service (see PCL version via nuget)
+
+Summit: .Net as a .nuget package - watch Connect keynote.
+
+Summit: Genisoft MiniEF for SQLite Xamarin-based with sync (Genisoft GitHub).

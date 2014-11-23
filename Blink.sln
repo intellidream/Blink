@@ -24,6 +24,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blink.Data", "Blink.Data\Bl
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blink.Data.Tests", "Blink.Data.Tests\Blink.Data.Tests.csproj", "{9714073E-2AB7-43C8-A7A8-44ADC39CEFBC}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{5026C128-5127-4F9D-B0B8-DC2EEA55A83D}"
+	ProjectSection(SolutionItems) = preProject
+		Blink.Notes.txt = Blink.Notes.txt
+		Blink.Tables.jpg = Blink.Tables.jpg
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		Blink.Apps\Blink.Apps.Shared\Blink.Apps.Shared.projitems*{06552203-e96b-4090-a612-6f5133d52f2f}*SharedItemsImports = 13
