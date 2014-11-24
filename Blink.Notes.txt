@@ -13,3 +13,7 @@ Summit: VSIX office 365 api -> VS -> Add connected service (see PCL version via 
 Summit: .Net as a .nuget package - watch Connect keynote.
 
 Summit: Genisoft MiniEF for SQLite Xamarin-based with sync (Genisoft GitHub).
+
+TODO: synchronization (akavache/sterling) - operation-type / object-to-sync / files-with-my-header-structure-aka-class
+
+TODO: encryption & compression (especially at sync)
