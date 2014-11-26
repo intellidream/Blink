@@ -23,25 +23,25 @@ namespace Blink.Data.Repos
         bool DeleteValue(Guid id);
     }
 
-    public class ElementRepository : IRepository<Element> 
-    {
-        #region IRepository<Element> Members
+    //public class ElementRepository : IRepository<Element> 
+    //{
+    //    #region IRepository<Element> Members
 
-        public async Task<Element> GetById(Guid id)
-        {
-            throw new NotImplementedException();
-        }
+    //    public async Task<Element> GetById(Guid id)
+    //    {
+    //        throw new NotImplementedException();
+    //    }
 
-        public async Task<bool> Save(Element element)
-        {
-            throw new NotImplementedException();
-        }
+    //    public async Task<bool> Save(Element element)
+    //    {
+    //        throw new NotImplementedException();
+    //    }
 
-        public async Task<bool> Delete(Guid id)
-        {
-            throw new NotImplementedException();
-        }
+    //    public async Task<bool> Delete(Guid id)
+    //    {
+    //        throw new NotImplementedException();
+    //    }
 
-        #endregion
-    }
+    //    #endregion
+    //}
 }
