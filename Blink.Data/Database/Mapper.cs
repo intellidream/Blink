@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Blink.Data
+namespace Blink.Data.Database
 {
-    public class DatabaseProvider
+    public class Mapper
     {
-
     }
 }

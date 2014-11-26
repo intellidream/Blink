@@ -10,7 +10,7 @@ using System.Collections.Specialized;
 //using System.Data;
 //using System.Data.Common;
 
-namespace Blink.Data
+namespace Blink.Data.Database
 {
     public static class ObjectExtensions
     {
