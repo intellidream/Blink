@@ -44,7 +44,8 @@ namespace Blink.Data.Model
         public T Value { get; set; }
     }
 
-    public abstract class Container<T> : Element where T : Element
+    public abstract class Container<T> : Element 
+        where T : Element
     {
         public List<T> Values { get; set; }
 

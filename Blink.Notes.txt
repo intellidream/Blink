@@ -17,3 +17,5 @@ Summit: Genisoft MiniEF for SQLite Xamarin-based with sync (Genisoft GitHub).
 TODO: synchronization (akavache/sterling) - operation-type / object-to-sync / files-with-my-header-structure-aka-class
 
 TODO: encryption & compression (especially at sync)
+
+HINT: model classes (model my types) >> dto classes (mapped from model ones - model my dtos and serialization) >> viewmodel classes (mapped from dto's - model my viewmodels and add stuff like inotifypropertychanged)
