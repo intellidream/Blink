@@ -6,8 +6,20 @@ using System.Threading.Tasks;
 
 namespace Blink.Data.Database
 {
-    public class Provider
+    public interface IProvider 
     {
+        void CreateDatabase(string databasePath);
+    }
 
+    public class Provider : IProvider
+    {
+        #region IProvider Members
+
+        public async void CreateDatabase(string databasePath)
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
     }
 }
