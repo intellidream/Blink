@@ -51,6 +51,8 @@ namespace Blink.Data.Contracts
         public VideoSummary Video { get; set; }
     }
 
+    //TextValue(summary&content)/TweetValue(summary@content) directly in NoteValue and not value summary and value content
+
     public class ValueContent { }
 
     public class TextSummary { public string SummaryText { get; set; } }
