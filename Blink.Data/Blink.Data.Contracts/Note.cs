@@ -27,43 +27,109 @@ namespace Blink.Data.Contracts
 
     public class NoteValue
     {
+        public Guid Id { get; set; }
+        public Guid NoteId { get; set; }
+
         public ValueTypes Type { get; set; }
 
-        public ValueSummary Summary { get; set; }
-        public ValueContent Content { get; set; }
+        public TextValue Text { get; set; }
+        public TweetValue Tweet { get; set; }
+        public MediaValue Media { get; set; }
     }
 
     public enum ValueTypes
     {
         Text = 0,
         Tweet = 1,
-        Image = 2,
-        Audio = 3,
-        Video = 4,
+        Media = 2,
     }
 
-    public class ValueSummary
+    public class TextValue 
     {
-        public TextSummary Text { get; set; }
-        public TweetSummary Tweet { get; set; }
-        public ImageSummary Image { get; set; }
-        public AudioSummary Audio { get; set; }
-        public VideoSummary Video { get; set; }
+        public Guid Id { get; set; }
+        public Guid ValueId { get; set; }
+
+        public TextSummary Summary { get; set; }
+        public TextContent Content { get; set; }
     }
 
-    //TextValue(summary&content)/TweetValue(summary@content) directly in NoteValue and not value summary and value content
+    public class TweetValue
+    {
+        public Guid Id { get; set; }
+        public Guid ValueId { get; set; }
 
-    public class ValueContent { }
+        public TweetSummary Summary { get; set; }
+        public TweetContent Content { get; set; }
+    }
 
-    public class TextSummary { public string SummaryText { get; set; } }
-    public class TweetSummary { }
-    public class ImageSummary { public string SummaryText { get; set; } public byte[] SummaryData { get; set; } }
-    public class AudioSummary { }
-    public class VideoSummary { }
+    public class MediaValue
+    {
+        public Guid Id { get; set; }
+        public Guid ValueId { get; set; }
 
-    public class TextContent { }
-    public class TweetContent { }
-    public class ImageContent { }
-    public class AudioContent { }
-    public class VideoContent { }
+        public MediaType Type { get; set; }
+        public MediaSummary Summary { get; set; }
+        public MediaContent Content { get; set; }
+    }
+
+    public class TextSummary 
+    {
+        public Guid Id { get; set; }
+        public Guid TextId { get; set; }
+
+        public string Text { get; set; } 
+    }
+    
+    public class TweetSummary
+    {
+        public Guid Id { get; set; }
+        public Guid TweetId { get; set; }
+
+        public string User { get; set; }
+        public string Text { get; set; } 
+    }
+
+    public enum MediaType
+    {
+        Other = 0,
+        Image = 1,
+        Audio = 2,
+        Video = 3,
+    }
+
+    public class MediaSummary 
+    {
+        public Guid Id { get; set; }
+        public Guid MediaId { get; set; }
+
+        public MediaType Type { get; set; }
+        public string Text { get; set; } 
+        public byte[] Data { get; set; }
+    }
+
+    public class TextContent 
+    {
+        public Guid Id { get; set; }
+        public Guid TextId { get; set; }
+
+        public string Text { get; set; } 
+    }
+
+    public class TweetContent 
+    {
+        public Guid Id { get; set; }
+        public Guid TweetId { get; set; }
+
+        public string User { get; set; }
+        public string Text { get; set; } 
+    }
+
+    public class MediaContent 
+    {
+        public Guid Id { get; set; }
+        public Guid MediaId { get; set; }
+
+        public MediaType Type { get; set; }
+        public byte[] Data { get; set; }
+    }
 }
