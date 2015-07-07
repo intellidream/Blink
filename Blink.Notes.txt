@@ -29,6 +29,8 @@ HINT: model classes (model my types) >> dto classes (mapped from model ones - mo
 - See OneNote's manual Sync command.
 
 
+- Store data locally in sqlite db and online in onedrive or azure mobile (via persistence drivers/providers).
+
 
 Disc Structure (Local or OneDrive):
 ===================================

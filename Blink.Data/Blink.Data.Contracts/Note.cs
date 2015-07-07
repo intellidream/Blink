@@ -128,6 +128,17 @@ namespace Blink.Data.Contracts
         public byte[] Data { get; set; }
     }
 
+    public class Summary
+    {
+        public Guid Id { get; set; }//?
+        public Guid ValueId { get; set; }//?
+
+        public MediaTypes Type { get; set; }//?
+
+        public string Text { get; set; }
+        public byte[] Data { get; set; }
+    }
+
     public class MediaContent 
     {
         public Guid Id { get; set; }
