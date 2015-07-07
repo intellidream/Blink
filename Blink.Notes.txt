@@ -27,3 +27,16 @@ HINT: model classes (model my types) >> dto classes (mapped from model ones - mo
 - DataAccess takes care of DB persistence or SkyDrive json-like files and folders persistence and synchronization 
   In SkyDrive, maybe compact note files somehow - at a certain size or count... and only store bigger files, like resources, separately.
 - See OneNote's manual Sync command.
+
+
+
+Disc Structure (Local or OneDrive):
+===================================
+
+-Dir[Folder(Id|Name(Disc)/Path(DB))]
+ (File[.folder{Name,ParentId,Path}])
+	-List<Dir[Note(Id)]>
+	 (File[.note{Title,FolderId}])
+		-List<Dir[NoteValue(Id)]>
+		 (File[.value{Type,Summary,NoteId}])
+		 (File[.content{json_serialized/archived/encrypted_content}])
