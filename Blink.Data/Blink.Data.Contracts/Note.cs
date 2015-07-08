@@ -46,8 +46,9 @@ namespace Blink.Data.Contracts
     public enum ContentTypes
     {
         Text = 0,
-        Tweet = 1,
-        Media = 2,
+        Link = 1,
+        Tweet = 2,
+        Media = 3,
     }
 
 
@@ -59,6 +60,7 @@ namespace Blink.Data.Contracts
         public ContentTypes Type { get; set; }
 
         public Text Text { get; set; }
+        public Link Link { get; set; }
         public Tweet Tweet { get; set; }
         public Media Media { get; set; }
     }
@@ -68,7 +70,16 @@ namespace Blink.Data.Contracts
         public Guid Id { get; set; }
         public Guid ContentId { get; set; }
 
-        public string Text { get; set; }
+        public string Value { get; set; }
+    }
+
+    public class Link
+    {
+        public Guid Id { get; set; }
+        public Guid ContentId { get; set; }
+
+        public string Name { get; set; }
+        public string Address { get; set; }
     }
 
     public class Tweet
