@@ -29,85 +29,58 @@ namespace Blink.Data.Contracts
         public List<NoteValue> Values { get; set; }
     }
 
+    public class Summary
+    {
+        public string Text { get; set; }
+        public byte[] Data { get; set; }
+    }
+
     public class NoteValue
     {
         public Guid Id { get; set; }
         public Guid NoteId { get; set; }
 
-        public ValueTypes Type { get; set; }
-
-        public TextValue Text { get; set; }
-        public TweetValue Tweet { get; set; }
-        public MediaValue Media { get; set; }
+        public Summary Summary { get; set; }
+        public Content Content { get; set; }
     }
-
-    public enum ValueTypes
+    public enum ContentTypes
     {
         Text = 0,
         Tweet = 1,
         Media = 2,
     }
 
-    public class TextValue 
+
+    public class Content 
     {
         public Guid Id { get; set; }
         public Guid ValueId { get; set; }
 
-        public TextSummary Summary { get; set; }
-        public TextContent Content { get; set; }
+        public ContentTypes Type { get; set; }
+
+        public Text Text { get; set; }
+        public Tweet Tweet { get; set; }
+        public Media Media { get; set; }
     }
 
-    public class TweetValue
+    public class Text
     {
         public Guid Id { get; set; }
-        public Guid ValueId { get; set; }
-
-        public TweetSummary Summary { get; set; }
-        public TweetContent Content { get; set; }
-    }
-
-    public class MediaValue
-    {
-        public Guid Id { get; set; }
-        public Guid ValueId { get; set; }
-
-        public MediaTypes Type { get; set; }
-        public MediaSummary Summary { get; set; }
-        public MediaContent Content { get; set; }
-    }
-
-    public class TextSummary 
-    {
-        public Guid Id { get; set; }
-        public Guid TextId { get; set; }
-
-        public string Text { get; set; } 
-    }
-
-    public class TextContent
-    {
-        public Guid Id { get; set; }
-        public Guid TextId { get; set; }
+        public Guid ContentId { get; set; }
 
         public string Text { get; set; }
     }
-    
-    public class TweetSummary
+
+    public class Tweet
     {
         public Guid Id { get; set; }
-        public Guid TweetId { get; set; }
+        public Guid ContentId { get; set; }
 
-        public string User { get; set; }
-        public string Text { get; set; } 
-    }
-
-    public class TweetContent
-    {
-        public Guid Id { get; set; }
-        public Guid TweetId { get; set; }
-
+        public string Name { get; set; }
         public string User { get; set; }
         public string Text { get; set; }
+        public string Time { get; set; }
+        public string Client { get; set; }
     }
 
     public enum MediaTypes
@@ -118,31 +91,10 @@ namespace Blink.Data.Contracts
         Video = 3,
     }
 
-    public class MediaSummary 
+    public class Media
     {
         public Guid Id { get; set; }
-        public Guid MediaId { get; set; }
-
-        public MediaTypes Type { get; set; }
-        public string Text { get; set; } 
-        public byte[] Data { get; set; }
-    }
-
-    public class Summary
-    {
-        public Guid Id { get; set; }//?
-        public Guid ValueId { get; set; }//?
-
-        public MediaTypes Type { get; set; }//?
-
-        public string Text { get; set; }
-        public byte[] Data { get; set; }
-    }
-
-    public class MediaContent 
-    {
-        public Guid Id { get; set; }
-        public Guid MediaId { get; set; }
+        public Guid ContentId { get; set; }
 
         public MediaTypes Type { get; set; }
         public byte[] Data { get; set; }
