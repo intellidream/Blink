@@ -18,7 +18,6 @@ namespace Blink.Data.Contracts
         public List<Note> Notes { get; set; }
     }
 
-
     public class Note
     {
         public Guid Id { get; set; }
