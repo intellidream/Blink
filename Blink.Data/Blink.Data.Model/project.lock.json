@@ -201,16 +201,6 @@
           "lib/dotnet/Microsoft.Win32.Primitives.dll": {}
         }
       },
-      "Parse/1.7.0": {
-        "compile": {
-          "lib/netcore45/Parse.dll": {},
-          "lib/netcore45/Parse.WinRT.dll": {}
-        },
-        "runtime": {
-          "lib/netcore45/Parse.dll": {},
-          "lib/netcore45/Parse.WinRT.dll": {}
-        }
-      },
       "System.AppContext/4.0.0": {
         "dependencies": {
           "System.Collections": "[4.0.0, )",
@@ -1787,16 +1777,6 @@
         },
         "runtime": {
           "lib/dotnet/Microsoft.Win32.Primitives.dll": {}
-        }
-      },
-      "Parse/1.7.0": {
-        "compile": {
-          "lib/netcore45/Parse.dll": {},
-          "lib/netcore45/Parse.WinRT.dll": {}
-        },
-        "runtime": {
-          "lib/netcore45/Parse.dll": {},
-          "lib/netcore45/Parse.WinRT.dll": {}
         }
       },
       "System.AppContext/4.0.0": {
@@ -3408,16 +3388,6 @@
         },
         "runtime": {
           "lib/dotnet/Microsoft.Win32.Primitives.dll": {}
-        }
-      },
-      "Parse/1.7.0": {
-        "compile": {
-          "lib/netcore45/Parse.dll": {},
-          "lib/netcore45/Parse.WinRT.dll": {}
-        },
-        "runtime": {
-          "lib/netcore45/Parse.dll": {},
-          "lib/netcore45/Parse.WinRT.dll": {}
         }
       },
       "System.AppContext/4.0.0": {
@@ -5036,16 +5006,6 @@
           "lib/dotnet/Microsoft.Win32.Primitives.dll": {}
         }
       },
-      "Parse/1.7.0": {
-        "compile": {
-          "lib/netcore45/Parse.dll": {},
-          "lib/netcore45/Parse.WinRT.dll": {}
-        },
-        "runtime": {
-          "lib/netcore45/Parse.dll": {},
-          "lib/netcore45/Parse.WinRT.dll": {}
-        }
-      },
       "System.AppContext/4.0.0": {
         "dependencies": {
           "System.Collections": "[4.0.0, )",
@@ -6655,16 +6615,6 @@
         },
         "runtime": {
           "lib/dotnet/Microsoft.Win32.Primitives.dll": {}
-        }
-      },
-      "Parse/1.7.0": {
-        "compile": {
-          "lib/netcore45/Parse.dll": {},
-          "lib/netcore45/Parse.WinRT.dll": {}
-        },
-        "runtime": {
-          "lib/netcore45/Parse.dll": {},
-          "lib/netcore45/Parse.WinRT.dll": {}
         }
       },
       "System.AppContext/4.0.0": {
@@ -8283,16 +8233,6 @@
           "lib/dotnet/Microsoft.Win32.Primitives.dll": {}
         }
       },
-      "Parse/1.7.0": {
-        "compile": {
-          "lib/netcore45/Parse.dll": {},
-          "lib/netcore45/Parse.WinRT.dll": {}
-        },
-        "runtime": {
-          "lib/netcore45/Parse.dll": {},
-          "lib/netcore45/Parse.WinRT.dll": {}
-        }
-      },
       "System.AppContext/4.0.0": {
         "dependencies": {
           "System.Collections": "[4.0.0, )",
@@ -9902,16 +9842,6 @@
         },
         "runtime": {
           "lib/dotnet/Microsoft.Win32.Primitives.dll": {}
-        }
-      },
-      "Parse/1.7.0": {
-        "compile": {
-          "lib/netcore45/Parse.dll": {},
-          "lib/netcore45/Parse.WinRT.dll": {}
-        },
-        "runtime": {
-          "lib/netcore45/Parse.dll": {},
-          "lib/netcore45/Parse.WinRT.dll": {}
         }
       },
       "System.AppContext/4.0.0": {
@@ -11936,38 +11866,6 @@
         "ref/net46/Microsoft.Win32.Primitives.dll",
         "ref/xamarinios10/_._",
         "ref/xamarinmac20/_._"
-      ]
-    },
-    "Parse/1.7.0": {
-      "sha512": "3LyEXZXXricjXfgxt1HsmUQK6u82bwNHf+PfV+dq+K6Fg6GZO4bb/khiD/CDLJaPNoZe06Ko+cwxyHrGoG98Ig==",
-      "type": "Package",
-      "files": [
-        "[Content_Types].xml",
-        "_rels/.rels",
-        "lib/MonoAndroid/Parse.Android.dll",
-        "lib/MonoAndroid/Parse.Android.xml",
-        "lib/MonoTouch10/Parse.iOS.dll",
-        "lib/MonoTouch10/Parse.iOS.xml",
-        "lib/net45/Parse.dll",
-        "lib/net45/Parse.NetFx45.dll",
-        "lib/net45/Parse.NetFx45.xml",
-        "lib/net45/Parse.xml",
-        "lib/netcore45/Parse.dll",
-        "lib/netcore45/Parse.WinRT.dll",
-        "lib/netcore45/Parse.WinRT.xml",
-        "lib/netcore45/Parse.xml",
-        "lib/wp8/Parse.dll",
-        "lib/wp8/Parse.Phone.dll",
-        "lib/wp8/Parse.Phone.xml",
-        "lib/wp8/Parse.xml",
-        "lib/wpa81/Parse.dll",
-        "lib/wpa81/Parse.WinRT.dll",
-        "lib/wpa81/Parse.WinRT.xml",
-        "lib/wpa81/Parse.xml",
-        "lib/Xamarin.iOS10/Parse.iOS.dll",
-        "lib/Xamarin.iOS10/Parse.iOS.xml",
-        "package/services/metadata/core-properties/42031c0d5a354ad19aa82010c3d6d71f.psmdcp",
-        "Parse.nuspec"
       ]
     },
     "System.AppContext/4.0.0": {
@@ -14668,8 +14566,7 @@
   },
   "projectFileDependencyGroups": {
     "": [
-      "Microsoft.NETCore.UniversalWindowsPlatform >= 5.0.0",
-      "Parse >= 1.7.0"
+      "Microsoft.NETCore.UniversalWindowsPlatform >= 5.0.0"
     ],
     "UAP,Version=v10.0": []
   }
