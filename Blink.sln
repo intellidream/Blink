@@ -10,9 +10,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{FB0D89
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Blink.Apps", "Blink.Apps", "{BCF35A0C-A6C0-4446-A344-F7F097A19FC2}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BlinkApps", "BlinkApps", "{BCF35A0C-A6C0-4446-A344-F7F097A19FC2}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Blink.Data", "Blink.Data", "{1F1FA127-D073-4DE3-B128-1623C058D2B0}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BlinkData", "BlinkData", "{1F1FA127-D073-4DE3-B128-1623C058D2B0}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{5026C128-5127-4F9D-B0B8-DC2EEA55A83D}"
 	ProjectSection(SolutionItems) = preProject
@@ -22,11 +22,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		Blink.Tables.jpg = Blink.Tables.jpg
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Blink.Host", "Blink.Host", "{A86A7466-99C2-414D-B9A0-69A03BE8BC3F}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BlinkHost", "BlinkHost", "{A86A7466-99C2-414D-B9A0-69A03BE8BC3F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blink.Data.Model", "Blink.Data\Blink.Data.Model\Blink.Data.Model.csproj", "{F33574D8-7489-42E1-8B2A-7B8D2A6036CE}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blink.Azure.Mobile", "Blink.Host\BlinkService\Blink.Azure.Mobile.csproj", "{209FA716-A7AD-4095-BD70-C8710FC66FA7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlinkAzure", "Blink.Host\BlinkService\BlinkAzure.csproj", "{209FA716-A7AD-4095-BD70-C8710FC66FA7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -40,22 +38,6 @@ Global
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{F33574D8-7489-42E1-8B2A-7B8D2A6036CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F33574D8-7489-42E1-8B2A-7B8D2A6036CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F33574D8-7489-42E1-8B2A-7B8D2A6036CE}.Debug|ARM.ActiveCfg = Debug|ARM
-		{F33574D8-7489-42E1-8B2A-7B8D2A6036CE}.Debug|ARM.Build.0 = Debug|ARM
-		{F33574D8-7489-42E1-8B2A-7B8D2A6036CE}.Debug|x64.ActiveCfg = Debug|x64
-		{F33574D8-7489-42E1-8B2A-7B8D2A6036CE}.Debug|x64.Build.0 = Debug|x64
-		{F33574D8-7489-42E1-8B2A-7B8D2A6036CE}.Debug|x86.ActiveCfg = Debug|x86
-		{F33574D8-7489-42E1-8B2A-7B8D2A6036CE}.Debug|x86.Build.0 = Debug|x86
-		{F33574D8-7489-42E1-8B2A-7B8D2A6036CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F33574D8-7489-42E1-8B2A-7B8D2A6036CE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F33574D8-7489-42E1-8B2A-7B8D2A6036CE}.Release|ARM.ActiveCfg = Release|ARM
-		{F33574D8-7489-42E1-8B2A-7B8D2A6036CE}.Release|ARM.Build.0 = Release|ARM
-		{F33574D8-7489-42E1-8B2A-7B8D2A6036CE}.Release|x64.ActiveCfg = Release|x64
-		{F33574D8-7489-42E1-8B2A-7B8D2A6036CE}.Release|x64.Build.0 = Release|x64
-		{F33574D8-7489-42E1-8B2A-7B8D2A6036CE}.Release|x86.ActiveCfg = Release|x86
-		{F33574D8-7489-42E1-8B2A-7B8D2A6036CE}.Release|x86.Build.0 = Release|x86
 		{209FA716-A7AD-4095-BD70-C8710FC66FA7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{209FA716-A7AD-4095-BD70-C8710FC66FA7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{209FA716-A7AD-4095-BD70-C8710FC66FA7}.Debug|ARM.ActiveCfg = Debug|Any CPU
@@ -77,7 +59,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{F33574D8-7489-42E1-8B2A-7B8D2A6036CE} = {1F1FA127-D073-4DE3-B128-1623C058D2B0}
 		{209FA716-A7AD-4095-BD70-C8710FC66FA7} = {A86A7466-99C2-414D-B9A0-69A03BE8BC3F}
 	EndGlobalSection
 EndGlobal
