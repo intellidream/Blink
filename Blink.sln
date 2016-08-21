@@ -10,10 +10,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{FB0D89
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BlinkApps", "BlinkApps", "{BCF35A0C-A6C0-4446-A344-F7F097A19FC2}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BlinkData", "BlinkData", "{1F1FA127-D073-4DE3-B128-1623C058D2B0}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{5026C128-5127-4F9D-B0B8-DC2EEA55A83D}"
 	ProjectSection(SolutionItems) = preProject
 		Blink.blinkdb = Blink.blinkdb
@@ -26,13 +22,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BlinkHost", "BlinkHost", "{
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlinkAzure", "Blink.Host\BlinkService\BlinkAzure.csproj", "{209FA716-A7AD-4095-BD70-C8710FC66FA7}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{582C82B1-5F9E-4B96-89F6-DA57A5E189FA}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Apps", "Apps", "{F62D8465-98DA-42AF-8DAA-A0C6C2745DD4}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "APIs", "APIs", "{D9A1347B-DFF0-4C5C-BC62-CF5AD43A4B56}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Logic", "Logic", "{08498A17-1A71-4F27-8A44-438C2ED78F3B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blink.Data.Entities", "Blink.Data.Entities\Blink.Data.Entities.csproj", "{9CE20E11-52C2-4A3A-AF2A-1D5616505EAD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -62,6 +52,22 @@ Global
 		{209FA716-A7AD-4095-BD70-C8710FC66FA7}.Release|x64.Build.0 = Release|Any CPU
 		{209FA716-A7AD-4095-BD70-C8710FC66FA7}.Release|x86.ActiveCfg = Release|Any CPU
 		{209FA716-A7AD-4095-BD70-C8710FC66FA7}.Release|x86.Build.0 = Release|Any CPU
+		{9CE20E11-52C2-4A3A-AF2A-1D5616505EAD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9CE20E11-52C2-4A3A-AF2A-1D5616505EAD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9CE20E11-52C2-4A3A-AF2A-1D5616505EAD}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{9CE20E11-52C2-4A3A-AF2A-1D5616505EAD}.Debug|ARM.Build.0 = Debug|Any CPU
+		{9CE20E11-52C2-4A3A-AF2A-1D5616505EAD}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{9CE20E11-52C2-4A3A-AF2A-1D5616505EAD}.Debug|x64.Build.0 = Debug|Any CPU
+		{9CE20E11-52C2-4A3A-AF2A-1D5616505EAD}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{9CE20E11-52C2-4A3A-AF2A-1D5616505EAD}.Debug|x86.Build.0 = Debug|Any CPU
+		{9CE20E11-52C2-4A3A-AF2A-1D5616505EAD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9CE20E11-52C2-4A3A-AF2A-1D5616505EAD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9CE20E11-52C2-4A3A-AF2A-1D5616505EAD}.Release|ARM.ActiveCfg = Release|Any CPU
+		{9CE20E11-52C2-4A3A-AF2A-1D5616505EAD}.Release|ARM.Build.0 = Release|Any CPU
+		{9CE20E11-52C2-4A3A-AF2A-1D5616505EAD}.Release|x64.ActiveCfg = Release|Any CPU
+		{9CE20E11-52C2-4A3A-AF2A-1D5616505EAD}.Release|x64.Build.0 = Release|Any CPU
+		{9CE20E11-52C2-4A3A-AF2A-1D5616505EAD}.Release|x86.ActiveCfg = Release|Any CPU
+		{9CE20E11-52C2-4A3A-AF2A-1D5616505EAD}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
